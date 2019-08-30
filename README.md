@@ -2,7 +2,7 @@
 來點幹話吧!
 
 ## Features
-* 使用者任選一職業可以產生一句幹話
+使用者任選一職業可以產生一句幹話
 
 ## Preview pages
 ![preview](/public/img/preview.jpg)
