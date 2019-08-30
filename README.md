@@ -20,7 +20,7 @@
 git clone https://github.com/HuangMinShi/trash_talk_generator.git
 ```
 
-**切換至restaurant_list**
+**切換至trash_talk_generator**
 ```=
 cd trash_talk_generator
 ```
