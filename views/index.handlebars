@@ -1,0 +1,83 @@
+<div class="container py-2">
+
+  <div class="row">
+    <div class="col-12 col-lg-10 col-xl-8 mx-auto text-center">
+      <h1 class="my-3">你想對誰說幹話?</h1>
+
+      <form method="POST" action="/">
+        <div class="form-row">
+          <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <div class="card">
+              <label for="engineer">
+                <img src="/img/angry-developer.jpg" class="card-img-top job-img" alt="engineer">
+              </label>
+              <div class="card-body">
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="engineer" class="custom-control-input" name="job" value="engineer"
+                    {{#is option 'engineer'}}checked{{/is}}>
+                  <label for="engineer" class="custom-control-label">
+                    <span>
+                      工程師
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <div class="card">
+              <label for="designer">
+                <img src="/img/angry-designer.jpg" class="card-img-top job-img" alt="designer">
+              </label>
+              <div class="card-body">
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="designer" class="custom-control-input" name="job" value="designer"
+                    {{#is option 'designer'}}checked{{/is}}>
+                  <label for="designer" class="custom-control-label">
+                    <span>
+                      設計師
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <div class="card">
+              <label for="entrepreneur">
+                <img src="/img/angry-founder.jpg" class="card-img-top job-img" alt="entrepreneur">
+              </label>
+              <div class="card-body">
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="entrepreneur" class="custom-control-input" name="job" value="entrepreneur"
+                    {{#is option 'entrepreneur'}}checked{{/is}}>
+                  <label for="entrepreneur" class="custom-control-label">
+                    <span>
+                      創業家
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-row">
+          <div class="form-submit pr-1 flex-shrink-0">
+            <button type="submit" class="btn btn-success">
+              <span>
+                產生幹話
+              </span>
+            </button>
+          </div>
+
+          <div class="form-info flex-grow-1">
+            <textarea name="textarea" id="message" cols="50" rows="4">{{sentence}}</textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
