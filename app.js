@@ -42,12 +42,34 @@ app.get('/', (req, res) => {
 app.get('/restaurants', (req, res) => {
   res.redirect('/')
 })
+// ///////////////////// 新增一筆餐廳頁面
+app.get('/restaurants/new', (req, res) => {
+  res.render('new')
+})
 // ///////////////////// 查看一筆餐廳
 app.get('/restaurants/:id', (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     console.log(restaurant)
     if (err) return console.log(err)
     return res.render('show', { restaurant })
+  })
+})
+// ///////////////////// 新增一筆餐廳
+app.post('/restaurants', (req, res) => {
+  const restaurant = new Restaurant({
+    name: req.body.name,
+    name_en: req.body.name_en,
+    category: req.body.category,
+    image: req.body.image,
+    location: req.body.location,
+    phone: req.body.phone,
+    google_map: req.body.google_map,
+    rating: req.body.rating,
+    description: req.body.description
+  })
+  restaurant.save((err) => {
+    if (err) return console.log(err)
+    return res.redirect('/')
   })
 })
 
@@ -61,14 +83,6 @@ app.get('/restaurants/:id', (req, res) => {
 
 
 
-// ///////////////////// 新增一筆餐廳頁面
-app.get('/restaurants/new', (req, res) => {
-  res.send('新增一筆餐廳頁面')
-})
-// ///////////////////// 新增一筆餐廳
-app.post('/restaurants', (req, res) => {
-  res.send('新增一筆餐廳')
-})
 // ///////////////////// 修改一筆餐廳頁面
 app.get('/restaurants/:id/edit', (req, res) => {
   res.send('修改一筆餐廳頁面')

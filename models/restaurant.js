@@ -4,34 +4,33 @@ const Schema = mongoose.Schema
 const restaurantSchema = new Schema({
   name: {
     type: String,
-    required: true
+    // required: true
   },
   name_en: {
     type: String,
-    required: true
+    // required: true
   },
   category: {
     type: String,
-    required: true
+    // required: true
   },
   image: {
     type: String,
-    default: "https://picsum.photos/id/1026/4621/3070"
   },
   location: {
     type: String,
-    required: true
+    // required: true
   },
   phone: {
     type: String,
-    required: true
+    // required: true
   },
   google_map: {
     type: String
   },
   rating: {
     type: Number,
-    required: true
+    // required: true
   },
   description: {
     type: String,
