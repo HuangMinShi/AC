@@ -24,4 +24,9 @@
 
     <img class="" src="{{restaurant.image}}" alt="{{restaurant.name}}" style="max-width: 600px;">
   </div>
+  <a href="/">back</a>
+  <a href="/restaurants/{{restaurant.id}}/edit">edit</a>
+  <form action="/restaurant/{{this.id}}/delete" method="POST" style="display: inline-block">
+    <button type="submit">delete</button>
+  </form>
 </div>

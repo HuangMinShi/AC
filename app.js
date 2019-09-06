@@ -49,48 +49,43 @@ app.get('/restaurants/new', (req, res) => {
 // ///////////////////// 查看一筆餐廳
 app.get('/restaurants/:id', (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
-    console.log(restaurant)
     if (err) return console.log(err)
     return res.render('show', { restaurant })
   })
 })
 // ///////////////////// 新增一筆餐廳
 app.post('/restaurants', (req, res) => {
-  const restaurant = new Restaurant({
-    name: req.body.name,
-    name_en: req.body.name_en,
-    category: req.body.category,
-    image: req.body.image,
-    location: req.body.location,
-    phone: req.body.phone,
-    google_map: req.body.google_map,
-    rating: req.body.rating,
-    description: req.body.description
-  })
+  const restaurant = new Restaurant({})
+  Object.assign(restaurant, req.body)
   restaurant.save((err) => {
     if (err) return console.log(err)
     return res.redirect('/')
   })
 })
-
-
-
-
-
-
-
-
-
-
-
 // ///////////////////// 修改一筆餐廳頁面
 app.get('/restaurants/:id/edit', (req, res) => {
-  res.send('修改一筆餐廳頁面')
+  Restaurant.findById(req.params.id, (err, restaurant) => {
+    if (err) return console.log(err)
+    return res.render('edit', { restaurant })
+  })
 })
 // ///////////////////// 修改一筆餐廳
 app.post('/restaurants/:id/edit', (req, res) => {
-  res.send('修改一筆餐廳')
+  Restaurant.findById(req.params.id, (err, restaurant) => {
+    if (err) return console.log(err)
+    Object.assign(restaurant, req.body)
+    restaurant.save(err => {
+      if (err) return console.log(err)
+      return res.redirect(`/restaurants/${req.params.id}`)
+    })
+  })
 })
+
+
+
+
+
+
 // ///////////////////// 刪除一筆餐廳
 app.post('/restaurants/:id/delete', (req, res) => {
   res.send('刪除一筆餐廳')

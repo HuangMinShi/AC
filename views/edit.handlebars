@@ -1,0 +1,15 @@
+<div class="container">
+  <a href="/">back</a>
+  <form action="/restaurants/{{restaurant.id}}/edit" method="POST">
+    <input type="text" name="name" placeholder="name" value="{{restaurant.name}}">
+    <input type="text" name="name_en" placeholder="name_en" value="{{restaurant.name_en}}">
+    <input type="text" name="category" placeholder="category" value="{{restaurant.category}}">
+    <input type="text" name="location" placeholder="location" value="{{restaurant.location}}">
+    <input type="text" name="phone" placeholder="phone" value="{{restaurant.phone}}">
+    <input type="number" name="rating" placeholder="rating" value="{{restaurant.rating}}">
+    <input type="url" name="image" placeholder="image" value="{{restaurant.image}}">
+    <textarea name="description" id="description" cols="30" rows="10" placeholder="write description"
+      value="{{restaurant.description}}"></textarea>
+    <button type="submit">edit</button>
+  </form>
+</div>
