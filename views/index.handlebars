@@ -1,1 +1,42 @@
-<h1>Hello</h1>
+{{!-- search-bar --}}
+<div class="container search-bar">
+  <div class="search-bar-outer">
+    <div class="search-bar-inner">
+      <form action="/search" method="GET">
+        <label for="search-restaurant">
+          <h4>尋找餐廳</h4>
+        </label>
+
+        <div class="input-group">
+          <input type="text" id="search-restaurant" name="keyword" value="" placeholder="輸入餐廳 分類">
+          <div class="input-group-append">
+            <button type="submit"></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{{!-- data panel --}}
+<div class="container">
+  <div class="row">
+    <div class="card-columns">
+
+      {{#each restaurants}}
+      <a href="/restaurants/{{this.id}}">
+        <div class="card">
+          <img src="{{this.image}}" alt="{{this.name}}" class="card-img-top">
+
+          <div class="card-body">
+            <h6 class="card-title">{{this.name}}</h6>
+            <div class="restaurant-category">{{this.category}}</div>
+            <span>{{this.rating}}</span>
+          </div>
+        </div>
+      </a>
+      {{/each}}
+
+    </div>
+  </div>
+</div>

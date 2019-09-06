@@ -20,7 +20,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // connect to mongodb and get the object
 mongoose.connect('mongodb://127.0.0.1/restaurant', { useNewUrlParser: true })
 const db = mongoose.connection
-console.log(db)
 
 // start listening on db event
 db.on('error', () => {
@@ -31,36 +30,41 @@ db.once('open', () => {
   console.log('mongodb connected!')
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// set routes
+// add routes
+// ///////////////////// 首頁//
 app.get('/', (req, res) => {
-  res.render('index')
+  Restaurant.find((err, restaurants) => {
+    if (err) return console.log(err)
+    return res.render('index', { restaurants })
+  })
+})
+// ///////////////////// 瀏覽全部餐廳
+app.get('/restaurants', (req, res) => {
+  res.redirect('/')
+})
+// ///////////////////// 新增一筆餐廳頁面
+app.get('/restaurants/new', (req, res) => {
+  res.send('新增一筆餐廳頁面')
+})
+// ///////////////////// 查看一筆餐廳
+app.get('/restaurants/:id', (req, res) => {
+  res.send('查看一筆餐廳')
+})
+// ///////////////////// 新增一筆餐廳
+app.post('/restaurants', (req, res) => {
+  res.send('新增一筆餐廳')
+})
+// ///////////////////// 修改一筆餐廳頁面
+app.get('/restaurants/:id/edit', (req, res) => {
+  res.send('修改一筆餐廳頁面')
+})
+// ///////////////////// 修改一筆餐廳
+app.post('/restaurants/:id/edit', (req, res) => {
+  res.send('修改一筆餐廳')
+})
+// ///////////////////// 刪除一筆餐廳
+app.post('/restaurants/:id/delete', (req, res) => {
+  res.send('刪除一筆餐廳')
 })
 
 //start listening on server
