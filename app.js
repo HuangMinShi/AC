@@ -80,37 +80,18 @@ app.post('/restaurants/:id/edit', (req, res) => {
     })
   })
 })
-
-
-
-
-
-
 // ///////////////////// 刪除一筆餐廳
-app.post('/restaurants/:id/delete', (req, res) => {
-  res.send('刪除一筆餐廳')
-})
+app.post('/restaurant/:id/delete', (req, res) => {
+  Restaurant.findById(req.params.id, (err, restaurant) => {
+    if (err) return console.log(err)
+    restaurant.remove(err => {
+      if (err) return console.log(err)
+      return res.redirect('/')
+    })
 
+  })
+})
 //start listening on server
 app.listen(port, () => {
   console.log(`The server is running on localhost:${port}`)
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
