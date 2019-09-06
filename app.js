@@ -42,13 +42,28 @@ app.get('/', (req, res) => {
 app.get('/restaurants', (req, res) => {
   res.redirect('/')
 })
+// ///////////////////// 查看一筆餐廳
+app.get('/restaurants/:id', (req, res) => {
+  Restaurant.findById(req.params.id, (err, restaurant) => {
+    console.log(restaurant)
+    if (err) return console.log(err)
+    return res.render('show', { restaurant })
+  })
+})
+
+
+
+
+
+
+
+
+
+
+
 // ///////////////////// 新增一筆餐廳頁面
 app.get('/restaurants/new', (req, res) => {
   res.send('新增一筆餐廳頁面')
-})
-// ///////////////////// 查看一筆餐廳
-app.get('/restaurants/:id', (req, res) => {
-  res.send('查看一筆餐廳')
 })
 // ///////////////////// 新增一筆餐廳
 app.post('/restaurants', (req, res) => {

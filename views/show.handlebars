@@ -1,0 +1,27 @@
+<h1 class="restaurant-show-title">{{restaurant.name}}</h1>
+
+<div class="container">
+  <div class="row">
+    <p class="">
+      <span class="">類別：</span>
+      {{restaurant.category}}
+    </p>
+
+    <p class="">
+      <span class="">地址：</span>
+      {{restaurant.location}}
+      <a href="{{restaurant.google_map}}" class="" target="_blank"></a>
+    </p>
+
+    <p class="">
+      <span class="">電話：</span>
+      {{restaurant.phone}}
+    </p>
+
+    <p class="">
+      {{restaurant.description}}
+    </p>
+
+    <img class="" src="{{restaurant.image}}" alt="{{restaurant.name}}" style="max-width: 600px;">
+  </div>
+</div>
