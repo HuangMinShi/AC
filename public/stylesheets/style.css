@@ -98,6 +98,16 @@ font-size: 1.3rem;
   color: rgba(255, 255, 255, 1)
 }
 
+.required-icon {
+  color: red;
+  font-size: 5px;
+}
+
+.not-required-icon {
+  color: rgba(0, 0, 0, 0);
+  font-size: 5px;
+}
+
 @media screen and (min-width: 768px) {
   .card img{
     height: 160px;
