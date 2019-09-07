@@ -57,6 +57,11 @@ app.get('/restaurants/:id', (req, res) => {
 app.post('/restaurants', (req, res) => {
   const restaurant = new Restaurant({})
   Object.assign(restaurant, req.body)
+
+  if (!restaurant.image) {
+    restaurant.image = '/images/default.png'
+  }
+
   restaurant.save((err) => {
     if (err) return console.log(err)
     return res.redirect('/')
