@@ -3,7 +3,8 @@
   <div class="search-bar-input">
     <form action="/search" method="GET">
       <div class="form-group">
-        <input type="search" class="form-control" id="search-restaurant" name="keyword" value="" placeholder="輸入餐廳 分類">
+        <input type="search" class="form-control" id="search-restaurant" name="keyword" {{#if keyword}}
+          value="{{keyword}}" {{/if}} placeholder="輸入餐廳 分類">
         <button type="submit" class="btn btn-search btn-primary"></button>
       </div>
     </form>

@@ -35,6 +35,7 @@ db.once('open', () => {
 app.get('/', (req, res) => {
   Restaurant.find((err, restaurants) => {
     if (err) return console.log(err)
+    console.log(Object.prototype.toString.call(restaurants))
     return res.render('index', { restaurants })
   })
 })
@@ -96,6 +97,21 @@ app.post('/restaurant/:id/delete', (req, res) => {
 
   })
 })
+// ///////////////////// 搜尋餐廳
+app.get('/search', (req, res) => {
+  const keyword = req.query.keyword
+  const regExp = new RegExp(keyword, 'i')
+
+  Restaurant.find((err, restaurants) => {
+    if (err) return console.log(err)
+    let matchRestaurants = restaurants.filter(item => {
+      return (item.name.match(regExp) || item.category.match(regExp))
+    })
+    res.render('index', { restaurants: matchRestaurants, keyword })
+  })
+})
+
+
 //start listening on server
 app.listen(port, () => {
   console.log(`The server is running on localhost:${port}`)
