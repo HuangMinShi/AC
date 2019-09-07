@@ -62,6 +62,41 @@ header {
   min-width: 200px;
 }
 
+.restaurant-show p{
+font-size: 1.3rem;
+}
+
+#restaurant-show-image img{
+  width: 100%;
+  cursor: pointer;
+}
+
+#restaurant-show-title {
+  position: relative;
+  top: -100px;
+  color: white;
+  text-align: center;
+  font-size: 3rem;
+  text-shadow: 0 0 10px rgba(0, 0, 0, .8);
+}
+
+.modal-body {
+  padding: 0;
+}
+
+.modal-body img {
+  width: 100%;
+}
+
+.modal-body button.close {
+  position: absolute;
+  right: 6px;
+}
+
+.modal-body button span {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 1)
+}
 
 @media screen and (min-width: 768px) {
   .card img{
