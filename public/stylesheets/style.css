@@ -2,7 +2,7 @@ body {
   font-family: 'Noto Sans TC', sans-serif;
 }
 
-header {
+header, footer {
   overflow: hidden;
 }
 
@@ -39,7 +39,9 @@ header {
 }
 
 .search-bar span {
-  font-size: 18px;
+  font-size: 30px;
+  font-weight: 900;
+  padding-bottom: 6px;
 }
 
 .search-bar div.form-group {
@@ -110,6 +112,11 @@ font-size: 1.3rem;
 .not-required-icon {
   color: rgba(0, 0, 0, 0);
   font-size: 5px;
+}
+
+footer {
+  background-color: #343a40;
+  color: white;
 }
 
 @media screen and (min-width: 768px) {
