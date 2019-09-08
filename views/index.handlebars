@@ -19,9 +19,11 @@
           <li><a href="/?sortby=name">按餐廳名稱 </a> </li>
           <li><a href="/?sortby=category">按餐廳類別</a>
           </li>
-          <li><a href="/?sortby=rating&orderby=asc">按餐廳評分(A-Z)</a>
+          <li><a href={{#if keyword}} "/search/?keyword={{keyword}}&sortby=rating&orderby=asc"
+              {{else}} "/?sortby=rating&orderby=asc" {{/if}}>按餐廳評分(A-Z)</a>
           </li>
-          <li><a href="/?sortby=rating&orderby=desc">按餐廳評分(Z-A)</a>
+          <li><a href={{#if keyword}} "/search/?keyword={{keyword}}&sortby=rating&orderby=desc"
+              {{else}} "/?sortby=rating&orderby=desc" {{/if}}>按餐廳評分(Z-A)</a>
           </li>
         </ul>
       </li>

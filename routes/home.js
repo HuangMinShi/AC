@@ -4,6 +4,7 @@ const router = express.Router()
 
 // 首頁
 router.get('/', (req, res) => {
+  console.log('首頁')
   const { sortby, orderby } = req.query
   let objSort = new Object()
   objSort[sortby] = orderby
