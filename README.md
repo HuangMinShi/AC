@@ -39,9 +39,7 @@ cd restaurant_list_db_sort
 npm i express
 ```
 
-**安裝 MongoDB Community Server 並啟動資料庫**
-[MongoDB Community Server](https://www.mongodb.com/download-center/community)
-
+**安裝 [MongoDB Community Server](https://www.mongodb.com/download-center/community) 並啟動資料庫**
 
 **安裝專案套件**
 ```npm=
