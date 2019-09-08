@@ -61,7 +61,7 @@
             <h4 class="mr-auto">真的要刪除嗎?</h4>
             <div class="action p-1">
               <button type="button" class="btn btn-primary" data-dismiss="modal">返回</button>
-              <form action="/restaurant/{{this.id}}/delete" method="POST" class="d-inline">
+              <form action="/restaurant/{{this.id}}/delete?_method=DELETE" method="POST" class="d-inline">
                 <button type=" submit" class="btn btn btn-outline-danger">確定</button>
               </form>
             </div>

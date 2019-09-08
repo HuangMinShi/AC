@@ -9,8 +9,8 @@
           </h5>
           <hr>
 
-          <form {{#if createNew}}action="/restaurants" {{else}}action="/restaurants/{{restaurant.id}}/edit" {{/if}}
-            method="POST">
+          <form {{#if createNew}}action="/restaurants" {{else}}action="/restaurants/{{restaurant.id}}/edit?_method=PUT"
+            {{/if}} method="POST">
 
             <div class="form-group form-row">
               <label class="col-sm-3 col-form-label" for="name">

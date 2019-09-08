@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const Restaurant = require('./models/restaurant')
+const methodOverride = require('method-override')
 
 // define server related variables
 const app = express()
@@ -17,6 +18,9 @@ app.set('view engine', 'handlebars')
 // set static data path and use bodyparser to encode URL
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// override with POST having ?_method=PUT/DELETE
+app.use(methodOverride('_method'))
 
 // connect to mongodb and get the object
 mongoose.connect('mongodb://127.0.0.1/restaurant', { useNewUrlParser: true })
@@ -83,7 +87,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
 })
 
 // 修改一筆餐廳
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id/edit', (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if (err) return console.log(err)
 
@@ -97,7 +101,7 @@ app.post('/restaurants/:id/edit', (req, res) => {
 })
 
 // 刪除一筆餐廳
-app.post('/restaurant/:id/delete', (req, res) => {
+app.delete('/restaurant/:id/delete', (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if (err) return console.log(err)
     restaurant.remove(err => {
