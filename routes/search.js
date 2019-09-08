@@ -3,7 +3,6 @@ const router = express.Router()
 const Restaurant = require('../models/restaurant')
 
 router.get('/', (req, res) => {
-  console.log('1')
   const keyword = req.query.keyword
   const regExp = new RegExp(keyword, 'i')
   const { sortby, orderby } = req.query
