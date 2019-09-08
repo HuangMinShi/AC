@@ -11,7 +11,7 @@
 * 使用者可以依照餐廳名稱、類別及評分排序
 
 ## Preview pages
-![preview](/images/index_page_add_sort.jpg)
+![preview](/public/images/index_page_add_sort.jpg)
 
 ## Environment and package used
 * [Node.js](https://nodejs.org/en/) v10.15.0
