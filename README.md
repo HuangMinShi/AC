@@ -10,8 +10,8 @@
 * 使用者可以搜尋特定餐廳名稱或類別
 
 ## Preview pages
-![preview](/images/index_page.png)
-![preview](/images/show_page.png)
+![preview](/images/index_page.jpg)
+![preview](/images/show_page.jpg)
 
 ## Environment and package used
 * [Node.js](https://nodejs.org/en/) v10.15.0
