@@ -35,82 +35,9 @@ db.once('open', () => console.log('mongodb connected!'))
 
 
 // ============ routes ============ //
-// 首頁
-app.get('/', (req, res) => {
-  Restaurant.find((err, restaurants) => {
-    if (err) return console.log(err)
-    return res.render('index', { restaurants })
-  })
-})
-
-// 瀏覽全部餐廳
-app.get('/restaurants', (req, res) => {
-  res.redirect('/')
-})
-
-// 新增一筆餐廳頁面
-app.get('/restaurants/new', (req, res) => {
-  const createNew = true
-  res.render('new_or_edit', { createNew })
-})
-
-// 查看一筆餐廳
-app.get('/restaurants/:id', (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
-    if (err) return console.log(err)
-    return res.render('show', { restaurant })
-  })
-})
-
-// 新增一筆餐廳
-app.post('/restaurants', (req, res) => {
-  const restaurant = new Restaurant({})
-  Object.assign(restaurant, req.body)
-
-  // 預設圖片
-  if (!restaurant.image) {
-    restaurant.image = '/images/default.png'
-  }
-
-  restaurant.save((err) => {
-    if (err) return console.log(err)
-    return res.redirect('/')
-  })
-})
-
-// 修改一筆餐廳頁面
-app.get('/restaurants/:id/edit', (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
-    if (err) return console.log(err)
-    return res.render('new_or_edit', { restaurant })
-  })
-})
-
-// 修改一筆餐廳
-app.put('/restaurants/:id/edit', (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
-    if (err) return console.log(err)
-
-    Object.assign(restaurant, req.body)
-
-    restaurant.save(err => {
-      if (err) return console.log(err)
-      return res.redirect(`/restaurants/${req.params.id}`)
-    })
-  })
-})
-
-// 刪除一筆餐廳
-app.delete('/restaurant/:id/delete', (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
-    if (err) return console.log(err)
-    restaurant.remove(err => {
-      if (err) return console.log(err)
-      return res.redirect('/')
-    })
-
-  })
-})
+// use route-prefix and include router
+app.use('/', require('./routes/home'))
+app.use('/restaurants', require('./routes/restaurant'))
 
 // 搜尋餐廳
 app.get('/search', (req, res) => {
