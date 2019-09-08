@@ -31,32 +31,11 @@ db.on('error', () => console.log('mongodb error!'))
 db.once('open', () => console.log('mongodb connected!'))
 
 
-
-
-
 // ============ routes ============ //
 // use route-prefix and include router
 app.use('/', require('./routes/home'))
 app.use('/restaurants', require('./routes/restaurant'))
-
-// 搜尋餐廳
-app.get('/search', (req, res) => {
-  const keyword = req.query.keyword
-  const regExp = new RegExp(keyword, 'i')
-
-  Restaurant.find((err, restaurants) => {
-    if (err) return console.log(err)
-
-    let matchRestaurants = restaurants.filter(item => {
-      return (item.name.match(regExp) || item.category.match(regExp))
-    })
-
-    res.render('index', { restaurants: matchRestaurants, keyword })
-  })
-})
-
-
-
+app.use('/search', require('./routes/search'))
 
 
 // ============ start listening on server ============ //

@@ -1,25 +1,36 @@
 <!-- ============ search-bar ============ -->
 
-<div class="container search-bar">
-  <div class="search-bar-input">
-    <form action="/search" method="GET">
-      <div class="form-group">
-        <input type="search" class="form-control" id="search-restaurant" name="keyword" {{#if keyword}}
-          value="{{keyword}}" {{/if}} placeholder="輸入餐廳 分類">
-        <button type="submit" class="btn btn-search btn-primary"></button>
-      </div>
-    </form>
-  </div>
+<div class="container row mx-auto">
+  <div class="row col-md-10 col-12 mx-auto">
+    <div class="search-bar col-4 mr-auto">
+      <form action="/search" method="GET">
+        <div class="form-group">
+          <input type="search" class="form-control" id="search-restaurant" name="keyword" {{#if keyword}}
+            value="{{keyword}}" {{/if}} placeholder="輸入餐廳 分類">
+          <button type="submit" class="btn btn-search btn-primary"></button>
+        </div>
+      </form>
+    </div>
 
-  <span class="mx-3">|</span>
-
-  <div class="btn-create">
-    <a href="/restaurants/new" class="btn btn-primary">新增餐廳</a>
+    <ul class="sort-drop-down-menu col-4">
+      <li>
+        <a href="#">排序</a>
+        <ul>
+          <li><a href="/?sortby=name">按餐廳名稱 </a> </li>
+          <li><a href="/?sortby=category">按餐廳類別</a>
+          </li>
+          <li><a href="/?sortby=rating&orderby=asc">按餐廳評分(A-Z)</a>
+          </li>
+          <li><a href="/?sortby=rating&orderby=desc">按餐廳評分(Z-A)</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
   </div>
 </div>
 
 <!-- ============ data-panel ============ -->
-<div class="container row mx-auto my-4">
+<div class="container row mx-auto">
   <div class="row col-md-10 col-12 mx-auto">
 
     {{#unless restaurants}}
@@ -31,7 +42,7 @@
     {{#each restaurants}}
     <div class="col-lg-4 col-md-6 col-12">
       <a href="/restaurants/{{this.id}}" class="text-secondary">
-        <div class="card">
+        <div class="col-restaurant card">
           <img src="{{this.image}}" alt="{{this.name}}" class="card-img-top">
 
           <div class="card-body p-3">
