@@ -1,3 +1,4 @@
+<!-- ============ show-content ============ -->
 <h1 id="restaurant-show-title">{{restaurant.name}}</h1>
 
 <div class="container">
@@ -39,16 +40,17 @@
       </p>
     </div>
   </div>
+  <hr>
 
-  <div class="action my-5">
+  <div class="action my-4 text-center">
     <a href="/" class="btn btn btn-primary">返回</a>
     <a href="/restaurants/{{restaurant.id}}/edit" class="btn btn btn-primary">編輯</a>
-    <form action="/restaurant/{{restaurant.id}}/delete" method="POST" style="display: inline-block">
-      <button type="submit" class="btn btn btn-outline-danger">刪除</button>
-    </form>
+    <button type="submit" class="btn btn btn-outline-danger" data-toggle="modal"
+      data-target="#restaurant-delete-modal">刪除</button>
   </div>
 </div>
 
+<!-- ============ show-img-modal ============ -->
 <div class="modal fade" id="restaurant-show-image-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -57,6 +59,23 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <img src="{{restaurant.image}}" alt="{{restaurant.name}}">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ show-delete-modal ============ -->
+<div class="modal fade " id="restaurant-delete-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content p-3">
+      <div class="modal-body d-flex align-items-center">
+        <h4 class="mr-auto">真的要刪除嗎?</h4>
+        <div class="action p-1">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">返回</button>
+          <form action="/restaurant/{{restaurant.id}}/delete" method="POST" class="d-inline">
+            <button type=" submit" class="btn btn btn-outline-danger">確定</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>

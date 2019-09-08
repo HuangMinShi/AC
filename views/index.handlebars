@@ -1,4 +1,5 @@
-{{!-- search-bar --}}
+<!-- ============ search-bar ============ -->
+
 <div class="container search-bar">
   <div class="search-bar-input">
     <form action="/search" method="GET">
@@ -17,10 +18,15 @@
   </div>
 </div>
 
-
-{{!-- data panel --}}
-<div class="container row mx-auto">
+<!-- ============ data-panel ============ -->
+<div class="container row mx-auto my-4">
   <div class="row col-md-10 col-12 mx-auto">
+
+    {{#unless restaurants}}
+    <div class="search-nothing-img mb-3 mx-auto">
+      <img src="../images/search_nothing.png" alt="search-nothing-img" width="100%">
+    </div>
+    {{/unless}}
 
     {{#each restaurants}}
     <div class="col-lg-4 col-md-6 col-12">
@@ -41,11 +47,27 @@
         <div class="action mt-2 mb-5 text-right">
           <a href="/restaurants/{{this.id}}/edit" class="btn btn btn-primary">編輯</a>
           <a href="/restaurants/{{this.id}}" class="btn btn btn-primary">細節</a>
-          <form action="/restaurant/{{this.id}}/delete" method="POST" style="display: inline-block">
-            <button type="submit" class="btn btn btn-outline-danger">刪除</button>
-          </form>
+          <button type="submit" class="btn btn btn-outline-danger" data-toggle="modal"
+            data-target="#restaurant-delete-modal">刪除</button>
         </div>
       </a>
+    </div>
+
+    <!-- ============ *delete-modal ============ -->
+    <div class="modal fade " id="restaurant-delete-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content p-3">
+          <div class="modal-body d-flex align-items-center">
+            <h4 class="mr-auto">真的要刪除嗎?</h4>
+            <div class="action p-1">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">返回</button>
+              <form action="/restaurant/{{this.id}}/delete" method="POST" class="d-inline">
+                <button type=" submit" class="btn btn btn-outline-danger">確定</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     {{/each}}
 

@@ -1,3 +1,4 @@
+// ============ basic settings ============ //
 // include module and package
 const express = require('express')
 const exphbs = require('express-handlebars')
@@ -22,43 +23,47 @@ mongoose.connect('mongodb://127.0.0.1/restaurant', { useNewUrlParser: true })
 const db = mongoose.connection
 
 // start listening on db event
-db.on('error', () => {
-  console.log('mongodb error!')
-})
+db.on('error', () => console.log('mongodb error!'))
+db.once('open', () => console.log('mongodb connected!'))
 
-db.once('open', () => {
-  console.log('mongodb connected!')
-})
 
-// add routes
-// ///////////////////// 首頁//
+
+
+
+// ============ routes ============ //
+// 首頁
 app.get('/', (req, res) => {
   Restaurant.find((err, restaurants) => {
     if (err) return console.log(err)
-    console.log(Object.prototype.toString.call(restaurants))
     return res.render('index', { restaurants })
   })
 })
-// ///////////////////// 瀏覽全部餐廳
+
+// 瀏覽全部餐廳
 app.get('/restaurants', (req, res) => {
   res.redirect('/')
 })
-// ///////////////////// 新增一筆餐廳頁面
+
+// 新增一筆餐廳頁面
 app.get('/restaurants/new', (req, res) => {
-  res.render('new')
+  const createNew = true
+  res.render('new_or_edit', { createNew })
 })
-// ///////////////////// 查看一筆餐廳
+
+// 查看一筆餐廳
 app.get('/restaurants/:id', (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if (err) return console.log(err)
     return res.render('show', { restaurant })
   })
 })
-// ///////////////////// 新增一筆餐廳
+
+// 新增一筆餐廳
 app.post('/restaurants', (req, res) => {
   const restaurant = new Restaurant({})
   Object.assign(restaurant, req.body)
 
+  // 預設圖片
   if (!restaurant.image) {
     restaurant.image = '/images/default.png'
   }
@@ -68,25 +73,30 @@ app.post('/restaurants', (req, res) => {
     return res.redirect('/')
   })
 })
-// ///////////////////// 修改一筆餐廳頁面
+
+// 修改一筆餐廳頁面
 app.get('/restaurants/:id/edit', (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if (err) return console.log(err)
-    return res.render('edit', { restaurant })
+    return res.render('new_or_edit', { restaurant })
   })
 })
-// ///////////////////// 修改一筆餐廳
+
+// 修改一筆餐廳
 app.post('/restaurants/:id/edit', (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if (err) return console.log(err)
+
     Object.assign(restaurant, req.body)
+
     restaurant.save(err => {
       if (err) return console.log(err)
       return res.redirect(`/restaurants/${req.params.id}`)
     })
   })
 })
-// ///////////////////// 刪除一筆餐廳
+
+// 刪除一筆餐廳
 app.post('/restaurant/:id/delete', (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if (err) return console.log(err)
@@ -97,21 +107,28 @@ app.post('/restaurant/:id/delete', (req, res) => {
 
   })
 })
-// ///////////////////// 搜尋餐廳
+
+// 搜尋餐廳
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
   const regExp = new RegExp(keyword, 'i')
 
   Restaurant.find((err, restaurants) => {
     if (err) return console.log(err)
+
     let matchRestaurants = restaurants.filter(item => {
       return (item.name.match(regExp) || item.category.match(regExp))
     })
+
     res.render('index', { restaurants: matchRestaurants, keyword })
   })
 })
 
 
+
+
+
+// ============ start listening on server ============ //
 //start listening on server
 app.listen(port, () => {
   console.log(`The server is running on localhost:${port}`)

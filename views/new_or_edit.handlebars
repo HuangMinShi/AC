@@ -3,12 +3,15 @@
     <div class="col-10 col-lg-8 col-xl-6 mx-auto">
       <div class="card my-5 p-1">
         <div class="card-body">
-          <h5 class="card-title">編輯餐廳
+          <h5 class="card-title">
+            {{#if createNew}}新增餐廳{{else}}編輯餐廳{{/if}}
             <i class="fas fa-utensils"></i>
           </h5>
           <hr>
 
-          <form action="/restaurants/{{restaurant.id}}/edit" method="POST">
+          <form {{#if createNew}}action="/restaurants" {{else}}action="/restaurants/{{restaurant.id}}/edit" {{/if}}
+            method="POST">
+
             <div class="form-group form-row">
               <label class="col-sm-3 col-form-label" for="name">
                 <i class="fas fa-star-of-life required-icon"></i>
@@ -31,7 +34,7 @@
               </div>
             </div>
 
-            <div class=" form-group form-row">
+            <div class="form-group form-row">
               <label class="col-sm-3 col-form-label" for="category">
                 <i class="fas fa-star-of-life required-icon"></i>
                 分類：
@@ -48,8 +51,8 @@
                 評分：
               </label>
               <div class="col-sm-9">
-                <input type="number" id="rating" class="form-control" name="rating" value="{{restaurant.rating}}"
-                  value="2.5" min="0" max="5" step="0.1">
+                <input type="number" id="rating" class="form-control" name="rating" {{#if createNew}}value="2.5"
+                  {{else}} value="{{restaurant.rating}}" {{/if}} min="0" max="5" step="0.1">
               </div>
             </div>
 
@@ -86,7 +89,7 @@
               </div>
             </div>
 
-            <div class=" form-group form-row">
+            <div class="form-group form-row">
               <label class="col-sm-3 col-form-label" for="google_map">
                 <i class="fas fa-star-of-life not-required-icon"></i>
                 GoogleMap：
@@ -109,10 +112,12 @@
             </div>
 
             <hr>
-            <div class=" action text-right">
+            <div class="action text-right">
               <a href="/" class="btn btn btn-primary">返回</a>
-              <button class="btn btn-success" type="submit">送出</button>
+              <button class="btn btn-success" type="submit">
+                {{#if createNew}}新增{{else}}送出{{/if}}</button>
             </div>
+
           </form>
         </div>
       </div>
