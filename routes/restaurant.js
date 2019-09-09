@@ -24,8 +24,9 @@ router.get('/:id', (req, res) => {
 
 // 新增一筆餐廳
 router.post('/', (req, res) => {
-  const restaurant = new Restaurant({})
-  Object.assign(restaurant, req.body)
+  // 原:產生空物件實例，資料內容利用Object.assign指派
+  // 新:產生物件實例當下便把資料內容當參數傳入
+  const restaurant = new Restaurant(req.body)
 
   // 預設圖片
   if (!restaurant.image) {

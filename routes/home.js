@@ -5,11 +5,8 @@ const router = express.Router()
 // 首頁
 router.get('/', (req, res) => {
   const { sortby, orderby } = req.query
-  let objSort = new Object()
-  objSort[sortby] = orderby
-
   Restaurant.find()
-    .sort(objSort)
+    .sort({ [sortby]: orderby })
     .exec((err, restaurants) => {
       if (err) return console.log(err)
       return res.render('index', { restaurants })
