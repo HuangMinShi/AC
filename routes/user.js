@@ -12,7 +12,7 @@ router.post('/register', (req, res) => {
 })
 // 登入
 router.get('/login', (req, res) => {
-  res.send('登入')
+  res.render('login')
 })
 // 登入提交
 router.post('/login', (req, res) => {
