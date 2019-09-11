@@ -4,7 +4,7 @@ const router = express.Router()
 
 // 註冊
 router.get('/register', (req, res) => {
-  res.send('註冊')
+  res.render('register')
 })
 // 註冊提交
 router.post('/register', (req, res) => {
