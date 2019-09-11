@@ -8,7 +8,24 @@ router.get('/register', (req, res) => {
 })
 // 註冊提交
 router.post('/register', (req, res) => {
-  res.send('註冊')
+  User
+    .findOne({ email: req.body.email })
+    .then(user => {
+      if (user) {
+        console.log('User already exists!')
+        res.render('register', req.body)
+      } else {
+        const newUser = new User(req.body)
+        newUser
+          .save()
+          .then(user => {
+            res.redirect('/')
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+    })
 })
 // 登入
 router.get('/login', (req, res) => {
