@@ -36,6 +36,7 @@ db.once('open', () => console.log('mongodb connected!'))
 app.use('/', require('./routes/home'))
 app.use('/restaurants', require('./routes/restaurant'))
 app.use('/search', require('./routes/search'))
+app.use('/users', require('./routes/user'))
 
 
 // ============ start listening on server ============ //
