@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const Restaurant = require('./models/restaurant')
 const methodOverride = require('method-override')
+const session = require('express-session')
 
 // define server related variables
 const app = express()
@@ -29,6 +30,16 @@ const db = mongoose.connection
 // start listening on db event
 db.on('error', () => console.log('mongodb error!'))
 db.once('open', () => console.log('mongodb connected!'))
+
+app.use(session({
+  secret: 'qwertyuiop',
+  resave: false,
+  saveUninitialized: true
+}))
+
+
+
+
 
 
 // ============ routes ============ //
