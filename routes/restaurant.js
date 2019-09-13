@@ -17,7 +17,7 @@ router.get('/new', authenticated, (req, res) => {
 
 // 查看一筆餐廳
 router.get('/:id', authenticated, (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
+  Restaurant.findOne({ _id: req.params.id, userId: req.user.id }, (err, restaurant) => {
     if (err) return console.log(err)
     return res.render('show', { restaurant })
   })
@@ -28,6 +28,7 @@ router.post('/', authenticated, (req, res) => {
   // 原:產生空物件實例，資料內容利用Object.assign指派
   // 新:產生物件實例當下便把資料內容當參數傳入
   const restaurant = new Restaurant(req.body)
+  restaurant.userId = req.user._id
 
   // 預設圖片
   if (!restaurant.image) {
@@ -42,7 +43,7 @@ router.post('/', authenticated, (req, res) => {
 
 // 修改一筆餐廳頁面
 router.get('/:id/edit', authenticated, (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
+  Restaurant.findOne({ _id: req.params.id, userId: req.user.id }, (err, restaurant) => {
     if (err) return console.log(err)
     return res.render('new_or_edit', { restaurant })
   })
@@ -50,7 +51,7 @@ router.get('/:id/edit', authenticated, (req, res) => {
 
 // 修改一筆餐廳
 router.put('/:id/edit', authenticated, (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
+  Restaurant.findOne({ _id: req.params.id, userId: req.user.id }, (err, restaurant) => {
     if (err) return console.log(err)
 
     Object.assign(restaurant, req.body)
@@ -64,7 +65,7 @@ router.put('/:id/edit', authenticated, (req, res) => {
 
 // 刪除一筆餐廳
 router.delete('/:id/delete', authenticated, (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
+  Restaurant.findOne({ _id: req.params.id, userId: req.user.id }, (err, restaurant) => {
     if (err) return console.log(err)
     restaurant.remove(err => {
       if (err) return console.log(err)
