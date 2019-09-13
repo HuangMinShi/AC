@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 const Restaurant = require('./models/restaurant')
 const methodOverride = require('method-override')
 const session = require('express-session')
+const passport = require('passport')
 
 // define server related variables
 const app = express()
@@ -31,12 +32,21 @@ const db = mongoose.connection
 db.on('error', () => console.log('mongodb error!'))
 db.once('open', () => console.log('mongodb connected!'))
 
+// session
 app.use(session({
   secret: 'qwertyuiop',
   resave: false,
   saveUninitialized: true
 }))
 
+app.use(passport.initialize())
+app.use(passport.session())
+
+require('./config/passport')(passport)
+app.use((req, res, next) => {
+  res.locals.user = req.user
+  next()
+})
 
 
 
