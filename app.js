@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
 // connect to mongodb and get the object
-mongoose.connect('mongodb://127.0.0.1/restaurant', { useNewUrlParser: true })
+mongoose.connect('mongodb://127.0.0.1/restaurant', { useNewUrlParser: true, useCreateIndex: true })
 const db = mongoose.connection
 
 // start listening on db event
