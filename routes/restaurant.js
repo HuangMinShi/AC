@@ -26,7 +26,7 @@ router.get('/:id', authenticated, (req, res) => {
 // 新增一筆餐廳
 router.post('/', authenticated, (req, res) => {
   // 原:產生空物件實例，資料內容利用Object.assign指派
-  // 新:產生物件實例當下便把資料內容當參數傳入
+  // 新:產生物件實例當下便把資料內容當引數傳入
   const restaurant = new Restaurant(req.body)
   restaurant.userId = req.user._id
 

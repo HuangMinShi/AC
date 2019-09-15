@@ -1,6 +1,6 @@
 const express = require('express')
-const Restaurant = require('../models/restaurant')
 const router = express.Router()
+const Restaurant = require('../models/restaurant')
 const { authenticated } = require('../config/auth')
 
 // 首頁
@@ -10,7 +10,7 @@ router.get('/', authenticated, (req, res) => {
     .sort({ [sortby]: orderby })
     .exec((err, restaurants) => {
       if (err) return console.log(err)
-      return res.render('index', { restaurants })
+      return res.render('index', { restaurants, sortby, orderby })
     })
 })
 

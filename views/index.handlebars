@@ -18,18 +18,24 @@
 
     <ul class="sort-drop-down-menu col-4">
       <li>
-        <a href="#">排序</a>
+        <a href="#">
+          {{#if sortby}}
+          {{sortby}}
+          {{else}}
+          排序
+          {{/if}}
+        </a>
         <ul>
           <li><a href={{#if keyword}} "/search/?keyword={{keyword}}&sortby=name" {{else}} "/?sortby=name"
-              {{/if}}>按餐廳名稱</a>
+              {{/if}}>依名稱</a>
           <li><a href={{#if keyword}} "/search/?keyword={{keyword}}&sortby=category" {{else}} "/?sortby=category"
-              {{/if}}>按餐廳類別</a>
+              {{/if}}>依類別</a>
           </li>
           <li><a href={{#if keyword}} "/search/?keyword={{keyword}}&sortby=rating&orderby=asc"
-              {{else}} "/?sortby=rating&orderby=asc" {{/if}}>按餐廳評分(A-Z)</a>
+              {{else}} "/?sortby=rating&orderby=asc" {{/if}}>依評分(低至高)</a>
           </li>
           <li><a href={{#if keyword}} "/search/?keyword={{keyword}}&sortby=rating&orderby=desc"
-              {{else}} "/?sortby=rating&orderby=desc" {{/if}}>按餐廳評分(Z-A)</a>
+              {{else}} "/?sortby=rating&orderby=desc" {{/if}}>依評分(高至低)</a>
           </li>
         </ul>
       </li>
