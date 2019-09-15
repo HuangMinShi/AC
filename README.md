@@ -13,7 +13,7 @@
 * 使用者可以依照餐廳名稱、類別及評分排序
 
 ## Preview pages
-![preview](/public/images/index_page_add_sort.jpg)
+![preview](/public/images/login_page.jpg)
 ![preview](/public/images/show_page.jpg)
 
 ## Environment and package used
