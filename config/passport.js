@@ -18,7 +18,7 @@ module.exports = (passport) => {
             if (isMatch) {
               return done(null, user)
             } else {
-              return done(null, false, { message: 'Password輸入錯誤，請重新輸入。' })
+              return done(null, false, { message: 'Password輸入錯誤，請重新輸入==。' })
             }
           })
         })

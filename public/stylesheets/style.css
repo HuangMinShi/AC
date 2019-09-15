@@ -55,6 +55,12 @@ header, footer {
   content: "\f002";
 }
 
+.btn-create{
+  padding-left: 15px;
+  padding-top: 15px
+}
+
+
 
 /* ============ sort-drop-down-menu ============ */
 ul {
