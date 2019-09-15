@@ -10,7 +10,7 @@ router.get('/', authenticated, (req, res) => {
     .sort({ [sortby]: orderby })
     .exec((err, restaurants) => {
       if (err) return console.log(err)
-      return res.render('index', { restaurants, sortby, orderby })
+      return res.render('index', { restaurants, sortby })
     })
 })
 

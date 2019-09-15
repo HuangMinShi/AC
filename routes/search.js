@@ -17,7 +17,7 @@ router.get('/', authenticated, (req, res) => {
         return (item.name.match(regExp) || item.category.match(regExp))
       })
 
-      res.render('index', { restaurants: matchRestaurants, keyword, sortby, orderby })
+      res.render('index', { restaurants: matchRestaurants, keyword, sortby })
     })
 })
 
