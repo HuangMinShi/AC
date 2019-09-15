@@ -9,6 +9,11 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('passport')
 
+// 判別開發環境
+if (process.env.NOde_env !== 'production') {
+  require('dotenv').config()
+}
+
 // define server related variables
 const app = express()
 const port = 3000
@@ -59,6 +64,7 @@ app.use('/', require('./routes/home'))
 app.use('/restaurants', require('./routes/restaurant'))
 app.use('/search', require('./routes/search'))
 app.use('/users', require('./routes/user'))
+app.use('/auth', require('./routes/auths'))
 
 
 // ============ start listening on server ============ //
