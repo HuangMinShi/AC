@@ -10,7 +10,7 @@ module.exports = (passport) => {
       User.findOne({ email: email })
         .then(user => {
           if (!user) {
-            return done(null, false, { message: 'That emails is not registered' })
+            return done(null, false, { message: '輸入的Email尚未註冊，請註冊新用戶。' })
           }
 
           bcrypt.compare(password, user.password, (err, isMatch) => {
@@ -18,7 +18,7 @@ module.exports = (passport) => {
             if (isMatch) {
               return done(null, user)
             } else {
-              return done(null, false, { message: 'Email or password incorrect' })
+              return done(null, false, { message: 'Password輸入錯誤，請重新輸入。' })
             }
           })
         })
