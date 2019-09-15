@@ -37,6 +37,7 @@ router.post('/register', (req, res) => {
             bcrypt.hash(newUser.password, salt, (err, hash) => {
               if (err) throw err
               newUser.password = hash
+              newUser.name = req.body.name || 'Anonymous'
 
               newUser
                 .save()
