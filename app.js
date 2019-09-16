@@ -11,7 +11,7 @@ const passport = require('passport')
 const flash = require('connect-flash')
 
 // 判別開發環境
-if (process.env.NOde_env !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
