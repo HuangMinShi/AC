@@ -1,1 +1,17 @@
-<h1>Hello world!</h1>
+<h4>總金額</h4>
+<ul>
+  {{#each records}}
+  <li>
+    icon
+    {{this.name}}
+    {{this.date}}
+    {{this.category}}
+    {{this.amount}}
+    <a href="/records/{{this.id}}/edit">修改</a>
+    <form action="/records/:id/delete" method="POST" style="display: inline">
+      <button type="submit">刪除</button>
+    </form>
+  </li>
+  {{/each}}
+</ul>
+<a href="/records/new">新增支出</a>

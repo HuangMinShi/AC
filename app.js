@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
+const Record = require('./models/record')
 
 const app = express()
 const port = 3000
@@ -19,12 +20,17 @@ app.set('view engine', 'handlebars')
 
 //首頁
 app.get('/', (req, res) => {
-  res.render('index')
+  Record.find((err, records) => {
+    if (err) return console.log(err)
+    return res.render('index', { records })
+  })
 })
 //列出全部
 app.get('/records', (req, res) => {
-  res.send('2')
+  res.redirect('/')
 })
+
+
 //新增1筆頁面
 app.get('/records/new', (req, res) => {
   res.send('3')
