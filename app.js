@@ -24,7 +24,14 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.get('/', (req, res) => {
   Record.find((err, records) => {
     if (err) return console.log(err)
-    return res.render('index', { records })
+
+    const amountList = records.map(item => Number(item.amount))
+    let totalAmount = 0
+    if (amountList.length) {
+      totalAmount = amountList.reduce((p, c) => p + c)
+    }
+
+    return res.render('index', { records, totalAmount })
   })
 })
 //列出全部
