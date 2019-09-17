@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const exphbs = require('express-handlebars')
 
 const app = express()
 const port = 3000
@@ -13,9 +14,12 @@ db.once('open', () => {
   console.log('mongoose connected!')
 })
 
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
+
 //首頁
 app.get('/', (req, res) => {
-  res.send('1')
+  res.render('index')
 })
 //列出全部
 app.get('/records', (req, res) => {
