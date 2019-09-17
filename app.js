@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const Record = require('./models/record')
+const bodyParser = require('body-parser')
 
 const app = express()
 const port = 3000
@@ -17,6 +18,7 @@ db.once('open', () => {
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+app.use(bodyParser.urlencoded({ extended: true }))
 
 //首頁
 app.get('/', (req, res) => {
@@ -29,16 +31,24 @@ app.get('/', (req, res) => {
 app.get('/records', (req, res) => {
   res.redirect('/')
 })
-
-
 //新增1筆頁面
 app.get('/records/new', (req, res) => {
-  res.send('3')
+  res.render('new')
 })
 //新增1筆
 app.post('/records', (req, res) => {
-  res.send('4')
+  const newRecord = new Record(req.body)
+
+  newRecord.save(err => {
+    if (err) return console.log(err)
+    return res.redirect('/records')
+  })
 })
+
+
+
+
+
 //編輯1筆頁面
 app.get('/records/:id/edit', (req, res) => {
   res.send('5')
