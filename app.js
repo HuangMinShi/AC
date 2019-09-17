@@ -44,19 +44,26 @@ app.post('/records', (req, res) => {
     return res.redirect('/records')
   })
 })
-
-
-
-
-
 //編輯1筆頁面
 app.get('/records/:id/edit', (req, res) => {
-  res.send('5')
+  Record.findById(req.params.id, (err, record) => {
+    if (err) return console.log(err)
+    res.render('edit', { record })
+  })
 })
 //編輯1筆
 app.post('/records/:id/edit', (req, res) => {
-  res.send('6')
+  Record.findById(req.params.id, (err, record) => {
+    if (err) return console.log(err)
+    Object.assign(record, req.body)
+    record.save(err => {
+      if (err) return console.log(err)
+      res.redirect('/records')
+    })
+  })
 })
+
+
 //刪除1筆
 app.post('/records/:id/delete', (req, res) => {
   res.send('7')

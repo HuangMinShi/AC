@@ -1,0 +1,18 @@
+<p>*必填欄位</p>
+<h4>請修改你的支出</h4>
+<form action="/records/{{record.id}}/edit" method="POST">
+  <label for="name">名稱*:</label>
+  <input type="text" name="name" id="name" value="{{record.name}}">
+
+  <label for="date">日期*:</label>
+  <input type="date" name="date" id="date" value="{{record.date}}">
+
+  <label for="category">類別*:</label>
+  <input type="text" name="category" id="category" value="{{record.category}}">
+
+  <label for="amount">金額*:</label>
+  <input type="text" name="amount" id="amount" value="{{record.amount}}">
+
+  <button type="submit">送出</button>
+  <a href="/">返回</a>
+</form>
