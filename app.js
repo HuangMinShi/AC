@@ -13,8 +13,33 @@ db.once('open', () => {
   console.log('mongoose connected!')
 })
 
+//首頁
 app.get('/', (req, res) => {
   res.send('1')
+})
+//列出全部
+app.get('/records', (req, res) => {
+  res.send('2')
+})
+//新增1筆頁面
+app.get('/records/new', (req, res) => {
+  res.send('3')
+})
+//新增1筆
+app.post('/records', (req, res) => {
+  res.send('4')
+})
+//編輯1筆頁面
+app.get('/records/:id/edit', (req, res) => {
+  res.send('5')
+})
+//編輯1筆
+app.post('/records/:id/edit', (req, res) => {
+  res.send('6')
+})
+//刪除1筆
+app.post('/records/:id/delete', (req, res) => {
+  res.send('7')
 })
 
 app.listen(port, () => {
