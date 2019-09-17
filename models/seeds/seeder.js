@@ -1,8 +1,5 @@
-const express = require('express')
 const mongoose = require('mongoose')
-
-const app = express()
-const port = 3000
+const Record = require('../record')
 
 mongoose.connect('mongodb://127.0.0.1/record', { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
@@ -11,12 +8,14 @@ db.on('error', () => {
 })
 db.once('open', () => {
   console.log('mongoose connected!')
-})
 
-app.get('/', (req, res) => {
-  res.send('1')
-})
+  for (let i = 0; i < 5; i++) {
+    Record.create({
+      name: 'name_' + i,
+      category: 'category_' + i,
+      amount: i + 1
+    })
+  }
 
-app.listen(port, () => {
-  console.log(`The server is running on localhost://${port}`)
+  console.log('done')
 })
