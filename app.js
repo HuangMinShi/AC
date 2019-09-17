@@ -78,7 +78,20 @@ app.post('/records/:id/delete', (req, res) => {
     })
   })
 })
+//篩選類別
+app.get('/filter', (req, res) => {
+  Record.find({ category: req.query.category }, (err, records) => {
+    if (err) return console.log(err)
 
+    const amountList = records.map(item => Number(item.amount))
+    let totalAmount = 0
+    if (amountList.length) {
+      totalAmount = amountList.reduce((p, c) => p + c)
+    }
+
+    return res.render('index', { records, totalAmount })
+  })
+})
 
 app.listen(port, () => {
   console.log(`The server is running on localhost://${port}`)
