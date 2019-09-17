@@ -38,7 +38,6 @@ app.get('/records/new', (req, res) => {
 //新增1筆
 app.post('/records', (req, res) => {
   const newRecord = new Record(req.body)
-
   newRecord.save(err => {
     if (err) return console.log(err)
     return res.redirect('/records')
@@ -48,7 +47,7 @@ app.post('/records', (req, res) => {
 app.get('/records/:id/edit', (req, res) => {
   Record.findById(req.params.id, (err, record) => {
     if (err) return console.log(err)
-    res.render('edit', { record })
+    return res.render('edit', { record })
   })
 })
 //編輯1筆
@@ -58,16 +57,21 @@ app.post('/records/:id/edit', (req, res) => {
     Object.assign(record, req.body)
     record.save(err => {
       if (err) return console.log(err)
-      res.redirect('/records')
+      return res.redirect('/')
+    })
+  })
+})
+//刪除1筆
+app.post('/records/:id/delete', (req, res) => {
+  Record.findById(req.params.id, (err, record) => {
+    if (err) return console.log(err)
+    return record.remove(err => {
+      if (err) return console.log(err)
+      return res.redirect('/')
     })
   })
 })
 
-
-//刪除1筆
-app.post('/records/:id/delete', (req, res) => {
-  res.send('7')
-})
 
 app.listen(port, () => {
   console.log(`The server is running on localhost://${port}`)

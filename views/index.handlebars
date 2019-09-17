@@ -8,7 +8,7 @@
     {{this.category}}
     {{this.amount}}
     <a href="/records/{{this.id}}/edit">修改</a>
-    <form action="/records/:id/delete" method="POST" style="display: inline">
+    <form action="/records/{{this.id}}/delete" method="POST" style="display: inline">
       <button type="submit">刪除</button>
     </form>
   </li>
