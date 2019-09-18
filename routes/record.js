@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../models/record')
-const { addUp } = require('../libs/comFunc')
+const { addUp, date } = require('../libs/comFunc')
 let categoryFilter = ''
 
 //列出全部
@@ -12,7 +12,9 @@ router.get('/', (req, res) => {
 
 //新增1筆頁面
 router.get('/new', (req, res) => {
-  res.render('new')
+  const today = date()
+  res.render('new', { today })
+
 })
 
 //新增1筆
