@@ -20,19 +20,24 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 
+let filterCategory = ''
+
 //首頁
 app.get('/', (req, res) => {
-  Record.find((err, records) => {
-    if (err) return console.log(err)
+  filterCategory = ''
+  Record.find()
+    .sort({ date: 'desc' })
+    .exec((err, records) => {
+      if (err) return console.log(err)
 
-    const amountList = records.map(item => Number(item.amount))
-    let totalAmount = 0
-    if (amountList.length) {
-      totalAmount = amountList.reduce((p, c) => p + c)
-    }
+      const amountList = records.map(item => Number(item.amount))
+      let totalAmount = 0
+      if (amountList.length) {
+        totalAmount = amountList.reduce((p, c) => p + c)
+      }
 
-    return res.render('index', { records, totalAmount })
-  })
+      return res.render('index', { records, totalAmount })
+    })
 })
 //列出全部
 app.get('/records', (req, res) => {
@@ -64,7 +69,11 @@ app.post('/records/:id/edit', (req, res) => {
     Object.assign(record, req.body)
     record.save(err => {
       if (err) return console.log(err)
-      return res.redirect('/')
+      if (filterCategory) {
+        return res.redirect(`/records/filter?category=${filterCategory}`)
+      } else {
+        return res.redirect('/')
+      }
     })
   })
 })
@@ -74,23 +83,30 @@ app.post('/records/:id/delete', (req, res) => {
     if (err) return console.log(err)
     return record.remove(err => {
       if (err) return console.log(err)
-      return res.redirect('/')
+      if (filterCategory) {
+        return res.redirect(`/records/filter?category=${filterCategory}`)
+      } else {
+        return res.redirect('/')
+      }
     })
   })
 })
 //篩選類別
-app.get('/filter', (req, res) => {
-  Record.find({ category: req.query.category }, (err, records) => {
-    if (err) return console.log(err)
+app.get('/records/filter', (req, res) => {
+  filterCategory = req.query.category
+  Record.find({ category: filterCategory })
+    .sort({ date: 'desc' })
+    .exec((err, records) => {
+      if (err) return console.log(err)
 
-    const amountList = records.map(item => Number(item.amount))
-    let totalAmount = 0
-    if (amountList.length) {
-      totalAmount = amountList.reduce((p, c) => p + c)
-    }
+      const amountList = records.map(item => Number(item.amount))
+      let totalAmount = 0
+      if (amountList.length) {
+        totalAmount = amountList.reduce((p, c) => p + c)
+      }
 
-    return res.render('index', { records, totalAmount })
-  })
+      return res.render('index', { records, totalAmount, filterCategory })
+    })
 })
 
 app.listen(port, () => {
