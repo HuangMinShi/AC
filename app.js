@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const Record = require('./models/record')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 
 const app = express()
 const port = 3000
@@ -19,9 +20,9 @@ db.once('open', () => {
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 let filterCategory = ''
-
 //首頁
 app.get('/', (req, res) => {
   filterCategory = ''
@@ -63,7 +64,7 @@ app.get('/records/:id/edit', (req, res) => {
   })
 })
 //編輯1筆
-app.post('/records/:id/edit', (req, res) => {
+app.put('/records/:id/edit', (req, res) => {
   Record.findById(req.params.id, (err, record) => {
     if (err) return console.log(err)
     Object.assign(record, req.body)
@@ -78,7 +79,7 @@ app.post('/records/:id/edit', (req, res) => {
   })
 })
 //刪除1筆
-app.post('/records/:id/delete', (req, res) => {
+app.delete('/records/:id/delete', (req, res) => {
   Record.findById(req.params.id, (err, record) => {
     if (err) return console.log(err)
     return record.remove(err => {

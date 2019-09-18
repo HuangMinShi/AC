@@ -1,6 +1,6 @@
 <p>*必填欄位</p>
 <h4>請修改你的支出</h4>
-<form action="/records/{{record.id}}/edit" method="POST">
+<form action="/records/{{record.id}}/edit?_method=PUT" method="POST">
   <label for="name">名稱*:</label>
   <input type="text" name="name" id="name" value="{{record.name}}">
 
