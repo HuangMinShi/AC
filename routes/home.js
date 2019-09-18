@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../models/record')
+const { addUp } = require('../libs/comFunc')
 
 //首頁
 router.get('/', (req, res) => {
@@ -8,13 +9,7 @@ router.get('/', (req, res) => {
     .sort({ date: 'desc' })
     .exec((err, records) => {
       if (err) return console.log(err)
-
-      const amountList = records.map(item => Number(item.amount))
-      let totalAmount = 0
-      if (amountList.length) {
-        totalAmount = amountList.reduce((p, c) => p + c)
-      }
-
+      const totalAmount = addUp(records)
       return res.render('index', { records, totalAmount })
     })
 })
