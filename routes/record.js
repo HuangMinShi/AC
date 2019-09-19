@@ -15,13 +15,14 @@ router.get('/', (req, res) => {
 //新增1筆頁面
 router.get('/new', (req, res) => {
   const today = date()
-  res.render('new', { today })
+  res.render('new', { today, categoryList })
 
 })
 
 //新增1筆
 router.post('/', (req, res) => {
   const newRecord = new Record(req.body)
+  console.log(req.body)
   newRecord.save(err => {
     if (err) return console.log(err)
     return categoryFilter ? res.redirect(`/records/filter?category=${categoryFilter}`) : res.redirect('/')
@@ -32,7 +33,8 @@ router.post('/', (req, res) => {
 router.get('/:id/edit', (req, res) => {
   Record.findById(req.params.id, (err, record) => {
     if (err) return console.log(err)
-    return res.render('edit', { record })
+    const recordCategory = categoryList[record.category]
+    return res.render('edit', { record, [recordCategory]: true })
   })
 })
 

@@ -8,7 +8,12 @@
   <input type="date" name="date" id="date" value="{{today}}">
 
   <label for="category">類別*:</label>
-  <input type="text" name="category" id="category">
+  <select class="custom-select" id="category" name="category">
+    <option selected>選擇類別..</option>
+    {{#each categoryList}}
+    <option value="{{@key}}">{{this}}</option>
+    {{/each}}
+  </select>
 
   <label for="amount">金額*:</label>
   <input type="text" name="amount" id="amount">

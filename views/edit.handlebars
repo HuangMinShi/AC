@@ -10,9 +10,21 @@
   <label for="category">類別*:</label>
   <input type="text" name="category" id="category" value="{{record.category}}">
 
+
   <label for="amount">金額*:</label>
   <input type="text" name="amount" id="amount" value="{{record.amount}}">
 
   <button type="submit">送出</button>
   <a href="/">返回主頁</a>
 </form>
+
+<!-- 使用each動態建立並判別當筆類別?? -->
+<label for="category">類別*:</label>
+<select class="custom-select" id="category" name="category">
+  <option>選擇類別..</option>
+  <option value="home" {{#if 家居物業}}selected{{/if}}>家居物業</option>
+  <option value="shuttle-van" {{#if 交通出行}}selected{{/if}}>交通出行</option>
+  <option value="grin-beam" {{#if 休閒娛樂}}selected{{/if}}>休閒娛樂</option>
+  <option value="utensils" {{#if 餐飲食品}}selected{{/if}}>餐飲食品</option>
+  <option value="pen" {{#if 其他}}selected{{/if}}>其他</option>
+</select>
