@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../models/record')
+const categoryList = require('../categoryList.json')
 const { addUp, date } = require('../libs/comFunc')
 let categoryFilter = ''
+
 
 //列出全部
 router.get('/', (req, res) => {
@@ -65,7 +67,7 @@ router.get('/filter', (req, res) => {
     .exec((err, records) => {
       if (err) return console.log(err)
       const totalAmount = addUp(records)
-      return res.render('index', { records, totalAmount })
+      return res.render('index', { records, totalAmount, categoryList })
     })
 })
 
