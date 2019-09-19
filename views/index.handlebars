@@ -1,25 +1,58 @@
-<ul>
-  <li><a href="/records">篩選</a></li>
-  <ul>
-    <li><a href="/records/filter?category=a">a</a></li>
-    <li><a href="/records/filter?category=d">d</a></li>
-  </ul>
-</ul>
+<div class="row">
+  <div class="col-md-10 col-lg-8 mx-auto">
 
-<h1>總金額: {{totalAmount}}</h1>
-<ul>
-  {{#each records}}
-  <li>
-    icon
-    {{this.name}}
-    {{this.date}}
-    {{this.category}}
-    {{this.amount}}
-    <a href="/records/{{this.id}}/edit?_method=PUT">修改</a>
-    <form action="/records/{{this.id}}/delete?_method=DELETE" method="POST" style="display: inline">
-      <button type="submit">刪除</button>
-    </form>
-  </li>
-  {{/each}}
-</ul>
-<a href="/records/new">新增支出</a>
+    <div class="expense-filter-dropdown row">
+      <div class="dropdown col-7 col-md-8 my-4">
+        <button class="btn w-100 text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          篩選
+        </button>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="/records/filter?category=a">a</a>
+          <a class="dropdown-item" href="/records/filter?category=d">d</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="total-amount" class="row">
+      <div class="col-7 col-md-8 d-flex justify-content-between">
+        <h5>總金額:</h5>
+        <p>{{totalAmount}}</p>
+      </div>
+    </div>
+
+    <ul class="list-group">
+      {{#each records}}
+      <div class="row">
+        <div class="expense-content col-7 col-md-8">
+          <li class="list-group-item d-flex align-items-center">
+            <i class="expense-content-icon {{this.category}} fas fa-home mr-2 text-info"></i>
+
+            <div class="expense-content-info">
+              <h5>{{this.name}}</h5>
+              <p>{{this.date}}</p>
+            </div>
+
+            <p class="expense-content-amount ml-auto">{{this.amount}}</p>
+          </li>
+        </div>
+
+        <div class="expense-action col-5 col-md-4 d-flex align-items-center">
+          <a href="/records/{{this.id}}/edit?_method=PUT" class="mr-2 btn btn-success">修改</a>
+
+          <form action="/records/{{this.id}}/delete?_method=DELETE" method="POST" style="display: inline">
+            <button type="submit" class="btn btn-danger">刪除</button>
+          </form>
+        </div>
+      </div>
+      {{/each}}
+    </ul>
+
+    <div class="row my-4">
+      <div class="col-7 col-md-8 text-center">
+        <a href="/records/new" class="btn btn-primary w-50">新增支出</a>
+      </div>
+    </div>
+  </div>
+</div>
