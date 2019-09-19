@@ -15,18 +15,36 @@
 
 <body class="bg-light">
 
-  <header>
-    <nav class="navbar navbar-dark bg-primary">
-      <a href="/records" class="navbar-brand">家庭記帳本</a>
-    </nav>
-  </header>
+  <div id="wrapper">
+    <header>
+      <nav class="navbar navbar-dark bg-dark">
+        <a href="/records" class="navbar-brand">家庭記帳本</a>
+      </nav>
+    </header>
 
-  <main>
-    <div class="container mt-3">
-      {{{body}}}
-    </div>
-  </main>
+    <main>
+      <div class="container mt-3">
+        {{{body}}}
+      </div>
+    </main>
 
+    <footer id="footer" class="bg-dark">
+      <div class="container">
+        <div class="footer-content text-center p-1">
+          <p class="my-3 text-white">
+            simple expense record built by
+            <a href="https://github.com/HuangMinShi" target="_blank" class="ml-1">
+              Ethan
+              <i class="fab fa-github mx-1 text-white"></i>
+            </a>
+          </p>
+          <p>
+            <a href="#">back to top</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

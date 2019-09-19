@@ -1,11 +1,35 @@
-body {
+html, body {
   margin: 0;
-  padding: 0
+  padding: 0;
+  height: 100%;
 }
 
 p, h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0;
+}
+
+#wrapper {
+  position: relative;
+  min-height: 100%;
+}
+
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 5;
+}
+
+main {
+  padding: 80px 0;
+  height: 800px;
+}
+
+footer {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
 }
 
 #total-amount p {
