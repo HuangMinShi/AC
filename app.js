@@ -24,6 +24,7 @@ app.use(express.static('public'))
 
 app.use('/', require('./routes/home'))
 app.use('/records', require('./routes/record'))
+app.use('/users', require('./routes/user'))
 
 app.listen(port, () => {
   console.log(`The server is running on localhost://${port}`)
