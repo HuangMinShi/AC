@@ -16,7 +16,28 @@ router.get('/register', (req, res) => {
 })
 //註冊
 router.post('/register', (req, res) => {
-  res.send('register')
+  const { name, email, password, password2 } = req.body
+
+  User
+    .findOne({ email: email })
+    .then(user => {
+      if (user) {
+        // 使用者存在，回註冊頁。
+        res.render('register', req.body)
+      } else {
+        // 新增使用者，回登入頁。
+        const newUser = new User(req.body)
+
+        newUser
+          .save()
+          .then(user => {
+            res.redirect('/')
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+    })
 })
 //登出
 router.get('/logout', (req, res) => {
