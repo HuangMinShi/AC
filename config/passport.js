@@ -1,6 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy
 const mongoose = require('mongoose')
 const User = require('../models/user')
+const bcrypt = require('bcryptjs')
 
 module.exports = passport => {
 
@@ -14,13 +15,18 @@ module.exports = passport => {
             // 使用者未註冊，回登入頁。
             console.log('使用者未註冊，回登入頁。')
             return done(null, false, { message: 'Email尚未註冊' })
-          } else if (password !== user.password) {
-            // 使用者輸入密碼錯誤，回登入頁。
-            console.log('使用者輸入密碼錯誤，回登入頁。')
-            return done(null, false, { message: '輸入密碼錯誤' })
           }
 
-          return done(null, user)
+          // bcrypt.compare(str, hash, callback)
+          bcrypt.compare(password, user.password, (err, isMatch) => {
+            if (err) throw err
+
+            if (isMatch) {
+              return done(null, user)
+            } else {
+              return done(null, false, { message: 'Email或Password輸入錯誤' })
+            }
+          })
         }).catch(err => {
           console.log(err)
         })
