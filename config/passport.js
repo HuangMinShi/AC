@@ -1,4 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy
+const FacebookStrategy = require('passport-facebook').Strategy
 const mongoose = require('mongoose')
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
@@ -31,6 +32,45 @@ module.exports = passport => {
           console.log(err)
         })
     }))
+
+  passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_ID,
+    clientSecret: process.env.FACEBOOK_SECRET,
+    callbackURL: process.env.FACEBOOK_callback,
+    profileFields: ['email', 'displayName']
+  }, (accessToken, refreshToken, profile, done) => {
+    User
+      .findOne({ email: profile._json.email })
+      .then(user => {
+        if (!user) {
+          // Email不存在=>產生隨機密碼=>加鹽=>存進資料庫
+          const newUser = new User(profile._json)
+
+          const randomPassword = Math.random().toString(36).slice(-8)
+          bcrypt.genSalt(10, (err, salt) => {
+            if (err) throw err
+            bcrypt.hash(randomPassword, salt, (err, hash) => {
+              if (err) throw err
+              newUser.password = hash
+
+              newUser
+                .save()
+                .then(user => {
+                  return done(null, user)
+                })
+                .catch(err => {
+                  console.log(err)
+                })
+            })
+          })
+        } else {
+          // 登入
+          return (null, user)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+  }))
 
   passport.serializeUser((user, done) => {
     return done(null, user.id)
