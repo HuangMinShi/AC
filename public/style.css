@@ -1,6 +1,10 @@
-html, body {
+* {
+  font-family: 'Noto Sans TC', sans-serif, 'Nunito Sans';
   margin: 0;
   padding: 0;
+}
+
+html, body {
   height: 100%;
 }
 
@@ -17,7 +21,7 @@ p, h1, h2, h3, h4, h5, h6 {
 header {
   position: fixed;
   top: 0;
-  z-index: 1;
+  z-index: 1001;
   width: 100%;
 }
 
@@ -74,4 +78,9 @@ footer {
 .required-icon {
   color: red;
   font-size: 8px;
+}
+
+.dropdown-item {
+  padding-right: 12px;
+  padding-left: 12px;
 }

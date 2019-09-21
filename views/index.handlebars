@@ -5,12 +5,16 @@
       <div class="dropdown col-7 col-md-8 my-4">
         <button class="btn w-100 text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          篩選
+          {{#if category}}{{category}}{{else}}篩選{{/if}}
         </button>
 
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          {{#if category}}
+          <a class="dropdown-item" href="/records">全部</a>
+          {{/if}}
+
           {{#each categoryList}}
-          <a class="dropdown-item" href="/records/filter?category={{@key}}">{{this}}</a>
+          <a class=" dropdown-item" href="/records/filter?category={{@key}}">{{this}}</a>
           {{/each}}
         </div>
       </div>

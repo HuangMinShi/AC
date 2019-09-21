@@ -9,6 +9,7 @@ let categoryFilter = ''
 
 //列出全部
 router.get('/', authenticated, (req, res) => {
+  console.log('清空', categoryFilter)
   categoryFilter = ''
   res.redirect('/')
 })
@@ -66,12 +67,13 @@ router.delete('/:id/delete', authenticated, (req, res) => {
 //篩選類別
 router.get('/filter', authenticated, (req, res) => {
   categoryFilter = req.query.category
+  const category = categoryList[categoryFilter]
   Record.find({ category: categoryFilter, userId: req.user._id })
     .sort({ date: 'desc' })
     .exec((err, records) => {
       if (err) return console.log(err)
       const totalAmount = addUp(records)
-      return res.render('index', { records, totalAmount, categoryList })
+      return res.render('index', { records, totalAmount, categoryList, category })
     })
 })
 
