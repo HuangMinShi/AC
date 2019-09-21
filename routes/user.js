@@ -1,19 +1,28 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
+const passport = require('passport')
 
 //登入頁面
 router.get('/login', (req, res) => {
   res.render('login')
 })
+
 //登入
-router.post('/login', (req, res) => {
-  res.send('login')
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/users/login',
+    // failureFlash: true,
+    badRequestMessage: '請填寫 Email 及 Password '
+  })(req, res, next)
 })
+
 //註冊頁面
 router.get('/register', (req, res) => {
   res.render('register')
 })
+
 //註冊
 router.post('/register', (req, res) => {
   const { name, email, password, password2 } = req.body
@@ -39,6 +48,7 @@ router.post('/register', (req, res) => {
       }
     })
 })
+
 //登出
 router.get('/logout', (req, res) => {
   res.send('5')
