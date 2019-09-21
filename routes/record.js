@@ -23,6 +23,8 @@ router.get('/new', authenticated, (req, res) => {
 //新增1筆
 router.post('/', authenticated, (req, res) => {
   const newRecord = new Record(req.body)
+  newRecord.userId = req.user._id
+
   newRecord.save(err => {
     if (err) return console.log(err)
     return categoryFilter ? res.redirect(`/records/filter?category=${categoryFilter}`) : res.redirect('/')
@@ -31,7 +33,7 @@ router.post('/', authenticated, (req, res) => {
 
 //編輯1筆頁面
 router.get('/:id/edit', authenticated, (req, res) => {
-  Record.findById(req.params.id, (err, record) => {
+  Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     if (err) return console.log(err)
     const recordCategory = categoryList[record.category]
     return res.render('edit', { record, [recordCategory]: true })
@@ -40,7 +42,7 @@ router.get('/:id/edit', authenticated, (req, res) => {
 
 //編輯1筆
 router.put('/:id/edit', authenticated, (req, res) => {
-  Record.findById(req.params.id, (err, record) => {
+  Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     if (err) return console.log(err)
     Object.assign(record, req.body)
     record.save(err => {
@@ -52,7 +54,7 @@ router.put('/:id/edit', authenticated, (req, res) => {
 
 //刪除1筆
 router.delete('/:id/delete', authenticated, (req, res) => {
-  Record.findById(req.params.id, (err, record) => {
+  Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     if (err) return console.log(err)
     return record.remove(err => {
       if (err) return console.log(err)
@@ -64,7 +66,7 @@ router.delete('/:id/delete', authenticated, (req, res) => {
 //篩選類別
 router.get('/filter', authenticated, (req, res) => {
   categoryFilter = req.query.category
-  Record.find({ category: categoryFilter })
+  Record.find({ category: categoryFilter, userId: req.user._id })
     .sort({ date: 'desc' })
     .exec((err, records) => {
       if (err) return console.log(err)

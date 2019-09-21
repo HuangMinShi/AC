@@ -7,7 +7,7 @@ const { authenticated } = require('../config/auth')
 
 //首頁
 router.get('/', authenticated, (req, res) => {
-  Record.find()
+  Record.find({ userId: req.user._id })
     .sort({ date: 'desc' })
     .exec((err, records) => {
       if (err) return console.log(err)
