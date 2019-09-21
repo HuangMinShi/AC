@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Record = require('../models/record')
 const categoryList = require('../categoryList.json')
-const { addUp } = require('../libs/comFunc')
+const { addUp, markEvenOrderList } = require('../libs/comFunc')
 const { authenticated } = require('../config/auth')
 
 //首頁
@@ -11,6 +11,7 @@ router.get('/', authenticated, (req, res) => {
     .sort({ date: 'desc' })
     .exec((err, records) => {
       if (err) return console.log(err)
+      markEvenOrderList(records)
       const totalAmount = addUp(records)
       return res.render('index', { records, totalAmount, categoryList })
     })

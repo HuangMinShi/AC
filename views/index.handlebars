@@ -31,7 +31,7 @@
       {{#each records}}
       <div class="row">
         <div class="expense-content col-7 col-md-8">
-          <li class="list-group-item d-flex align-items-center">
+          <li class="list-group-item d-flex align-items-center {{#if this.isEvenOrder}}list-group-item-dark{{/if}}">
             <i class="expense-content-icon fas fa-{{this.category}} mr-2 text-info"></i>
 
             <div class="expense-content-info">

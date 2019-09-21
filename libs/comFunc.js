@@ -13,5 +13,12 @@ module.exports = {
     dd.length < 2 ? dd = `0${dd}` : dd
 
     return `${yyyy}-${mm}-${dd}`
+  },
+  markEvenOrderList: (arr) => {
+    arr.forEach((item, index) => {
+      if (index % 2 === 0) {
+        item.isEvenOrder = true
+      }
+    })
   }
 }

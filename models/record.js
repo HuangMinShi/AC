@@ -25,6 +25,10 @@ const recordSchema = new Schema({
     ref: 'user',
     index: true,
     required: true
+  },
+  isEvenOrder: {
+    type: Boolean,
+    default: false
   }
 })
 

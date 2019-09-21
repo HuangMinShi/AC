@@ -2,14 +2,13 @@ const express = require('express')
 const router = express.Router()
 const Record = require('../models/record')
 const categoryList = require('../categoryList.json')
-const { addUp, date } = require('../libs/comFunc')
+const { addUp, date, markEvenOrderList } = require('../libs/comFunc')
 const { authenticated } = require('../config/auth')
 let categoryFilter = ''
 
 
 //列出全部
 router.get('/', authenticated, (req, res) => {
-  console.log('清空', categoryFilter)
   categoryFilter = ''
   res.redirect('/')
 })
@@ -72,6 +71,8 @@ router.get('/filter', authenticated, (req, res) => {
     .sort({ date: 'desc' })
     .exec((err, records) => {
       if (err) return console.log(err)
+
+      markEvenOrderList(records)
       const totalAmount = addUp(records)
       return res.render('index', { records, totalAmount, categoryList, category })
     })
