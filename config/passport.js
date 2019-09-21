@@ -65,7 +65,7 @@ module.exports = passport => {
           })
         } else {
           // 登入
-          return (null, user)
+          return done(null, user)
         }
       }).catch(err => {
         console.log(err)
