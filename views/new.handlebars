@@ -14,6 +14,7 @@
           <hr>
         </div>
 
+        {{> messages}}
         <form action="/records" method="POST">
           <div class="form-group row">
             <label for="name" class="col-sm-3 col-form-label">
@@ -22,7 +23,7 @@
             </label>
 
             <div class="col-sm-9">
-              <input type="text" name="name" id="name" class="form-control" placeholder="早餐">
+              <input type="text" name="name" id="name" class="form-control" placeholder="例如:早餐、加油.." value="{{name}}">
             </div>
           </div>
 
@@ -33,7 +34,7 @@
             </label>
 
             <div class="col-sm-9">
-              <input type="date" name="date" id="date" class="form-control" value="{{today}}">
+              <input type="date" name="date" id="date" class="form-control" value="{{day}}">
             </div>
           </div>
 
@@ -60,15 +61,16 @@
             </label>
 
             <div class="col-sm-9">
-              <input type="text" name="amount" id="amount" class="form-control">
+              <input type="text" name="amount" id="amount" class="form-control" placeholder="例如:100、60..."
+                value="{{amount}}"">
             </div>
           </div>
 
           <hr>
-          <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-success mr-3 w-25">新增支出</button>
-            <a href="/records" class="btn btn-primary w-25">返回主頁</a>
-          </div>
+          <div class=" d-flex justify-content-end">
+              <button type="submit" class="btn btn-success mr-3 w-25">新增支出</button>
+              <a href="/records" class="btn btn-primary w-25">返回主頁</a>
+            </div>
         </form>
       </dic>
     </div>

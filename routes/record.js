@@ -4,6 +4,7 @@ const Record = require('../models/record')
 const categoryList = require('../categoryList.json')
 const { addUp, date, markEvenOrderList } = require('../libs/comFunc')
 const { authenticated } = require('../config/auth')
+const { checkNewRecordValidity } = require('../config//check')
 let categoryFilter = ''
 
 
@@ -15,15 +16,16 @@ router.get('/', authenticated, (req, res) => {
 
 //新增1筆頁面
 router.get('/new', authenticated, (req, res) => {
-  const today = date()
-  res.render('new', { today, categoryList })
+  const day = date()
+  res.render('new', { day, categoryList })
 
 })
 
 //新增1筆
-router.post('/', authenticated, (req, res) => {
+router.post('/', authenticated, checkNewRecordValidity, (req, res) => {
   const newRecord = new Record(req.body)
   newRecord.userId = req.user._id
+
 
   newRecord.save(err => {
     if (err) return console.log(err)
@@ -41,7 +43,7 @@ router.get('/:id/edit', authenticated, (req, res) => {
 })
 
 //編輯1筆
-router.put('/:id/edit', authenticated, (req, res) => {
+router.put('/:id/edit', authenticated, checkNewRecordValidity, (req, res) => {
   Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     if (err) return console.log(err)
     Object.assign(record, req.body)
