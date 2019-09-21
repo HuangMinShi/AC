@@ -84,3 +84,23 @@ footer {
   padding-right: 12px;
   padding-left: 12px;
 }
+
+.list-group-item {
+  border: none;
+}
+
+.list-group-item:first-child,.list-group-item:last-child {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.list-group-item:hover {
+  background-color:rgba(18, 19, 19, 0.849);
+  color: #fff;
+}
+
+.list-group-item-dark {
+  background-color:rgba(199, 204, 203, .3);
+}
