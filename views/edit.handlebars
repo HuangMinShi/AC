@@ -47,11 +47,9 @@
               <!-- 使用each動態建立並判別當筆類別?? -->
               <select class="custom-select" id="category" name="category" class="form-control">
                 <option>選擇類別..</option>
-                <option value="home" {{#if 家居物業}}selected{{/if}}>家居物業</option>
-                <option value="shuttle-van" {{#if 交通出行}}selected{{/if}}>交通出行</option>
-                <option value="grin-beam" {{#if 休閒娛樂}}selected{{/if}}>休閒娛樂</option>
-                <option value="utensils" {{#if 餐飲食品}}selected{{/if}}>餐飲食品</option>
-                <option value="pen" {{#if 其他}}selected{{/if}}>其他</option>
+                {{#each categoryList}}
+                <option value="{{@key}}" {{#is this ../recordCategory}} selected {{/is}}>{{this}}</option>
+                {{/each}}
               </select>
             </div>
           </div>

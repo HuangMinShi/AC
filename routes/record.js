@@ -38,7 +38,7 @@ router.get('/:id/edit', authenticated, (req, res) => {
   Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     if (err) return console.log(err)
     const recordCategory = categoryList[record.category]
-    return res.render('edit', { record, [recordCategory]: true })
+    return res.render('edit', { record, categoryList, recordCategory })
   })
 })
 

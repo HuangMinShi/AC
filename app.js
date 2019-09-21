@@ -22,7 +22,20 @@ db.once('open', () => {
   console.log('mongoose connected!')
 })
 
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+const hbs = exphbs.create({
+  helpers: {
+    is: function (str1, str2, options) {
+      if (str1 === str2) {
+        return options.fn(this)
+      } else {
+        return options.inverse(this)
+      }
+    }
+  },
+  defaultLayout: 'main'
+})
+
+app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
