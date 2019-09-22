@@ -4,7 +4,7 @@ const Record = require('../models/record')
 const categoryList = require('../categoryList.json')
 const { addUp, date, markEvenOrderList } = require('../libs/comFunc')
 const { authenticated } = require('../config/auth')
-const { checkNewRecordValidity } = require('../config//check')
+const { checkRecord } = require('../config/validity')
 let categoryFilter = ''
 
 
@@ -22,7 +22,7 @@ router.get('/new', authenticated, (req, res) => {
 })
 
 //新增1筆
-router.post('/', authenticated, checkNewRecordValidity, (req, res) => {
+router.post('/', authenticated, checkRecord, (req, res) => {
   const newRecord = new Record(req.body)
   newRecord.userId = req.user._id
 
@@ -43,7 +43,7 @@ router.get('/:id/edit', authenticated, (req, res) => {
 })
 
 //編輯1筆
-router.put('/:id/edit', authenticated, checkNewRecordValidity, (req, res) => {
+router.put('/:id/edit', authenticated, checkRecord, (req, res) => {
   Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     if (err) return console.log(err)
     Object.assign(record, req.body)

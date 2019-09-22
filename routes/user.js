@@ -3,6 +3,7 @@ const router = express.Router()
 const User = require('../models/user')
 const passport = require('passport')
 const bcrypt = require('bcryptjs')
+const { checkEmail } = require('../config/validity')
 
 //登入頁面
 router.get('/login', (req, res) => {
@@ -25,7 +26,7 @@ router.get('/register', (req, res) => {
 })
 
 //註冊
-router.post('/register', (req, res) => {
+router.post('/register', checkEmail, (req, res) => {
   const { name, email, password, password2 } = req.body
 
   // 顯示錯誤訊息
