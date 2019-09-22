@@ -104,3 +104,16 @@ footer {
 .list-group-item-dark {
   background-color:rgba(199, 204, 203, .3);
 }
+
+.wrapper {
+  border: 2px solid rgba(18, 19, 19, 0.849);
+  border-radius: 5px;
+}
+
+hr {
+  border-top: 1px solid rgba(0,0,0,.5)
+}
+
+#total-amount p {
+  color: orangered;
+}
