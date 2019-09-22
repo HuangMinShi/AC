@@ -48,7 +48,7 @@
               <select class="custom-select" id="category" name="category" class="form-control">
                 <option selected>選擇類別</option>
                 {{#each categoryList}}
-                <option value="{{@key}}">{{this}}</option>
+                <option value="{{@key}}" {{#is this ../recordCategory}} selected {{/is}}>{{this}}</option>
                 {{/each}}
               </select>
             </div>
@@ -62,15 +62,15 @@
 
             <div class="col-sm-9">
               <input type="text" name="amount" id="amount" class="form-control" placeholder="例如:100、60..."
-                value="{{amount}}"">
+                value="{{amount}}">
             </div>
           </div>
 
           <hr>
           <div class=" d-flex justify-content-end">
-              <button type="submit" class="btn btn-success mr-3 w-25">新增支出</button>
-              <a href="/records" class="btn btn-primary w-25">返回主頁</a>
-            </div>
+            <button type="submit" class="btn btn-success mr-3 w-25">新增支出</button>
+            <a href="/records" class="btn btn-primary w-25">返回主頁</a>
+          </div>
         </form>
       </dic>
     </div>

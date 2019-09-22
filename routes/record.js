@@ -5,12 +5,12 @@ const categoryList = require('../categoryList.json')
 const { addUp, date, markEvenOrderList } = require('../libs/comFunc')
 const { authenticated } = require('../config/auth')
 const { checkRecord } = require('../config/validity')
-let categoryFilter = ''
+let filterCategoryKey = ''
 
 
 //列出全部
 router.get('/', authenticated, (req, res) => {
-  categoryFilter = ''
+  filterCategoryKey = ''
   res.redirect('/')
 })
 
@@ -26,10 +26,9 @@ router.post('/', authenticated, checkRecord, (req, res) => {
   const newRecord = new Record(req.body)
   newRecord.userId = req.user._id
 
-
   newRecord.save(err => {
     if (err) return console.log(err)
-    return categoryFilter ? res.redirect(`/records/filter?category=${categoryFilter}`) : res.redirect('/')
+    return filterCategoryKey ? res.redirect(`/records/filter?category=${filterCategoryKey}`) : res.redirect('/')
   })
 })
 
@@ -49,7 +48,7 @@ router.put('/:id/edit', authenticated, checkRecord, (req, res) => {
     Object.assign(record, req.body)
     record.save(err => {
       if (err) return console.log(err)
-      return categoryFilter ? res.redirect(`/records/filter?category=${categoryFilter}`) : res.redirect('/')
+      return filterCategoryKey ? res.redirect(`/records/filter?category=${filterCategoryKey}`) : res.redirect('/')
     })
   })
 })
@@ -60,23 +59,23 @@ router.delete('/:id/delete', authenticated, (req, res) => {
     if (err) return console.log(err)
     return record.remove(err => {
       if (err) return console.log(err)
-      return categoryFilter ? res.redirect(`/records/filter?category=${categoryFilter}`) : res.redirect('/')
+      return filterCategoryKey ? res.redirect(`/records/filter?category=${filterCategoryKey}`) : res.redirect('/')
     })
   })
 })
 
 //篩選類別
 router.get('/filter', authenticated, (req, res) => {
-  categoryFilter = req.query.category
-  const category = categoryList[categoryFilter]
-  Record.find({ category: categoryFilter, userId: req.user._id })
+  filterCategoryKey = req.query.category
+  const filterCategory = categoryList[filterCategoryKey]
+  Record.find({ category: filterCategoryKey, userId: req.user._id })
     .sort({ date: 'desc' })
     .exec((err, records) => {
       if (err) return console.log(err)
 
       markEvenOrderList(records)
       const totalAmount = addUp(records)
-      return res.render('index', { records, totalAmount, categoryList, category })
+      return res.render('index', { records, totalAmount, categoryList, filterCategory })
     })
 })
 

@@ -17,7 +17,8 @@ module.exports = {
     }
 
     if (errors.length > 0) {
-      res.render('new', { name, day, categoryList, amount, errors })
+      const recordCategory = categoryList[category]
+      res.render('new', { name, day, amount, categoryList, recordCategory, errors })
     } else {
       req.body.amount = amountValue
       return next()
