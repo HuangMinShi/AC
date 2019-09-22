@@ -12,7 +12,7 @@ const categoryExample = {
   pen: ['冒險者守衛', '控域守衛', '藍水晶', '紅水晶']
 }
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1/record', {
+mongoose.connect('mongodb://127.0.0.1/record', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true
@@ -62,5 +62,4 @@ db.once('open', () => {
   }
 
   console.log('done')
-  process.exit()
 })

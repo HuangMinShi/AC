@@ -24,5 +24,13 @@ module.exports = {
   getRandomOf(arr) {
     let index = Math.floor(Math.random() * arr.length)
     return arr[index]
+  },
+  filterMonth(arr, m) {
+    const arrFilter = arr.filter(item => {
+      const date = new Date(item.date)
+      const month = date.getMonth() + 1
+      return month === Number(m) ? item : false
+    })
+    return arrFilter
   }
 }

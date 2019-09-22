@@ -1,24 +1,38 @@
 <div class="row">
   <div class="wrapper col-md-10 col-lg-8 mx-auto">
 
-    <div class="expense-filter-dropdown row">
-      <div class="dropdown col-7 col-md-8 my-4">
-        <button class="btn w-100 text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          {{#if filterCategory}}{{filterCategory}}{{else}}篩選{{/if}}
-        </button>
+    <div class="row my-3">
+      <div class="expense-filter-dropdown col-3 col-md-4">
+        <div class="dropdown">
+          <button class="btn w-100 text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{#if month}}{{month}}月{{else}}篩選月份{{/if}}
+          </button>
 
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          {{#if filterCategory}}
-          <a class="dropdown-item" href="/records">不依類別</a>
-          {{/if}}
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {{#each months}}
+            <a class=" dropdown-item" href="/records/filter?month={{@index}}">{{this}}</a>
+            {{/each}}
+          </div>
+        </div>
+      </div>
 
-          {{#each categoryList}}
-          <a class=" dropdown-item" href="/records/filter?category={{@key}}">{{this}}</a>
-          {{/each}}
+      <div class="expense-filter-dropdown col-3 col-md-4">
+        <div class="dropdown">
+          <button class="btn w-100 text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{#if categoryCn}}{{categoryCn}}{{else}}篩選類別{{/if}}
+          </button>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {{#each categoryList}}
+            <a class=" dropdown-item" href="/records/filter?category={{@key}}">{{this}}</a>
+            {{/each}}
+          </div>
         </div>
       </div>
     </div>
+
 
     <div id="total-amount" class="row">
       <div class="col-7 col-md-8 d-flex justify-content-between">

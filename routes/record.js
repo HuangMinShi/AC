@@ -2,15 +2,16 @@ const express = require('express')
 const router = express.Router()
 const Record = require('../models/record')
 const categoryList = require('../categoryList.json')
-const { addUp, date, markEvenOrderList } = require('../libs/comFunc')
+const { addUp, date, markEvenOrderList, filterMonth } = require('../libs/comFunc')
 const { authenticated } = require('../config/auth')
 const { checkRecord } = require('../config/validity')
-let filterCategoryKey = ''
-
+let category = '', month = ''
+const months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
 
 //列出全部
 router.get('/', authenticated, (req, res) => {
-  filterCategoryKey = ''
+  category = ''
+  month = ''
   res.redirect('/')
 })
 
@@ -28,7 +29,7 @@ router.post('/', authenticated, checkRecord, (req, res) => {
 
   newRecord.save(err => {
     if (err) return console.log(err)
-    return filterCategoryKey ? res.redirect(`/records/filter?category=${filterCategoryKey}`) : res.redirect('/')
+    return (category || month) ? res.redirect(`/records/filter?category=${category}&month=${month - 1}`) : res.redirect('/')
   })
 })
 
@@ -48,7 +49,7 @@ router.put('/:id/edit', authenticated, checkRecord, (req, res) => {
     Object.assign(record, req.body)
     record.save(err => {
       if (err) return console.log(err)
-      return filterCategoryKey ? res.redirect(`/records/filter?category=${filterCategoryKey}`) : res.redirect('/')
+      return (category || month) ? res.redirect(`/records/filter?category=${category}&month=${month - 1}`) : res.redirect('/')
     })
   })
 })
@@ -59,24 +60,45 @@ router.delete('/:id/delete', authenticated, (req, res) => {
     if (err) return console.log(err)
     return record.remove(err => {
       if (err) return console.log(err)
-      return filterCategoryKey ? res.redirect(`/records/filter?category=${filterCategoryKey}`) : res.redirect('/')
+      return (category || month) ? res.redirect(`/records/filter?category=${category}&month=${month - 1}`) : res.redirect('/')
     })
   })
 })
 
 //篩選類別
 router.get('/filter', authenticated, (req, res) => {
-  filterCategoryKey = req.query.category
-  const filterCategory = categoryList[filterCategoryKey]
-  Record.find({ category: filterCategoryKey, userId: req.user._id })
-    .sort({ date: 'desc' })
-    .exec((err, records) => {
-      if (err) return console.log(err)
+  category = req.query.category || category
+  month = Number(req.query.month) + 1 || month
+  const categoryCn = categoryList[category]
 
-      markEvenOrderList(records)
-      const totalAmount = addUp(records)
-      return res.render('index', { records, totalAmount, categoryList, filterCategory })
-    })
+  if (category) {
+    Record.find({ category: category, userId: req.user._id })
+      .sort({ date: 'desc' })
+      .exec((err, results) => {
+        if (err) return console.log(err)
+
+        let records = results
+        if (month) {
+          records = filterMonth(results, month)
+        }
+        markEvenOrderList(records)
+        const totalAmount = addUp(records)
+
+        return res.render('index', { records, totalAmount, categoryList, categoryCn, months, month })
+      })
+  } else {
+    Record.find({ userId: req.user._id })
+      .sort({ date: 'desc' })
+      .exec((err, results) => {
+        if (err) return console.log(err)
+
+        let records = filterMonth(results, month)
+        markEvenOrderList(records)
+        const totalAmount = addUp(records)
+
+        return res.render('index', { records, totalAmount, categoryList, months, month })
+      })
+  }
 })
 
 module.exports = router
