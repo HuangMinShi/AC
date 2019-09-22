@@ -117,3 +117,8 @@ hr {
 #total-amount p {
   color: orangered;
 }
+
+.not-required-icon {
+  color: rgba(0, 0, 0, 0);
+  font-size: 5px;
+}
