@@ -18,12 +18,15 @@ mongoose.connect('mongodb://127.0.0.1/record', {
   useCreateIndex: true
 })
 const db = mongoose.connection
+
 db.on('error', () => {
   console.log('mongoose error!')
 })
+
 db.once('open', () => {
   console.log('mongoose connected!')
 
+  //  產生2位使用者
   for (let i = 1; i <= 2; i++) {
     const user = new User({
       name: `user${i}`,
@@ -31,6 +34,7 @@ db.once('open', () => {
       password: '12345'
     })
 
+    //  密碼加鹽
     bcrypt.genSalt(10, (err, salt) => {
       if (err) throw err
       bcrypt.hash(user.password, salt, (err, hash) => {
@@ -46,6 +50,7 @@ db.once('open', () => {
       })
     })
 
+    //  隨機生成8筆支出項目
     for (let i = 0; i < 8; i++) {
       const keys = Object.keys(categoryExample)
       const categoryItem = getRandomOf(keys)

@@ -1,3 +1,4 @@
+// 驗證使用權限
 module.exports = {
   authenticated: (req, res, next) => {
     if (req.isAuthenticated()) {
