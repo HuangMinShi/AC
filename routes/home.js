@@ -6,7 +6,7 @@ const categoryList = require('../categoryList.json')
 
 //  引入middleware and functions
 const { authenticated } = require('../config/auth')
-const { addUp, markEvenOrderList } = require('../libs/comFunc')
+const { addUp, markEvenOrderList, getFormatDate } = require('../libs/comFunc')
 
 //  宣告相關變數
 const months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
@@ -19,9 +19,8 @@ router.get('/', (req, res) => {
       if (err) return console.log(err)
 
       records.forEach(record => {
-        console.log(record.date)
         //  1.迭代新增dateFormat屬性
-        record.dateFormat = record.date.toJSON().split('T')[0]
+        record.dateFormat = getFormatDate(record.date)
         //  2.但console.log(record)，發現沒有dateFormat屬性
         console.log('2.', record)
         //  3.可嘗試存取dateFormat屬性，又發現明明有賦值? 非同步?

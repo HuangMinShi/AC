@@ -35,5 +35,16 @@ module.exports = {
       return month === Number(m) ? item : false
     })
     return arrFilter
+  },
+  //  回傳m月份日期範圍
+  getDayScope(m) {
+    let d = '30'
+    if (m === '2') d = '28'
+    if ((m < 8 && m % 2 === 1) || (m >= 8 && m % 2 === 0)) d = '31'
+
+    return {
+      $gte: new Date(`2019-${m}-01`),
+      $lte: new Date(`2019-${m}-${d}`)
+    }
   }
 }

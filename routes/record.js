@@ -7,7 +7,7 @@ const categoryList = require('../categoryList.json')
 //  引入middleware and functions
 const { authenticated } = require('../config/auth')
 const { checkRecord } = require('../config/validity')
-const { addUp, getFormatDate, markEvenOrderList, filterMonth } = require('../libs/comFunc')
+const { addUp, getFormatDate, getDayScope, markEvenOrderList } = require('../libs/comFunc')
 
 //  宣告相關變數
 let category = '', month = ''
@@ -74,43 +74,33 @@ router.delete('/:id/delete', authenticated, (req, res) => {
   })
 })
 
+
 //篩選類別
 router.get('/filter', authenticated, (req, res) => {
   category = req.query.category || category
   month = Number(req.query.month) + 1 || month
-  const categoryCn = categoryList[category]
 
-  //  有無篩選類別=>有=>利用mongoose篩選類別
-  if (category) {
-    Record.find({ category: category, userId: req.user._id })
-      .sort({ date: 'desc' })
-      .exec((err, results) => {
-        if (err) return console.log(err)
-
-        let records = results
-        //  有無篩選月份=>有=>執行filterMonth篩選月份 
-        if (month) {
-          records = filterMonth(results, month)
-        }
-
-        markEvenOrderList(records)
-        const totalAmount = addUp(records)
-        return res.render('index', { records, totalAmount, categoryList, categoryCn, months, month })
-      })
-  } else {
-    Record.find({ userId: req.user._id })
-      .sort({ date: 'desc' })
-      .exec((err, results) => {
-        if (err) return console.log(err)
-
-        //  篩選月份
-        let records = filterMonth(results, month)
-
-        markEvenOrderList(records)
-        const totalAmount = addUp(records)
-        return res.render('index', { records, totalAmount, categoryList, months, month })
-      })
+  const category2Cn = categoryList[category]
+  const options = {
+    userId: req.user._id,
   }
+
+  if (category) options.category = category
+  if (month) options.date = getDayScope(month)
+
+  Record.find(options)
+    .sort({ date: 'desc' })
+    .exec((err, records) => {
+      if (err) return console.log(err)
+
+      records.forEach(record => {
+        record.dateFormat = getFormatDate(record.date)
+      })
+      markEvenOrderList(records)
+      const totalAmount = addUp(records)
+
+      return res.render('index', { records, totalAmount, categoryList, category2Cn, months, month })
+    })
 })
 
 module.exports = router
