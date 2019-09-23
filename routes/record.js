@@ -7,7 +7,7 @@ const categoryList = require('../categoryList.json')
 //  引入middleware and functions
 const { authenticated } = require('../config/auth')
 const { checkRecord } = require('../config/validity')
-const { addUp, date, markEvenOrderList, filterMonth } = require('../libs/comFunc')
+const { addUp, getFormatDate, markEvenOrderList, filterMonth } = require('../libs/comFunc')
 
 //  宣告相關變數
 let category = '', month = ''
@@ -23,7 +23,7 @@ router.get('/', authenticated, (req, res) => {
 
 //  新增1筆頁面
 router.get('/new', authenticated, (req, res) => {
-  res.render('new', { day: date(), categoryList })
+  res.render('new', { today: getFormatDate(new Date()), categoryList })
 })
 
 //  新增1筆
@@ -43,8 +43,9 @@ router.post('/', authenticated, checkRecord, (req, res) => {
 router.get('/:id/edit', authenticated, (req, res) => {
   Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     if (err) return console.log(err)
-    const recordCategory = categoryList[record.category]
-    return res.render('edit', { record, categoryList, recordCategory })
+    record.category2Cn = categoryList[record.category]
+    record.dateFormat = getFormatDate(record.date)
+    return res.render('edit', { record, categoryList })
   })
 })
 

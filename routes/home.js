@@ -12,11 +12,22 @@ const { addUp, markEvenOrderList } = require('../libs/comFunc')
 const months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
 
 //  首頁
-router.get('/', authenticated, (req, res) => {
-  Record.find({ userId: req.user._id })
+router.get('/', (req, res) => {
+  Record.find()
     .sort({ date: 'desc' })
     .exec((err, records) => {
       if (err) return console.log(err)
+
+      records.forEach(record => {
+        console.log(record.date)
+        //  1.迭代新增dateFormat屬性
+        record.dateFormat = record.date.toJSON().split('T')[0]
+        //  2.但console.log(record)，發現沒有dateFormat屬性
+        console.log('2.', record)
+        //  3.可嘗試存取dateFormat屬性，又發現明明有賦值? 非同步?
+        console.log('3.', record.dateFormat)
+      })
+
       //  標註偶數序列
       markEvenOrderList(records)
       //  加總金額

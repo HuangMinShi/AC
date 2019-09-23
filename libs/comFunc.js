@@ -8,16 +8,8 @@ module.exports = {
   },
 
   //  取得當日日期並符合格式
-  date: () => {
-    const today = new Date()
-    const yyyy = today.getFullYear().toString()
-    let mm = (today.getMonth() + 1).toString()
-    let dd = today.getDate().toString()
-
-    mm.length < 2 ? mm = `0${mm}` : mm
-    dd.length < 2 ? dd = `0${dd}` : dd
-
-    return `${yyyy}-${mm}-${dd}`
+  getFormatDate: (date) => {
+    return formatDate = date.toJSON().split('T')[0]
   },
 
   //  標註支出清單中偶數序列=>為主頁偶數筆支出穿插底色
