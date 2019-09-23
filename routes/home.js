@@ -12,8 +12,8 @@ const { addUp, markEvenOrderList, getFormatDate } = require('../libs/comFunc')
 const months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
 
 //  首頁
-router.get('/', (req, res) => {
-  Record.find()
+router.get('/', authenticated, (req, res) => {
+  Record.find({ userId: req.user._id })
     .sort({ date: 'desc' })
     .exec((err, records) => {
       if (err) return console.log(err)
