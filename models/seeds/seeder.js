@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Record = require('../record')
 const User = require('../user')
 const bcrypt = require('bcryptjs')
-const { date, getRandomOf } = require('../../libs/comFunc')
+const { getFormatDate, getRandomOf } = require('../../libs/comFunc')
 
 const categoryExample = {
   home: ['爆裂魔杖', '速度之靴', '巨人腰帶', '靈巧披風', '長劍', '反曲弓'],
@@ -58,7 +58,7 @@ db.once('open', () => {
 
       Record.create({
         name: categoryName,
-        date: date(),
+        date: getFormatDate(new Date()),
         category: categoryItem,
         amount: Math.floor(Math.random() * 100),
         userId: user._id
