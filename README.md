@@ -18,22 +18,22 @@
 
 ## Environment and package used
 
-* \[Node.js\](https://nodejs.org/en/) v10.15.0
-* \[Express.js\](https://expressjs.com/) v4.17.1
-* \[express-handlebars\](https://www.npmjs.com/package/express-handlebars) v3.1.0
-* \[Font Awesome\](https://fontawesome.com/) v5.8.1
-* \[Bootstrap\](https://getbootstrap.com/) v4.3.1
-* \[MongoDB\](https://www.mongodb.com/download-center/community) v4.0.12
-* \[mongoose\](https://mongoosejs.com/) v5.6.12
-* \[method-override\](https://www.npmjs.com/package/method-override) v3.0.0
-* \[express-session\](https://www.npmjs.com/package/express-session) v8.1.0
-* \[passport\](https://www.npmjs.com/package/passport) v0.4.0
-* \[passport-local\](https://www.npmjs.com/package/passport-local) v1.0.0
-* \[passport-facebook\](https://www.npmjs.com/package/passport-facebook) v3.0.0
-* \[bcryptjs\](https://www.npmjs.com/package/bcryptjs) v2.4.3
-* \[connect-flash\](https://www.npmjs.com/package/connect-flash) v0.1.1
-* \[dotenv\](https://www.npmjs.com/package/dotenv) v1.16.2
-* 
+* [Node.js](https://nodejs.org/en/) v10.15.0
+* [Express.js](https://expressjs.com/) v4.17.1
+* [express-handlebars](https://www.npmjs.com/package/express-handlebars) v3.1.0
+* [Font Awesome](https://fontawesome.com/) v5.8.1
+* [Bootstrap](https://getbootstrap.com/) v4.3.1
+* [MongoDB](https://www.mongodb.com/download-center/community) v4.0.12
+* [mongoose](https://mongoosejs.com/) v5.6.12
+* [method-override](https://www.npmjs.com/package/method-override) v3.0.0
+* [express-session](https://www.npmjs.com/package/express-session) v8.1.0
+* [passport](https://www.npmjs.com/package/passport) v0.4.0
+* [passport-local](https://www.npmjs.com/package/passport-local) v1.0.0
+* [passport-facebook](https://www.npmjs.com/package/passport-facebook) v3.0.0
+* [bcryptjs](https://www.npmjs.com/package/bcryptjs) v2.4.3
+* [connect-flash](https://www.npmjs.com/package/connect-flash) v0.1.1
+* [dotenv](https://www.npmjs.com/package/dotenv) v1.16.2
+
 ## Installation and usage
 
 **複製專案**
@@ -51,7 +51,7 @@ cd simpleExpenseTracker
 npm i express
 ```
 
-**安裝 \[MongoDB Community Server\](https://www.mongodb.com/download-center/community)啟動資料庫**
+**安裝 [MongoDB Community Server](https://www.mongodb.com/download-center/community)啟動資料庫**
 
 **安裝專案套件**
 ```npm=
