@@ -9,11 +9,12 @@
               <i class="fas fa-star-of-life required-icon"></i>
               <p style="display: inline">必填</p>
             </div>
-            <h4 class="col-sm-9">請修改你的支出</h4>
+            <h4 class="col-sm-9">修改</h4>
           </div>
           <hr>
         </div>
 
+        {{> messages}}
         <form action="/records/{{record.id}}/edit?_method=PUT" method="POST">
           <div class="form-group row">
             <label for="name" class="col-sm-3 col-form-label">
@@ -22,7 +23,7 @@
             </label>
 
             <div class="col-sm-9">
-              <input type="text" name="name" id="name" class="form-control" placeholder="早餐" value="{{record.name}}">
+              <input type="text" name="name" id="name" class="form-control" placeholder="花了什麼?" value="{{record.name}}">
             </div>
           </div>
 
@@ -33,7 +34,7 @@
             </label>
 
             <div class="col-sm-9">
-              <input type="text" name="merchant" id="merchant" class="form-control" placeholder="例如:黑心商人"
+              <input type="text" name="merchant" id="merchant" class="form-control" placeholder="npc、淡水阿嬤"
                 value="{{record.merchant}}">
             </div>
           </div>
@@ -56,11 +57,10 @@
             </label>
 
             <div class="col-sm-9">
-              <!-- 使用each動態建立並判別當筆類別?? -->
               <select class="custom-select" id="category" name="category" class="form-control">
-                <option>選擇類別..</option>
+                <option>請選擇類別</option>
                 {{#each categoryList}}
-                <option value="{{@key}}" {{#is this ../record.category2Cn}} selected {{/is}}>{{this}}</option>
+                <option value="{{@key}}" {{#is this ../category2Cn}} selected {{/is}}>{{this}}</option>
                 {{/each}}
               </select>
             </div>

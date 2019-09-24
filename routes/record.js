@@ -23,7 +23,7 @@ router.get('/', authenticated, (req, res) => {
 
 //  新增1筆頁面
 router.get('/new', authenticated, (req, res) => {
-  res.render('new', { today: getFormatDate(new Date()), categoryList })
+  res.render('new', { date: getFormatDate(new Date()), categoryList })
 })
 
 //  新增1筆
@@ -43,9 +43,9 @@ router.post('/', authenticated, checkRecord, (req, res) => {
 router.get('/:id/edit', authenticated, (req, res) => {
   Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     if (err) return console.log(err)
-    record.category2Cn = categoryList[record.category]
+    const category2Cn = categoryList[record.category]
     record.dateFormat = getFormatDate(record.date)
-    return res.render('edit', { record, categoryList })
+    return res.render('edit', { record, categoryList, category2Cn })
   })
 })
 

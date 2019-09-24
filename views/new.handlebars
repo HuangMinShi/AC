@@ -9,7 +9,7 @@
               <i class="fas fa-star-of-life required-icon"></i>
               <p style="display: inline">必填</p>
             </div>
-            <h4 class="col-sm-9 ">請輸入你的支出</h4>
+            <h4 class="col-sm-9 ">新增</h4>
           </div>
           <hr>
         </div>
@@ -23,7 +23,7 @@
             </label>
 
             <div class="col-sm-9">
-              <input type="text" name="name" id="name" class="form-control" placeholder="例如:早餐、加油.." value="{{name}}">
+              <input type="text" name="name" id="name" class="form-control" placeholder="花了什麼" value="{{record.name}}">
             </div>
           </div>
 
@@ -34,8 +34,8 @@
             </label>
 
             <div class="col-sm-9">
-              <input type="text" name="merchant" id="merchant" class="form-control" placeholder="例如:黑心商人"
-                value="{{merchant}}">
+              <input type="text" name="merchant" id="merchant" class="form-control" placeholder="npc、淡水阿嬤"
+                value="{{record.merchant}}">
             </div>
           </div>
 
@@ -46,7 +46,7 @@
             </label>
 
             <div class="col-sm-9">
-              <input type="date" name="date" id="date" class="form-control" value="{{today}}">
+              <input type="date" name="date" id="date" class="form-control" value="{{date}}">
             </div>
           </div>
 
@@ -58,9 +58,9 @@
 
             <div class="col-sm-9">
               <select class="custom-select" id="category" name="category" class="form-control">
-                <option selected>選擇類別</option>
+                <option selected>請選擇類別</option>
                 {{#each categoryList}}
-                <option value="{{@key}}" {{#is this ../recordCategory}} selected {{/is}}>{{this}}</option>
+                <option value="{{@key}}" {{#is this ../category2Cn}} selected {{/is}}>{{this}}</option>
                 {{/each}}
               </select>
             </div>
@@ -73,14 +73,14 @@
             </label>
 
             <div class="col-sm-9">
-              <input type="text" name="amount" id="amount" class="form-control" placeholder="例如:100、60..."
-                value="{{amount}}">
+              <input type="text" name="amount" id="amount" class="form-control" placeholder="100、60..."
+                value="{{record.amount}}">
             </div>
           </div>
 
           <hr>
           <div class=" d-flex justify-content-end">
-            <button type="submit" class="btn btn-success mr-3 w-25">新增支出</button>
+            <button type="submit" class="btn btn-success mr-3 w-25">送出</button>
             <a href="/records" class="btn btn-primary w-25">返回主頁</a>
           </div>
         </form>
