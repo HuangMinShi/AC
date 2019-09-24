@@ -23,12 +23,13 @@ router.get('/', authenticated, (req, res) => {
         record.dateFormat = getFormatDate(record.date)
         //  2.但console.log(record)，發現沒有dateFormat屬性
         console.log('2.', record)
-        //  3.可嘗試存取dateFormat屬性，又發現明明有賦值? 非同步?
+        //  3.可嘗試存取dateFormat屬性，又發現明明有賦值?
         console.log('3.', record.dateFormat)
       })
 
       //  標註偶數序列
       markEvenOrderList(records)
+
       //  加總金額
       const totalAmount = addUp(records)
       return res.render('index', { records, totalAmount, categoryList, months })
