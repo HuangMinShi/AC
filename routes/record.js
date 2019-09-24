@@ -77,8 +77,8 @@ router.delete('/:id/delete', authenticated, (req, res) => {
 
 //篩選類別
 router.get('/filter', authenticated, (req, res) => {
-  category = req.query.category || category
-  month = Number(req.query.month) + 1 || month
+  category = req.query.resetCategory ? '' : req.query.category || category
+  month = req.query.resetMonth ? '' : Number(req.query.month) + 1 || month
 
   const category2Cn = categoryList[category]
   const options = {

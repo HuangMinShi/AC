@@ -22,9 +22,7 @@ router.get('/', authenticated, (req, res) => {
         //  1.迭代新增dateFormat屬性
         record.dateFormat = getFormatDate(record.date)
         //  2.但console.log(record)，發現沒有dateFormat屬性
-        console.log('2.', record)
-        //  3.可嘗試存取dateFormat屬性，又發現明明有賦值? 非同步?
-        console.log('3.', record.dateFormat)
+        //  3.可嘗試存取dateFormat屬性，又發現明明有賦值?
       })
 
       //  標註偶數序列

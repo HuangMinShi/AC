@@ -10,6 +10,10 @@
           </button>
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {{#if month}}
+            <a class=" dropdown-item" href="/records/filter?resetMonth=true">全部月份</a>
+            {{/if}}
+
             {{#each months}}
             <a class=" dropdown-item" href="/records/filter?month={{@index}}">{{this}}</a>
             {{/each}}
@@ -25,6 +29,10 @@
           </button>
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {{#if category2Cn}}
+            <a class=" dropdown-item" href="/records/filter?resetCategory=true">全部類別</a>
+            {{/if}}
+
             {{#each categoryList}}
             <a class=" dropdown-item" href="/records/filter?category={{@key}}">{{this}}</a>
             {{/each}}
