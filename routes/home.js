@@ -27,6 +27,7 @@ router.get('/', authenticated, (req, res) => {
 
       //  標註偶數序列
       markEvenOrderList(records)
+
       //  加總金額
       const totalAmount = addUp(records)
       return res.render('index', { records, totalAmount, categoryList, months })
