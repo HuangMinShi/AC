@@ -30,13 +30,18 @@ router.post('/register', (req, res) => {
 })
 
 // 登入
-router.get('/login', (req, res) => {
+router.get('/login', (req, res, ) => {
   res.render('login')
 })
 
 // 登入提交
-router.post('/login', (req, res) => {
-  res.send('login')
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/users/login',
+    // failureFlash: true,
+    badRequestMessage: '請填寫email及password'
+  })(req, res, next)
 })
 
 // 登出

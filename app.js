@@ -4,6 +4,8 @@ const app = express()
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+const passport = require('passport')
+const session = require('express-session')
 
 const db = require('./models')
 const Todo = db.Todo
@@ -17,7 +19,20 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+app.use(session({
+  secret: 'wertyuidf',
+  resave: false,
+  saveUninitialized: true
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 
+require('./config/passport')(passport)
+
+app.use((req, res, next) => {
+  res.locals.user = req.user
+  next()
+})
 
 // routes
 app.use('/', require('./routes/home'))
