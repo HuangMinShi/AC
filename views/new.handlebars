@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+    <div class="card card-body">
+
+      <form action="/todos" method="POST">
+        <div class="form-group row">
+          <label for="item" class="col-sm-3 col-form-label">待辦事項：</label>
+          <div class="col-sm-9">
+            <input type="text" name="item" id="item" class="form-control" placeholder="" value="{{todo.item}}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="category" class="col-sm-3 col-form-label">項目類別：</label>
+          <div class="col-sm-9">
+            <select class="custom-select" id="category" name="category" class="form-control">
+              <option selected>請選擇類別</option>
+              {{#each categoryList}}
+              <option value="{{@key}}" {{#is this ../category2Cn}} selected {{/is}}>{{this}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="date" class="col-sm-3 col-form-label">完成期限：</label>
+          <div class="col-sm-9">
+            <input type="date" name="date" id="date" class="form-control" value="{{todo.date}}">
+          </div>
+        </div>
+        <hr>
+
+        <div class=" d-flex justify-content-end">
+          <button type="submit" class="btn btn-success mr-3 w-50">新增</button>
+          <a href="/todos" class="btn btn-primary w-50">取消</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

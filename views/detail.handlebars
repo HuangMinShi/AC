@@ -1,33 +1,29 @@
 <div class="row">
   <div class="wrapper col-md-8 col-lg-6 mx-auto">
-
     <ul class="list-group">
-      {{#each todos}}
       <div class="row">
         <div class="todo-content col-6 col-md-7">
           <li class="list-group-item d-flex align-items-center">
-            <input style="vertical-align: middle;" type="checkbox" name="done" {{#if this.done }} checked{{/if}}
-              disabled />
+            <input style="vertical-align: middle;" type="checkbox" name="done"
+              {{#if todo.done}}checked{{/if}}disabled />
 
             <div class="todo-content-info">
-              <h5>{{this.item}}</h5>
-              <p>{{this.dateFormat}}</p>
+              <h5>{{todo.item}}</h5>
+              <p>{{todo.dateFormat}}</p>
             </div>
           </li>
         </div>
 
         <div class="todo-action col-6 col-md-5 d-flex align-items-center">
-          <a href="/todos/{{this.id}}" class="btn btn-secondary">內容</a>
-          <a href="/todos/{{this.id}}/edit?_method=PUT" class="btn btn-primary mx-2">修改</a>
+          <a href="/todos/{{todo.id}}/edit?_method=PUT" class="btn btn-primary mx-2">修改</a>
 
-          <form action="/todos/{{this.id}}/delete?_method=DELETE" method="POST" style="display: inline">
+          <form action="/todos/{{todo.id}}/delete?_method=DELETE" method="POST" style="display: inline">
             <button type="submit" class="btn btn-danger">刪除</button>
           </form>
         </div>
       </div>
-      {{/each}}
+
     </ul>
     <hr>
-
   </div>
 </div>

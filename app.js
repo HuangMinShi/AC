@@ -37,6 +37,7 @@ app.use((req, res, next) => {
 // routes
 app.use('/', require('./routes/home'))
 app.use('/users', require('./routes/user'))
+app.use('/todos', require('./routes/todo'))
 
 app.listen(port, () => {
   console.log(`Server is running on https://127.0.0.1:${port}`)
