@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const { authenticated } = require('../config/auth')
-const categoryList = ['緊急且重要', '緊急但不重要', '不緊急但重要', '不緊急且不重要']
+const categoryList = ['緊急重要', '緊急不重要', '不緊急重要', '不緊急不重要']
 
 const db = require('../models')
 const User = db.User
@@ -15,7 +15,8 @@ router.get('/', authenticated, (req, res) => {
 
 // 新增一筆頁面(順序須排在查看單筆前，因為查看單筆路由使用params將重疊)
 router.get('/new', authenticated, (req, res) => {
-  res.render('new', { categoryList })
+  const date = new Date().toJSON().split('T')[0]
+  res.render('new', { categoryList, date })
 })
 
 // 查看一筆
@@ -29,8 +30,6 @@ router.get('/:id', authenticated, (req, res) => {
       })
     })
     .then(todo => {
-      console.log(todo.done);
-
       return res.render('detail', { todo })
     })
     .catch(err => {
@@ -41,7 +40,9 @@ router.get('/:id', authenticated, (req, res) => {
 // 新增一筆
 router.post('/', authenticated, (req, res) => {
   const todo = {
-    name: req.body.item,
+    name: req.body.name,
+    category: req.body.category,
+    deadline: req.body.date,
     UserId: req.user.id,
     done: false,
   }
@@ -63,9 +64,8 @@ router.get('/:id/edit', authenticated, (req, res) => {
       return Todo.findOne({ where: { UserId: user.id, id: req.params.id } })
     })
     .then(todo => {
-      console.log(todo);
-
-      return res.render('edit', { todo })
+      const category = todo.category
+      return res.render('edit', { categoryList, todo, category })
     })
     .catch(err => {
       return res.status(422).json(err)
@@ -76,9 +76,8 @@ router.get('/:id/edit', authenticated, (req, res) => {
 router.put('/:id/edit', authenticated, (req, res) => {
   Todo.findOne({ where: { UserId: req.user.id, id: req.params.id } })
     .then(todo => {
-      console.log(req.body);
-
-      todo.name = req.body.item
+      Object.assign(todo, req.body)
+      todo.deadline = req.body.date
       todo.done = req.body.done === 'on'
 
       todo.save()

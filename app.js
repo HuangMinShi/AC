@@ -18,7 +18,21 @@ const User = db.User
 
 const port = 3000
 
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+//  自訂義helpers
+const hbs = exphbs.create({
+  helpers: {
+    is: function (str1, str2, options) {
+      if (str1 === str2) {
+        return options.fn(this)
+      } else {
+        return options.inverse(this)
+      }
+    }
+  },
+  defaultLayout: 'main'
+})
+
+app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
