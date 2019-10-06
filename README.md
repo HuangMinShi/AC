@@ -55,11 +55,11 @@ use todo_sequelize;
 npx sequelize-cli db:migrate
 ```
 3. command 輸入並建立種子資料
+帳號:user1@example.com
+密碼:123
 ```npm
 npx sequelize-cli db:seed:all
 ```
-帳號:user1@example.com
-密碼:123
 4. commmand 輸入並刪除種子資料
 ```npm
 npx sequelize-cli db:seed:undo:all
