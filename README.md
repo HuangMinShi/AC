@@ -44,6 +44,26 @@ npm i express
 ```
 
 **安裝 [MySQL](https://dev.mysql.com/downloads/windows/installer/)並啟動資料庫**
+- MySQL workbench 輸入
+```sql
+drop database if exists todo_sequelize;
+create database todo_sequelize;
+use todo_sequelize;
+```
+- command 輸入 建立資料綱要
+```npm
+npx sequelize-cli db:migrate
+```
+- command 輸入 建立種子資料
+```npm
+npx sequelize-cli db:seed:all
+```
+帳號:user1@example.com
+密碼:123
+- commmand 輸入 刪除種子資料
+```npm
+npx sequelize-cli db:seed:undo:all
+```
 
 **修改config.json**
 ```json
