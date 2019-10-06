@@ -11,12 +11,14 @@ module.exports = passport => {
       User
         .findOne({ where: { email: email } })
         .then(user => {
-          if (!user) return done(null, false, { message: 'email尚未註冊' })
+          if (!user) {
+            return done(null, false, { message: 'email尚未註冊' })
+          }
 
           bcrypt
             .compare(password, user.password)
-            .then(isMatch => {
-              if (!isMatch) return done(null, false, { message: 'email 或 password輸入錯誤' })
+            .then(match => {
+              if (!match) return done(null, false, { message: 'email 或 password輸入錯誤' })
 
               return done(null, user)
             })

@@ -14,10 +14,27 @@ router.get('/register', (req, res) => {
 // 註冊提交
 router.post('/register', (req, res) => {
   const { name, email, password, password2 } = req.body
+
+  const errors = []
+  if (!name || !email || !password || !password2) {
+    errors.push({ message: '必填欄位不得為空' })
+  }
+
+  if (password !== password2) {
+    errors.push({ message: '密碼輸入錯誤，請重新輸入' })
+  }
+
+  if (errors.length) {
+    return res.render('register', { name, email, password, password2, errors })
+  }
+
   User
     .findOne({ where: { email: email } })
     .then(user => {
-      if (user) return res.render('register', { name, email, password, password2 })
+      if (user) {
+        errors.push({ message: '使用者已註冊過' })
+        return res.render('register', { name, email, password, password2, errors })
+      }
 
       const newUser = new User(req.body)
       bcrypt
@@ -61,6 +78,7 @@ router.post('/login', (req, res, next) => {
 // 登出
 router.get('/logout', (req, res) => {
   req.logOut()
+  // req.flash('success_msg', '成功登出')
   res.redirect('/users/login')
 })
 
