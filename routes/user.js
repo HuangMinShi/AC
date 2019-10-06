@@ -70,7 +70,7 @@ router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/users/login',
-    // failureFlash: true,
+    failureFlash: true,
     badRequestMessage: '請填寫email及password'
   })(req, res, next)
 })
@@ -78,7 +78,7 @@ router.post('/login', (req, res, next) => {
 // 登出
 router.get('/logout', (req, res) => {
   req.logOut()
-  // req.flash('success_msg', '成功登出')
+  req.flash('success_msg', '成功登出')
   res.redirect('/users/login')
 })
 
