@@ -4,17 +4,18 @@
       <div class="row">
         <div class="todo-content col-6 col-md-7">
           <li class="list-group-item d-flex align-items-center">
-            <input style="vertical-align: middle;" type="checkbox" name="done"
-              {{#if todo.done}}checked{{/if}}disabled />
+            <input style="vertical-align: middle;width: 20px;height:20px;" type="checkbox" name="done"
+              {{#if todo.done}}checked{{/if}} class="mr-2" disabled />
 
             <div class="todo-content-info">
-              <h5>{{todo.item}}</h5>
-              <p>{{todo.dateFormat}}</p>
+              <h5>{{todo.name}}</h5>
+              {{!-- <p>{{todo.dateFormat}}</p> --}}
             </div>
           </li>
         </div>
 
         <div class="todo-action col-6 col-md-5 d-flex align-items-center">
+          <a href="/todos" class="btn btn-primary">返回</a>
           <a href="/todos/{{todo.id}}/edit?_method=PUT" class="btn btn-primary mx-2">修改</a>
 
           <form action="/todos/{{todo.id}}/delete?_method=DELETE" method="POST" style="display: inline">
