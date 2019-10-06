@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const { authenticated } = require('../config/auth')
+const { dateDiff } = require('../libs/date')
 const categoryList = ['緊急重要', '緊急不重要', '不緊急重要', '不緊急不重要']
 
 const db = require('../models')
@@ -30,6 +31,10 @@ router.get('/:id', authenticated, (req, res) => {
       })
     })
     .then(todo => {
+      const today = new Date().toJSON().split('T')[0]
+      todo.dateDiffToday = dateDiff(today, todo.deadline)
+      if (todo.dateDiffToday < 0 && !todo.done) return todo.delay = true
+
       return res.render('detail', { todo })
     })
     .catch(err => {

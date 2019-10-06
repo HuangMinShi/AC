@@ -9,9 +9,20 @@
               {{#if todo.done}}checked{{/if}} class="mr-2" disabled />
 
             <div class="todo-content-info">
-              <span style="font-size: 24px">{{todo.name}}</span>
+              <span style="font-size: 28px">{{todo.name}}</span>
             </div>
-            <span class="ml-2" style="line-height: 32px">期限: {{todo.deadline}}</span>
+            <span class="ml-auto" style="line-height: 32px">
+              {{#if todo.delay}}
+              <strong class="text-danger">已逾期</strong>
+              {{else}}
+              {{#if todo.done}}
+              <strong class="text-primary">期限內完成</strong>
+              {{else}}
+              還有 <strong class="text-info" style="font-size: 20px">
+                {{todo.dateDiffToday}}</strong>天
+              {{/if}}
+              {{/if}}
+            </span>
           </li>
         </div>
 
