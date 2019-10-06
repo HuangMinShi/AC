@@ -7,7 +7,7 @@ const User = db.User
 const Todo = db.Todo
 
 // 首頁
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
   User.findByPk(req.user.id)
     .then(user => {
       if (!user) throw new Error('User doesn\'t exists.')

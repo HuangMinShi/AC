@@ -7,17 +7,17 @@ const User = db.User
 const Todo = db.Todo
 
 // 列出全部
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
   res.redirect('/')
 })
 
 // 新增一筆頁面(順序須排在查看單筆前，因為查看單筆路由使用params將重疊)
-router.get('/new', (req, res) => {
+router.get('/new', authenticated, (req, res) => {
   res.render('new')
 })
 
 // 查看一筆
-router.get('/:id', (req, res) => {
+router.get('/:id', authenticated, (req, res) => {
   User.findByPk(req.user.id)
     .then(user => {
       if (!user) throw new Error('user not found.')
@@ -35,7 +35,7 @@ router.get('/:id', (req, res) => {
 })
 
 // 新增一筆
-router.post('/', (req, res) => {
+router.post('/', authenticated, (req, res) => {
   Todo.create({
     name: req.body.item,
     done: false,
@@ -48,7 +48,7 @@ router.post('/', (req, res) => {
 })
 
 // 編輯一筆頁面
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', authenticated, (req, res) => {
   User.findByPk(req.user.id)
     .then(user => {
       if (!user) throw new Error('user doesn\'t exists.')
@@ -64,7 +64,7 @@ router.get('/:id/edit', (req, res) => {
 })
 
 // 編輯一筆
-router.put('/:id/edit', (req, res) => {
+router.put('/:id/edit', authenticated, (req, res) => {
   Todo.findOne({ where: { UserId: req.user.id, id: req.params.id } })
     .then(todo => {
       console.log(req.body);
@@ -81,7 +81,7 @@ router.put('/:id/edit', (req, res) => {
 })
 
 // 刪除一筆
-router.delete('/:id/delete', (req, res) => {
+router.delete('/:id/delete', authenticated, (req, res) => {
   User.findByPk(req.user.id)
     .then(user => {
       if (!user) throw new Error('user doesn\'t exists')
