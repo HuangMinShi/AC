@@ -37,6 +37,7 @@ router.post('/register', (req, res) => {
       }
 
       const newUser = new User(req.body)
+
       bcrypt
         .genSalt(10)
         .then(salt => {
@@ -44,11 +45,10 @@ router.post('/register', (req, res) => {
         })
         .then(hash => {
           newUser.password = hash
-          return newUser
+          return newUser.save()
         })
         .then(user => {
-          user.save()
-          return res.redirect('/users/login')
+          return res.render('login', { email: user.email })
         })
         .catch(err => {
           return console.log(err)

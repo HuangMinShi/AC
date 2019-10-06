@@ -7,6 +7,10 @@ const methodOverride = require('method-override')
 const passport = require('passport')
 const session = require('express-session')
 const flash = require('connect-flash')
+const dotenv = require('dotenv')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const db = require('./models')
 const Todo = db.Todo
@@ -44,6 +48,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/home'))
 app.use('/users', require('./routes/user'))
 app.use('/todos', require('./routes/todo'))
+app.use('/auth', require('./routes/auth'))
 
 app.listen(port, () => {
   console.log(`Server is running on https://127.0.0.1:${port}`)
