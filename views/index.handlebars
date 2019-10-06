@@ -1,14 +1,15 @@
 <div class="row">
   <div class="wrapper col-md-8 col-lg-6 mx-auto">
 
-    <a href="/todos/new">新增</a>
+    <a href="/todos/new" class="btn btn-primary mb-3">新增待辦</a>
+
     <ul class="list-group">
       {{#each todos}}
       <div class="row">
         <div class="todo-content col-6 col-md-7">
           <li class="list-group-item d-flex align-items-center">
             <input style="vertical-align: middle;width: 20px;height:20px;" type="checkbox" name="done"
-              {{#if this.done}}checked{{/if}} class="mr-2" />
+              {{#if this.done}}checked{{/if}} class="mr-2" disabled />
 
             <div class="todo-content-info">
               <h5>{{this.name}}</h5>
@@ -21,9 +22,25 @@
           <a href="/todos/{{this.id}}" class="btn btn-secondary">內容</a>
           <a href="/todos/{{this.id}}/edit" class="btn btn-primary mx-2">修改</a>
 
-          <form action="/todos/{{this.id}}/delete?_method=DELETE" method="POST" style="display: inline">
-            <button type="submit" class="btn btn-danger">刪除</button>
-          </form>
+          <button type="submit" class="btn btn btn-outline-danger" data-toggle="modal"
+            data-target="#todo-delete-modal">刪除</button>
+        </div>
+      </div>
+
+      <!-- ============ *delete-modal ============ -->
+      <div class="modal fade" id="todo-delete-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-body d-flex align-items-center">
+              <h4 class="mr-auto text-danger"><strong>確定要刪除?</strong></h4>
+              <div class="action p-1">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">返回</button>
+                <form action="/todos/{{this.id}}/delete?_method=DELETE" method="POST" class="d-inline">
+                  <button type=" submit" class="btn btn btn-outline-danger">確定</button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       {{/each}}

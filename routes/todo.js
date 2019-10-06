@@ -82,7 +82,7 @@ router.put('/:id/edit', authenticated, (req, res) => {
       todo.done = req.body.done === 'on'
 
       todo.save()
-      return res.redirect(`/todos/${req.params.id}`)
+      return res.redirect(`/todos`)
     })
     .catch(err => {
       return res.status(422).json(err)
