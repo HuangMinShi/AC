@@ -1,20 +1,21 @@
 <div class="row">
-  <div class="wrapper col-md-8 col-lg-6 mx-auto">
+  <div class="wrapper col-md-10 col-lg-8 mx-auto">
     <ul class="list-group">
       <div class="row">
-        <div class="todo-content col-6 col-md-7">
+        <div class="col-2 text-center" style="line-height: 62px">{{todo.category}}</div>
+        <div class="todo-content col-5 col-lg-6">
           <li class="list-group-item d-flex align-items-center">
             <input style="vertical-align: middle;width: 20px;height:20px;" type="checkbox" name="done"
               {{#if todo.done}}checked{{/if}} class="mr-2" disabled />
 
             <div class="todo-content-info">
-              <h5>{{todo.name}}</h5>
-              {{!-- <p>{{todo.dateFormat}}</p> --}}
+              <span style="font-size: 24px">{{todo.name}}</span>
             </div>
+            <span class="ml-2" style="line-height: 32px">期限: {{todo.deadline}}</span>
           </li>
         </div>
 
-        <div class="todo-action col-6 col-md-5 d-flex align-items-center">
+        <div class="todo-action col-5 col-lg-4 d-flex align-items-center">
           <a href="/todos" class="btn btn-primary">返回</a>
           <a href="/todos/{{todo.id}}/edit?_method=PUT" class="btn btn-primary mx-2">修改</a>
 
