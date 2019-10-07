@@ -7,6 +7,20 @@ const app = express()
 const port = 3000
 
 app.use(methodOveride('_method'))
+app.use((req, res, next) => {
+  // 取得req進入時間點的date_object
+  const date = new Date()
+
+  const options = {
+    timeZone: 'Asia/Taipei',
+    hour12: false
+  }
+  const timeStamps = date.toLocaleString('zh-TW', options)
+  const results = `${timeStamps} | ${req.method} from ${req.url}`
+  console.log(results)
+
+  next()
+})
 
 // 列出全部 Todo
 app.get('/', (req, res) => {
