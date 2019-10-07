@@ -3,8 +3,10 @@ const exphbs = require('express-handlebars')
 const methodOveride = require('method-override')
 const app = express()
 
-// server 相關變數
 const port = 3000
+
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
 
 app.use(methodOveride('_method'))
 app.use((req, res, next) => {
@@ -24,7 +26,8 @@ app.use((req, res, next) => {
 
 // 列出全部 Todo
 app.get('/', (req, res) => {
-  res.send('列出全部 Todo')
+  res.render('index')
+  // res.send('列出全部 Todo')
 })
 
 // 新增一筆 Todo 頁面
