@@ -18,6 +18,9 @@ app.use((req, res, next) => {
     hour12: false
   }
   const timeStamps = date.toLocaleString('zh-TW', options)
+
+  if (req.url === '/favicon.ico') return
+
   const results = `${timeStamps} | ${req.method} from ${req.url}`
   console.log(results)
 
