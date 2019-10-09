@@ -66,6 +66,27 @@ app.post('/', (req, res) => {
     })
 })
 
+app.get('/:key', (req, res) => {
+  const key = req.params.key
+
+  const keyIndex = genHash(key)
+
+  Url
+    .findOne({ keyIndex })
+    .then(result => {
+      if (result) {
+        return res.redirect(result.url)
+      }
+      throw err
+    })
+    .catch(err => {
+      return res.status(422).json(err)
+    })
+})
+
+
+
+
 app.listen(port, () => {
   return console.log(`The server is running on localhost:${port}`)
 })
