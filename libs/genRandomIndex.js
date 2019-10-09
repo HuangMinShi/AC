@@ -1,7 +1,7 @@
 
 module.exports = {
   // 隨機產生5位英數字字串
-  genRandomKeyFor = (digits) => {
+  genRandomKeyFor: (digits) => {
     const symbol = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     let key = ''
 
@@ -13,7 +13,7 @@ module.exports = {
   },
 
   // 產生hash當作索引
-  genHash = (key) => {
+  genHash: (key) => {
     let hash = 1
 
     if (key.length === 5) {

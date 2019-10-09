@@ -20,4 +20,5 @@ const urlSchema = new Schema({
   },
 })
 
+urlSchema.index({ keyIndex: 1, urlIndex: 1 })
 module.exports = mongoose.model('Url', urlSchema)
