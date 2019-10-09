@@ -3,7 +3,7 @@ const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const Url = require('./models/url')
-const { genRandomKeyFor, genHash } = require('./libs/genRandomIndex')
+const { genHash, genUniqueKeyIn } = require('./libs/generate')
 
 const app = express()
 const port = 3000
@@ -29,15 +29,15 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
   const url = req.body.url
-  const urlIndex = genHash(url)
+  const urlId = genHash(url)
 
   Url
-    .find({ urlIndex })
-    .then(arr => {
+    .find({ urlId })
+    .then(urls => {
 
-      if (arr.length) {
+      if (urls.length) {
 
-        const result = arr.find(item => {
+        const result = urls.find(item => {
           return item.url === url
         })
 
@@ -53,66 +53,42 @@ app.post('/', (req, res) => {
         return res.render('index', { key })
       }
 
-      return query(Url)
+      return genUniqueKeyIn(Url, 5)
     })
-    .then(obj => {
-      if (!obj) return
-      const { key, keyIndex } = obj
-      Url.create({ url, urlIndex, key, keyIndex })
-      res.render('index', { key })
+    .then(keyPair => {
+      if (!keyPair) return new Error('Without keyPair!')
+
+      const { key, keyId } = keyPair
+      Url.create({ key, url, keyId, urlId })
+
+      return res.render('index', { key })
     })
     .catch(err => {
       console.log(err);
+      return res.status(422).json(err)
     })
 })
 
 app.get('/:key', (req, res) => {
   const key = req.params.key
-
-  const keyIndex = genHash(key)
+  const keyId = genHash(key)
 
   Url
-    .findOne({ keyIndex })
-    .then(result => {
-      if (result) {
-        return res.redirect(result.url)
+    .findOne({ keyId })
+    .then(key => {
+      if (key) {
+        return res.redirect(key.url)
       }
-      throw err
+      const keyError = true
+      return res.render('index', { keyError })
     })
     .catch(err => {
+      console.log(err)
       return res.status(422).json(err)
     })
 })
-
-
-
 
 app.listen(port, () => {
   return console.log(`The server is running on localhost:${port}`)
 })
 
-function query(Model) {
-  const key = genRandomKeyFor(5)
-  const keyIndex = genHash(key)
-
-  return Model
-    .find({ keyIndex })
-    .then(arr => {
-
-      if (arr.length) {
-
-        const result = arr.find(item => {
-          return item.key === key
-        })
-
-        if (result) {
-          return query(Model)
-        }
-      }
-
-      return { key, keyIndex }
-    })
-    .catch(err => {
-      return console.log(err)
-    })
-}
