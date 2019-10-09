@@ -8,16 +8,17 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
+  const baseUrl = req.headers.host
   const url = req.body.url
   const urlId = genHash(url)
 
   Url
     .find({ urlId })
-    .then(urls => {
+    .then(hasUrls => {
 
-      if (urls.length) {
+      if (hasUrls.length) {
 
-        const result = urls.find(item => {
+        const result = hasUrls.find(item => {
           return item.url === url
         })
 
@@ -27,21 +28,28 @@ router.post('/', (req, res) => {
       }
 
       return ''
+
     })
     .then(key => {
+
       if (key) {
-        return res.render('index', { key })
+        const shortenUrl = `${baseUrl}/${key}`
+        return res.render('index', { key, shortenUrl })
       }
 
       return genUniqueKeyIn(Url, 5)
+
     })
     .then(keyPair => {
 
       if (keyPair) {
         const { key, keyId } = keyPair
+        const shortenUrl = `${baseUrl}/${key}`
+
         Url.create({ key, url, keyId, urlId })
 
-        return res.render('index', { key })
+        return res.render('index', { key, shortenUrl })
+
       }
 
     })
@@ -56,12 +64,17 @@ router.get('/:key', (req, res) => {
 
   Url
     .findOne({ keyId })
-    .then(key => {
-      if (key) {
-        return res.redirect(key.url)
+    .then(hasKey => {
+
+      if (hasKey) {
+        return res.redirect(hasKey.url)
       }
+
       const keyError = true
-      return res.render('index', { keyError })
+      const shortenUrl = `${req.headers.host}/${key}`
+
+      return res.render('index', { keyError, shortenUrl })
+
     })
     .catch(err => {
       console.log(err)
