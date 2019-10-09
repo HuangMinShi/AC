@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const urlSchema = new Schema({
-  keyIndex: {
+  keyId: {
     type: Number,
     required: true
   },
@@ -10,7 +10,7 @@ const urlSchema = new Schema({
     type: String,
     required: true
   },
-  urlIndex: {
+  urlId: {
     type: Number,
     required: true
   },
@@ -20,5 +20,5 @@ const urlSchema = new Schema({
   },
 })
 
-urlSchema.index({ keyIndex: 1, urlIndex: 1 })
+urlSchema.index({ keyId: 1, urlId: 1 })
 module.exports = mongoose.model('Url', urlSchema)
