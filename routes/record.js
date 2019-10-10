@@ -1,6 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
+const db = require('../models')
+const User = db.User
+const Record = db.Record
+
 // 列出全部
 router.get('/', (req, res) => {
   res.redirect('/')
