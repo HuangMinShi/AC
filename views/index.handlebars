@@ -1,9 +1,9 @@
 <div class="row">
   <div class=" col-md-10 col-lg-8 mx-auto">
-    <div class="card card-body text-center p-5">
+    <div class="card card-body p-5">
 
       <div class="card-title">
-        <h1>URL Shorter</h1>
+        <h1 class="text-center">URL Shorter</h1>
         <div class="text-center my-4">
           <img src="https://icon-library.net//images/chain-link-icon-png/chain-link-icon-png-9.jpg" width="150" />
         </div>
@@ -38,9 +38,11 @@
 
       {{else}}
 
-      <div class="url-input mt-4">
+      {{> messages}}
+      <div class="url-input text-center">
         <form action="/" method="POST" class="form-group">
-          <input type="url" name="url" class="form-control" placeholder="https://www.google.com/" required>
+          <input type="url" name="url" class="form-control" placeholder="https://www.google.com/" value="{{url}}"
+            required>
           <button type="submit" class="btn btn-outline-primary w-50 mt-3">Shorten!</button>
         </form>
       </div>

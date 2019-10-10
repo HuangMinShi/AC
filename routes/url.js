@@ -2,12 +2,13 @@ const express = require('express')
 const router = express.Router()
 const Url = require('../models/url')
 const { genHash, genUniqueKeyIn } = require('../libs/generate')
+const { checkUrl } = require('../auths/validity')
 
 router.get('/', (req, res) => {
   res.render('index')
 })
 
-router.post('/', (req, res) => {
+router.post('/', checkUrl, (req, res) => {
   const baseUrl = req.headers.host
   const url = req.body.url
   const urlId = genHash(url)
