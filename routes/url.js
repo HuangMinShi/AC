@@ -6,14 +6,12 @@ const { checkUrl } = require('../auths/validity')
 
 // 首頁
 router.get('/', (req, res) => {
-  console.log('port:', process.env.PORT, 'mongodb_url:', process.env.MONGODB_URI);
-
   res.render('index')
 })
 
 // 新增url 利用checkUrl middleware檢查url
 router.post('/', checkUrl, (req, res) => {
-  const baseUrl = req.headers.host
+  const baseUrl = 'localhost:3000'
   const url = req.body.url
   const urlId = genHash(url)
 
