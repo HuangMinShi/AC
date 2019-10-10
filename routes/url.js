@@ -41,7 +41,7 @@ router.post('/', checkUrl, (req, res) => {
     .then(key => {
 
       if (key) {
-        const shortenUrl = `${baseUrl}/${key}`
+        const shortenUrl = `localhost:3000/${key}`
         return res.render('index', { key, shortenUrl })
       }
 
@@ -53,7 +53,7 @@ router.post('/', checkUrl, (req, res) => {
 
       if (keyPair) {
         const { key, keyId } = keyPair
-        const shortenUrl = `${baseUrl}/${key}`
+        const shortenUrl = `localhost:3000/${key}`
 
         Url.create({ key, url, keyId, urlId })
 
