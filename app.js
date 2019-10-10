@@ -4,9 +4,9 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
-mongoose.connect('mongodb://127.0.0.1/url', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1/url', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 const db = mongoose.connection
 
 db.on('error', () => {

@@ -6,6 +6,8 @@ const { checkUrl } = require('../auths/validity')
 
 // 首頁
 router.get('/', (req, res) => {
+  console.log('port:', process.env.PORT, 'mongodb_url:', process.env.MONGODB_URI);
+
   res.render('index')
 })
 
