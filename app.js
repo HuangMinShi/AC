@@ -18,8 +18,9 @@ db.once('open', () => {
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
-
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// routes
 app.use('/', require('./routes/url'))
 
 app.listen(port, () => {

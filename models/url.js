@@ -20,5 +20,6 @@ const urlSchema = new Schema({
   },
 })
 
+// 建立索引
 urlSchema.index({ keyId: 1, urlId: 1 })
 module.exports = mongoose.model('Url', urlSchema)

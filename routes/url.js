@@ -4,25 +4,30 @@ const Url = require('../models/url')
 const { genHash, genUniqueKeyIn } = require('../libs/generate')
 const { checkUrl } = require('../auths/validity')
 
+// 首頁
 router.get('/', (req, res) => {
   res.render('index')
 })
 
+// 新增url 利用checkUrl middleware檢查url
 router.post('/', checkUrl, (req, res) => {
   const baseUrl = req.headers.host
   const url = req.body.url
   const urlId = genHash(url)
 
+  // 利用hash後的Id搜尋以增加效率
   Url
     .find({ urlId })
     .then(hasUrls => {
 
+      // 是否有重複url?
       if (hasUrls.length) {
 
         const result = hasUrls.find(item => {
           return item.url === url
         })
 
+        // 有，回傳短網址的key
         if (result) {
           return result.key
         }
@@ -38,6 +43,7 @@ router.post('/', checkUrl, (req, res) => {
         return res.render('index', { key, shortenUrl })
       }
 
+      // 生成唯一key
       return genUniqueKeyIn(Url, 5)
 
     })
@@ -59,6 +65,7 @@ router.post('/', checkUrl, (req, res) => {
     })
 })
 
+// 瀏覽shortenUrl
 router.get('/:key', (req, res) => {
   const key = req.params.key
   const keyId = genHash(key)

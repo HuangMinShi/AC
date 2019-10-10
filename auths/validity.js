@@ -1,4 +1,6 @@
 module.exports = {
+
+  // 檢查url的合法性
   checkUrl: (req, res, next) => {
     const url = req.body.url
     const pattern = /(https?:\/\/)?[\w-]+(\.[\w]+)+[\w-+&@#/%?=~_|!:,.;]+/
