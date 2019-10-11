@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
+const passport = require('passport')
+
 
 
 const db = require('../models')
@@ -62,12 +64,19 @@ router.post('/register', (req, res) => {
 
 // 登入頁面
 router.get('/login', (req, res) => {
-  res.render('login')
+  res.render('login', { email: req.flash('email') })
 })
 
 // 登入
-router.post('/login', (req, res) => {
-  res.send('4')
+router.post('/login', (req, res, next) => {
+  req.flash('email', req.body.email)
+
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/users/login',
+    failureFlash: true,
+    badRequestMessage: '請填寫email及password'
+  })(req, res, next)
 })
 
 // 登出
