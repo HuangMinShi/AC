@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const { authenticated } = require('../config/auth')
+const { sum } = require('../libs/calcAmount')
 
 const db = require('../models')
 const User = db.User
@@ -15,8 +16,13 @@ router.get('/', authenticated, (req, res) => {
       if (!user) return new Error('使用者不存在!')
       return Record.findAll({ where: { userId: user.id } })
     })
-    .then(records => { return res.render('index', { records }) })
-    .catch(err => { return console.log(err) })
+    .then(records => {
+      const totalAmount = sum(records)
+      return res.render('index', { records, totalAmount })
+    })
+    .catch(err => {
+      return console.log(err)
+    })
 })
 
 module.exports = router
