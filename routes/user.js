@@ -3,8 +3,6 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
 
-
-
 const db = require('../models')
 const User = db.User
 const Record = db.Record
@@ -81,6 +79,8 @@ router.post('/login', (req, res, next) => {
 
 // 登出
 router.get('/logout', (req, res) => {
+  req.logOut()
+  req.flash('success_msg', '成功登出!')
   res.redirect('/users/login')
 })
 
