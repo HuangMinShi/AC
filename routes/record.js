@@ -30,13 +30,8 @@ router.post('/', authenticated, (req, res) => {
 
   newRecord
     .save()
-    .then(record => {
-      return res.redirect('/')
-    })
-    .catch(err => {
-      return console.log(err)
-    })
-
+    .then(record => { return res.redirect('/') })
+    .catch(err => { return console.log(err) })
 })
 
 // 編輯1筆頁面
@@ -47,12 +42,8 @@ router.get('/:id/edit', authenticated, (req, res) => {
       if (!user) return new Error('使用者不存在!')
       return Record.findOne({ where: { userId: req.user.id, id: req.params.id } })
     })
-    .then(record => {
-      return res.render('edit', { record, categoryList })
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    .then(record => { return res.render('edit', { record, categoryList }) })
+    .catch(err => { return console.log(err) })
 })
 
 // 編輯1筆
@@ -62,17 +53,21 @@ router.put('/:id/edit', authenticated, (req, res) => {
     .then(record => {
       Object.assign(record, req.body)
       return record.save()
-    }).then(record => {
-      res.redirect('/')
     })
-    .catch(err => {
-      console.log(err)
-    })
+    .then(record => { res.redirect('/') })
+    .catch(err => { return console.log(err) })
 })
 
 // 刪除1筆
 router.delete('/:id/delete', authenticated, (req, res) => {
-  res.redirect('/')
+  User
+    .findByPk(req.user.id)
+    .then(user => {
+      if (!user) return new Error('使用者不存在!')
+      return Record.destroy({ where: { userId: req.user.id, id: req.params.id } })
+    })
+    .then(record => { return res.redirect('/') })
+    .catch(err => { return console.log(err) })
 })
 
 // 篩選多筆

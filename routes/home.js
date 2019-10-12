@@ -15,12 +15,8 @@ router.get('/', authenticated, (req, res) => {
       if (!user) return new Error('使用者不存在!')
       return Record.findAll({ where: { userId: user.id } })
     })
-    .then(records => {
-      return res.render('index', { records })
-    })
-    .catch(err => {
-      return console.log(err)
-    })
+    .then(records => { return res.render('index', { records }) })
+    .catch(err => { return console.log(err) })
 })
 
 module.exports = router
