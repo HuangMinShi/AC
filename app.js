@@ -1,6 +1,6 @@
 const express = require('express')
 
-const exphbs = require('express-handlebars')
+const exphbs = require('./config/template')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const methodOverride = require('method-override')
@@ -13,7 +13,7 @@ const app = express()
 const port = 3000
 
 // all environments
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', exphbs.engine)
 app.set('view engine', 'handlebars')
 app.use(methodOverride('_method'))
 app.use(express.static('public'))

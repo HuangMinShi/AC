@@ -42,7 +42,11 @@ router.get('/:id/edit', authenticated, (req, res) => {
       if (!user) return new Error('使用者不存在!')
       return Record.findOne({ where: { userId: req.user.id, id: req.params.id } })
     })
-    .then(record => { return res.render('edit', { record, categoryList }) })
+    .then(record => {
+      const category2Cn = categoryList[record.category]
+
+      return res.render('edit', { record, categoryList, category2Cn })
+    })
     .catch(err => { return console.log(err) })
 })
 
