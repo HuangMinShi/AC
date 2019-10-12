@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const { authenticated } = require('../config/auth')
+const categoryList = require('../pubic/categoryList.json')
 
 const db = require('../models')
 const User = db.User
@@ -14,12 +15,28 @@ router.get('/', authenticated, (req, res) => {
 
 // 新增1筆頁面
 router.get('/new', authenticated, (req, res) => {
-  res.render('new')
+  const record = {
+    date: new Date().toLocaleString().split(' ')[0]
+  }
+
+  res.render('new', { record, categoryList })
 })
 
 // 新增1筆
 router.post('/', authenticated, (req, res) => {
-  res.redirect('/')
+  const record = { ...req.body }
+  const newRecord = new Record(record)
+  newRecord.UserId = req.user.id
+
+  newRecord
+    .save()
+    .then(record => {
+      return res.redirect('/')
+    })
+    .catch(err => {
+      return console.log(err)
+    })
+
 })
 
 // 編輯1筆頁面
