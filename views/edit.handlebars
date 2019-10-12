@@ -1,1 +1,73 @@
-<p>edit</p>
+<div class="row">
+  <div class="col-sm-10 col-md-8 col-lg-6 mx-auto">
+
+    <div class="card">
+      <dic class="card-body">
+        <div class="card-title">
+          <div class="row">
+            <div class="col-sm-3">
+              <p style="display: inline">*必填</p>
+            </div>
+            <h4 class="col-sm-9">修改</h4>
+          </div>
+          <hr>
+        </div>
+
+        <form action="/records/{{record.id}}/edit?_method=PUT" method="POST">
+          <div class="form-group row">
+            <label for="item" class="col-sm-3 col-form-label">*名稱：</label>
+
+            <div class="col-sm-9">
+              <input type="text" class="form-control" item="item" id="item" placeholder="item" value="{{record.item}}">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="merchant" class="col-sm-3 col-form-label">商家：</label>
+
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="merchant" id="merchant" placeholder="merchant"
+                value="{{record.merchant}}">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="date" class="col-sm-3 col-form-label">*日期：</label>
+
+            <div class="col-sm-9">
+              <input type="date" class="form-control" name="date" id="date" value="{{record.date}}">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="category" class="col-sm-3 col-form-label">*類別：</label>
+
+            <div class="col-sm-9">
+              <select class="custom-select" class="form-control" id="category" name="category">
+                <option selected>請選擇類別</option>
+                {{#each categoryList}}
+                <option value="{{@key}}">{{this}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="amount" class="col-sm-3 col-form-label">*金額：</label>
+
+            <div class="col-sm-9">
+              <input type="text" class="form-control name=" amount" id="amount" " placeholder=" amount"
+                value="{{record.amount}}">
+            </div>
+          </div>
+
+          <hr>
+          <div class=" d-flex justify-content-end">
+            <button type="submit" class="btn btn-success mr-3 w-25">送出</button>
+            <a href="/" class="btn btn-primary w-25">返回</a>
+          </div>
+        </form>
+      </dic>
+    </div>
+  </div>
+</div>

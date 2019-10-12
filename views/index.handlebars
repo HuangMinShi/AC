@@ -1,1 +1,52 @@
-<p>index</p>
+<div class="row">
+  <div class="wrapper col-md-10 col-lg-8 mx-auto">
+
+    <div id="total-amount" class="row">
+      <div class="col-7 col-md-8 d-flex justify-content-between">
+        <h5>總金額:</h5>
+        <p>{{totalAmount}}</p>
+      </div>
+    </div>
+    <hr>
+
+    <ul class="list-group">
+      {{#each records}}
+      <div class="row">
+        <div class="expense-content col-7 col-md-8">
+          <li class="list-group-item d-flex align-items-center">
+            <i class="expense-content-icon fas fa-{{this.category}} mr-2 text-info"></i>
+
+            <div class="expense-content-info">
+              <h5>{{this.name}}</h5>
+              <p>{{this.date}}</p>
+            </div>
+
+            <div class="ml-5 pt-4">
+              <small>
+                {{#if this.merchant}}( {{this.merchant}} ){{/if}}
+              </small>
+            </div>
+
+            <p class="expense-content-amount ml-auto">{{this.amount}}</p>
+          </li>
+        </div>
+
+        <div class="expense-action col-5 col-md-4 d-flex align-items-center">
+          <a href="/records/{{this.id}}/edit?_method=PUT" class="mr-2 btn btn-primary">修改</a>
+
+          <form action="/records/{{this.id}}/delete?_method=DELETE" method="POST" style="display: inline">
+            <button type="submit" class="btn btn-danger">刪除</button>
+          </form>
+        </div>
+      </div>
+      {{/each}}
+    </ul>
+    <hr>
+
+    <div class="row my-4">
+      <div class="col-7 col-md-8 text-center">
+        <a href="/records/new" class="btn btn-primary w-50">新增支出</a>
+      </div>
+    </div>
+  </div>
+</div>
