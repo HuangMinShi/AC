@@ -5,10 +5,11 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const passport = require('passport')
 const flash = require('connect-flash')
+if (process.env.NODE_ENV !== 'production') require('dotenv').config()
+require('./config/passport')(passport)
 
 const app = express()
 const port = 3000
-require('./config/passport')(passport)
 
 // all environments
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/home'))
 app.use('/records', require('./routes/record'))
 app.use('/users', require('./routes/user'))
+app.use('/auth', require('./routes/auths'))
 
 app.listen(port, () => {
   console.log(`Server is running on localhost://${port}`)
