@@ -41,12 +41,33 @@ router.post('/', authenticated, (req, res) => {
 
 // 編輯1筆頁面
 router.get('/:id/edit', authenticated, (req, res) => {
-  res.render('edit')
+  User
+    .findByPk(req.user.id)
+    .then(user => {
+      if (!user) return new Error('使用者不存在!')
+      return Record.findOne({ where: { userId: req.user.id, id: req.params.id } })
+    })
+    .then(record => {
+      return res.render('edit', { record, categoryList })
+    })
+    .catch(err => {
+      console.log(err)
+    })
 })
 
 // 編輯1筆
 router.put('/:id/edit', authenticated, (req, res) => {
-  res.redirect('/')
+  Record
+    .findOne({ where: { userId: req.user.id, id: req.params.id } })
+    .then(record => {
+      Object.assign(record, req.body)
+      return record.save()
+    }).then(record => {
+      res.redirect('/')
+    })
+    .catch(err => {
+      console.log(err)
+    })
 })
 
 // 刪除1筆
