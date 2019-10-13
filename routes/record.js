@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-const categoryList = require('../pubic/categoryList.json')
+const categoryList = require('../public/categoryList.json')
 const { authenticated } = require('../config/auth')
 const { genMonths } = require('../libs/date')
+const { sum } = require('../libs/calc')
 
 let category = ''
 let month = ''
@@ -54,6 +55,8 @@ router.get('/:id/edit', authenticated, (req, res) => {
       return res.render('edit', { record, categoryList, category2Cn })
     })
     .catch(err => { return console.log(err) })
+
+  //cnost user  = await User,finByPK()
 })
 
 // 編輯1筆
@@ -106,13 +109,12 @@ router.get('/filter', authenticated, (req, res) => {
 
       const variables = {
         records,
+        totalAmount: sum(records),
         categoryList,
         category2Cn: categoryList[category],
         months: genMonths(),
         month: month
       }
-
-      console.log(variables);
 
       res.render('index', variables)
     })

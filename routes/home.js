@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const categoryList = require('../pubic/categoryList.json')
+const categoryList = require('../public/categoryList.json')
 const { authenticated } = require('../config/auth')
 const { sum } = require('../libs/calc')
 const { genMonths } = require('../libs/date')

@@ -11,7 +11,7 @@
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             {{#if month}}
-            <a class=" dropdown-item" href="/records/filter?resetMonth=true">全部月份</a>
+            <a class="dropdown-item" href="/records/filter?resetMonth=true">全部月份</a>
             {{/if}}
 
             {{#each months}}
@@ -35,7 +35,7 @@
             {{/if}}
 
             {{#each categoryList}}
-            <a class=" dropdown-item" href="/records/filter?category={{@key}}">{{this}}</a>
+            <a class="dropdown-item" href="/records/filter?category={{@key}}">{{this}}</a>
             {{/each}}
           </div>
         </div>
