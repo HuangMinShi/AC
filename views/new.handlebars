@@ -13,6 +13,7 @@
           <hr>
         </div>
 
+        {{> messages}}
         <form action="/records" method="POST">
           <div class="form-group row">
             <label for="item" class="col-sm-3 col-form-label">*名稱：</label>
@@ -46,7 +47,7 @@
               <select class="custom-select" class="form-control" id="category" name="category">
                 <option selected>請選擇類別</option>
                 {{#each categoryList}}
-                <option value="{{@key}}">{{this}}</option>
+                <option value="{{@key}}" {{#is this ../category2Cn}}selected{{/is}}>{{this}}</option>
                 {{/each}}
               </select>
             </div>

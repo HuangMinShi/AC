@@ -3,6 +3,7 @@ const router = express.Router()
 
 const categoryList = require('../public/categoryList.json')
 const { authenticated } = require('../config/auth')
+const { checkRecordInput } = require('../config/validity')
 const { genMonths } = require('../libs/date')
 const { sum } = require('../libs/calc')
 
@@ -30,7 +31,7 @@ router.get('/new', authenticated, (req, res) => {
 })
 
 // 新增1筆
-router.post('/', authenticated, (req, res) => {
+router.post('/', authenticated, checkRecordInput, (req, res) => {
   const record = { ...req.body }
   const newRecord = new Record(record)
   newRecord.UserId = req.user.id
@@ -60,7 +61,7 @@ router.get('/:id/edit', authenticated, (req, res) => {
 })
 
 // 編輯1筆
-router.put('/:id/edit', authenticated, (req, res) => {
+router.put('/:id/edit', authenticated, checkRecordInput, (req, res) => {
   Record
     .findOne({ where: { userId: req.user.id, id: req.params.id } })
     .then(record => {

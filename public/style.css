@@ -54,6 +54,10 @@ footer {
   font-size: .5rem;
 }
 
+.expense-content li {
+  border-bottom: 1px solid rgba(199, 204, 203, .6);
+}
+
 .expense-content-amount {
   font-size: 1.3rem;
 }
@@ -75,10 +79,6 @@ footer {
   width: 94%;
 }
 
-.required-icon {
-  color: red;
-  font-size: 8px;
-}
 
 .dropdown-item {
   padding-right: 12px;
@@ -116,9 +116,4 @@ hr {
 
 #total-amount p {
   color: orangered;
-}
-
-.not-required-icon {
-  color: rgba(0, 0, 0, 0);
-  font-size: 5px;
 }
