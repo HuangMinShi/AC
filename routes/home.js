@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
+const categoryList = require('../pubic/categoryList.json')
 const { authenticated } = require('../config/auth')
-const { sum } = require('../libs/calcAmount')
+const { sum } = require('../libs/calc')
+const { genMonths } = require('../libs/date')
 
 const db = require('../models')
 const User = db.User
@@ -17,8 +19,15 @@ router.get('/', authenticated, (req, res) => {
       return Record.findAll({ where: { userId: user.id } })
     })
     .then(records => {
-      const totalAmount = sum(records)
-      return res.render('index', { records, totalAmount })
+
+      const variables = {
+        records,
+        categoryList,
+        totalAmount: sum(records),
+        months: genMonths()
+      }
+
+      return res.render('index', variables)
     })
     .catch(err => {
       return console.log(err)

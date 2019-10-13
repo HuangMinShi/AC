@@ -1,6 +1,48 @@
 <div class="row">
   <div class="wrapper col-md-10 col-lg-8 mx-auto">
 
+    <div class="row my-3">
+      <div class="expense-filter-dropdown col-3 col-md-4">
+        <div class="dropdown">
+          <button class="btn w-100 text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{#if month}}{{month}}月{{else}}月份{{/if}}
+          </button>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {{#if month}}
+            <a class=" dropdown-item" href="/records/filter?resetMonth=true">全部月份</a>
+            {{/if}}
+
+            {{#each months}}
+            <a class="dropdown-item" href="/records/filter?month={{@key}}" {{#is this '0月'}} style="display: none;"
+              {{/is}}>{{this}}</a>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+
+      <div class="expense-filter-dropdown col-3 col-md-4">
+        <div class="dropdown">
+          <button class="btn w-100 text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{#if category2Cn}}{{category2Cn}}{{else}}分類{{/if}}
+          </button>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {{#if category2Cn}}
+            <a class=" dropdown-item" href="/records/filter?resetCategory=true">全部類別</a>
+            {{/if}}
+
+            {{#each categoryList}}
+            <a class=" dropdown-item" href="/records/filter?category={{@key}}">{{this}}</a>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <div id="total-amount" class="row">
       <div class="col-7 col-md-8 d-flex justify-content-between">
         <h5>總金額:</h5>

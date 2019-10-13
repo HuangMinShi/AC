@@ -1,12 +1,18 @@
 const express = require('express')
 const router = express.Router()
 
-const { authenticated } = require('../config/auth')
 const categoryList = require('../pubic/categoryList.json')
+const { authenticated } = require('../config/auth')
+const { genMonths } = require('../libs/date')
+
+let category = ''
+let month = ''
 
 const db = require('../models')
 const User = db.User
 const Record = db.Record
+const Op = db.Sequelize.Op;
+const sequelize = db.sequelize
 
 // 列出全部
 router.get('/', authenticated, (req, res) => {
@@ -75,8 +81,41 @@ router.delete('/:id/delete', authenticated, (req, res) => {
 })
 
 // 篩選多筆
-router.delete('/filter', authenticated, (req, res) => {
-  res.redirect('/')
+router.get('/filter', authenticated, (req, res) => {
+  category = req.query.resetCategory ? '' : req.query.category || category
+  month = req.query.resetMonth ? '' : req.query.month || month
+
+  const queryOption = {
+    [Op.and]: [
+      { userId: req.user.id }
+    ]
+  }
+
+  // 若篩選月份，則push入queryOption，分類同理。
+  if (month) queryOption[Op.and].push(sequelize.where(sequelize.fn('MONTH', sequelize.col('date')), `${month}`))
+  if (category) queryOption[Op.and].push({ category: category })
+
+  User
+    .findByPk(req.user.id)
+    .then(user => {
+      if (!user) return new Error('使用者不存在!')
+
+      return Record.findAll({ where: queryOption })
+    })
+    .then(records => {
+
+      const variables = {
+        records,
+        categoryList,
+        category2Cn: categoryList[category],
+        months: genMonths(),
+        month: month
+      }
+
+      console.log(variables);
+
+      res.render('index', variables)
+    })
 })
 
 module.exports = router
