@@ -4,11 +4,12 @@ const router = express.Router()
 const categoryList = require('../public/categoryList.json')
 const { authenticated } = require('../config/auth')
 const { checkRecordInput } = require('../config/validity')
-const { genMonths } = require('../libs/date')
+const { genMonths, genYearsFrom } = require('../libs/date')
 const { sum } = require('../libs/calc')
 
-let category = ''
-let month = ''
+// 宣告變數以暫時紀錄上一次的篩選值
+let year = '', month = '', category = ''
+let years = [2017, 2018, 2019]
 
 const db = require('../models')
 const User = db.User
@@ -56,8 +57,6 @@ router.get('/:id/edit', authenticated, (req, res) => {
       return res.render('edit', { record, categoryList, category2Cn })
     })
     .catch(err => { return console.log(err) })
-
-  //cnost user  = await User,finByPK()
 })
 
 // 編輯1筆
@@ -86,12 +85,14 @@ router.delete('/:id/delete', authenticated, (req, res) => {
 
 // 篩選多筆
 router.get('/filter', authenticated, (req, res) => {
-  category = req.query.resetCategory ? '' : req.query.category || category
+  year = req.query.year || year || 2019
   month = req.query.resetMonth ? '' : req.query.month || month
+  category = req.query.resetCategory ? '' : req.query.category || category
 
   const queryOption = {
     [Op.and]: [
-      { userId: req.user.id }
+      { userId: req.user.id },
+      sequelize.where(sequelize.fn('YEAR', sequelize.col('date')), `${year}`)
     ]
   }
 
@@ -114,7 +115,9 @@ router.get('/filter', authenticated, (req, res) => {
         categoryList,
         category2Cn: categoryList[category],
         months: genMonths(),
-        month: month
+        month: month,
+        years: genYearsFrom(2010),
+        year
       }
 
       res.render('index', variables)

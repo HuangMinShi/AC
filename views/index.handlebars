@@ -3,16 +3,31 @@
 
     <!-- ============ filter ============ -->
     <div class="row my-3">
-      <div class="expense-filter-dropdown col-3 col-md-4">
+      <div class="expense-filter-dropdown col-2">
         <div class="dropdown">
           <button class="btn w-100 text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            {{#if month}}{{month}}月{{else}}月份{{/if}}
+            {{#if year}}{{year}}{{else}}2019{{/if}}
+          </button>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {{#each years}}
+            <a class="dropdown-item" href="/records/filter?year={{this}}">{{this}}</a>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+
+      <div class="expense-filter-dropdown col-3">
+        <div class="dropdown">
+          <button class="btn w-100 text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{#if month}}{{month}}月{{else}}不分月份{{/if}}
           </button>
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             {{#if month}}
-            <a class="dropdown-item" href="/records/filter?resetMonth=true">全部月份</a>
+            <a class="dropdown-item" href="/records/filter?resetMonth=true">不分月份</a>
             {{/if}}
 
             {{#each months}}
@@ -23,16 +38,16 @@
         </div>
       </div>
 
-      <div class="expense-filter-dropdown col-3 col-md-4">
+      <div class="expense-filter-dropdown col-3">
         <div class="dropdown">
           <button class="btn w-100 text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            {{#if category2Cn}}{{category2Cn}}{{else}}分類{{/if}}
+            {{#if category2Cn}}{{category2Cn}}{{else}}不分分類{{/if}}
           </button>
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             {{#if category2Cn}}
-            <a class=" dropdown-item" href="/records/filter?resetCategory=true">全部類別</a>
+            <a class=" dropdown-item" href="/records/filter?resetCategory=true">不分類別</a>
             {{/if}}
 
             {{#each categoryList}}

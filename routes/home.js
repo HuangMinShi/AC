@@ -4,7 +4,7 @@ const router = express.Router()
 const categoryList = require('../public/categoryList.json')
 const { authenticated } = require('../config/auth')
 const { sum } = require('../libs/calc')
-const { genMonths } = require('../libs/date')
+const { genMonths, genYearsFrom } = require('../libs/date')
 
 const db = require('../models')
 const User = db.User
@@ -24,7 +24,8 @@ router.get('/', authenticated, (req, res) => {
         records,
         categoryList,
         totalAmount: sum(records),
-        months: genMonths()
+        months: genMonths(),
+        years: genYearsFrom(2010)
       }
 
       return res.render('index', variables)
