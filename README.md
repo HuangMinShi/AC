@@ -16,8 +16,8 @@
 12. 使用者登入後可以建立專屬於自己的支出
 
 ## Preview Pages
-<img src="./public/preview/index.jpg" width="600px">
-<img src="./public/preview/login.jpg" width="600px">
+<img src="./public/preview/index.jpg" width="400px" target="_blank">
+<img src="./public/preview/login.jpg" width="400px" target="_blank">
 
 ## Environment and package used
 * [Node.js](https://nodejs.org/en/) v10.15.0
@@ -71,7 +71,7 @@ npx sequelize db:migrate
 npx sequelize db:seed:all
 ```
 
-4. 於 cls 輸入以刪除種子資料(若需要))
+4. 於 cls 輸入以刪除種子資料(若需要)
 ```npm
 npx sequelize db:seed:undo:all
 ```
