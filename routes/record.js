@@ -120,6 +120,10 @@ router.get('/filter', authenticated, (req, res) => {
         year
       }
 
+      if (!records.length) {
+        variables.default = "https://fakeimg.pl/540x100/f8f9fa/212529/?text=Have%20no%20records"
+      }
+
       res.render('index', variables)
     })
 })
