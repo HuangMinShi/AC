@@ -19,7 +19,8 @@
             <label for="item" class="col-sm-3 col-form-label">*名稱：</label>
 
             <div class="col-sm-9">
-              <input type="text" class="form-control" name="item" id="item" placeholder="item" value="{{record.item}}">
+              <input type="text" class="form-control" name="item" id="item" placeholder="item" value="{{record.item}}"
+                required>
             </div>
           </div>
 
@@ -36,7 +37,7 @@
             <label for="date" class="col-sm-3 col-form-label">*日期：</label>
 
             <div class="col-sm-9">
-              <input type="date" class="form-control" name="date" id="date" value="{{record.date}}">
+              <input type="date" class="form-control" name="date" id="date" value="{{record.date}}" required>
             </div>
           </div>
 
@@ -60,7 +61,7 @@
 
             <div class="col-sm-9">
               <input type="text" class="form-control" name="amount" id="amount" placeholder="amount"
-                value="{{record.amount}}">
+                value="{{record.amount}}" required>
             </div>
           </div>
 

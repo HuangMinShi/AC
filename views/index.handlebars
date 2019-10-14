@@ -42,7 +42,7 @@
         <div class="dropdown">
           <button class="btn w-100 text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            {{#if category2Cn}}{{category2Cn}}{{else}}不分分類{{/if}}
+            {{#if category2Cn}}{{category2Cn}}{{else}}不分類別{{/if}}
           </button>
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -69,6 +69,10 @@
 
     <!-- ============ data-panel ============ -->
     <ul class="list-group">
+      {{#if default}}
+      <img src={{default}}>
+      {{/if}}
+
       {{#each records}}
       <div class="row mt-1">
         <div class="expense-content col-7 col-md-8">
@@ -76,14 +80,12 @@
             <i class="expense-content-icon fas fa-{{this.category}} mr-2 text-info"></i>
 
             <div class="expense-content-info">
-              <h5>{{this.item}}</h5>
+              <h5>{{this.item}}
+                <small class="ml-2 text-info" style="font-size: 10px;">
+                  {{#if this.merchant}} @{{this.merchant}} {{/if}}
+                </small>
+              </h5>
               <p>{{this.date}}</p>
-            </div>
-
-            <div class="ml-3 pt-4">
-              <small>
-                {{#if this.merchant}}( {{this.merchant}} ){{/if}}
-              </small>
             </div>
 
             <p class="expense-content-amount ml-auto">{{this.amount}}</p>
