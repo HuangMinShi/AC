@@ -45,7 +45,7 @@ git clone https://github.com/HuangMinShi/expense-tracker-sequelize.git
 
 **切換專案**
 ```git
-cd expense-tracker-sequelize
+cd expense_tracker_sequelize
 ```
 
 **安裝環境**
@@ -56,9 +56,9 @@ npm i express
 **安裝 [MySQL](https://dev.mysql.com/downloads/windows/installer/) 並啟動資料庫**
 1. 於 MySQL workbench 輸入以使用資料庫
 ```sql
-drop database if exists expense-tracker-sequelize;
-create database expense-tracker-sequelize;
-use expense-tracker-sequelize;
+drop database if exists expense_tracker_sequelize;
+create database expense_tracker_sequelize;
+use expense_tracker_sequelize;
 ```
 
 2. 於 cls 輸入以建立資料綱要
@@ -81,7 +81,7 @@ npx sequelize db:seed:undo:all
 "development": {
   "username": "root",
   "password": "${安裝SQL設定的password}",
-  "database": "expense-tracker-sequelize",
+  "database": "expense_tracker_sequelize",
   "host": "127.0.0.1",
   "dialect": "mysql"
 }
@@ -92,7 +92,7 @@ npx sequelize db:seed:undo:all
 npm i express-handlebars express body-parser nodemon mongoose method-override express-session passport passport-local passport-facebook bcryptjs connect-flash dotenv mysql2 sequelize sequelize-cli
 ```
 
-**Facebook登入請於根目錄新增`.env`檔，並設置環境變數**
+**為支援Facebook登入請於根目錄新增`.env`檔，並設置環境變數**
 ```
 FACEBOOK_ID = ******
 FACEBOOK_SECRET = ******
