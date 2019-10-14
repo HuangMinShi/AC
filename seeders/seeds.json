@@ -1,0 +1,128 @@
+[
+  {
+    "item": "加油",
+    "category": "shuttle-van",
+    "amount": 100,
+    "date": "2019-09-21",
+    "merchant": "中油"
+  },
+  {
+    "item": "加油",
+    "category": "shuttle-van",
+    "amount": 128,
+    "date": "2019-07-18",
+    "merchant": "台塑"
+  },
+  {
+    "item": "早餐",
+    "category": "utensils",
+    "amount": 70,
+    "date": "2019-09-17",
+    "merchant": "吉野家"
+  },
+  {
+    "item": "中餐",
+    "category": "utensils",
+    "amount": 110,
+    "date": "2018-07-18",
+    "merchant": "行運燒臘"
+  },
+  {
+    "item": "行李箱",
+    "category": "pen",
+    "amount": 700,
+    "date": "2019-10-20",
+    "merchant": "寶雅"
+  },
+  {
+    "item": "NBA-2020",
+    "category": "grin-beam",
+    "amount": 1050,
+    "date": "2019-10-17",
+    "merchant": "小米奇"
+  },
+  {
+    "item": "女僕裝",
+    "category": "grin-beam",
+    "amount": 1200,
+    "date": "2018-07-20",
+    "merchant": "PCHOME"
+  },
+  {
+    "item": "洗髮精等",
+    "category": "home",
+    "amount": 300,
+    "date": "2019-10-17",
+    "merchant": "家樂福"
+  },
+  {
+    "item": "床包等",
+    "category": "home",
+    "amount": 820,
+    "date": "2019-10-29",
+    "merchant": "家樂福"
+  },
+  {
+    "item": "加油",
+    "category": "shuttle-van",
+    "amount": 150,
+    "date": "2019-01-18",
+    "merchant": "中油"
+  },
+  {
+    "item": "加油",
+    "category": "shuttle-van",
+    "amount": 128,
+    "date": "2019-03-18",
+    "merchant": "台塑"
+  },
+  {
+    "item": "朋友聚餐",
+    "category": "utensils",
+    "amount": 895,
+    "date": "2019-04-17",
+    "merchant": "響食天堂"
+  },
+  {
+    "item": "家族聚餐",
+    "category": "utensils",
+    "amount": 1200,
+    "date": "2019-06-25",
+    "merchant": "行運燒臘"
+  },
+  {
+    "item": "吹風機",
+    "category": "pen",
+    "amount": 1000,
+    "date": "2019-10-11",
+    "merchant": "光南"
+  },
+  {
+    "item": "極速快感20",
+    "category": "grin-beam",
+    "amount": 1250,
+    "date": "2018-10-17",
+    "merchant": "不知名"
+  },
+  {
+    "item": "護士裝",
+    "category": "grin-beam",
+    "amount": 1700,
+    "date": "2019-07-11",
+    "merchant": "PCHOME"
+  },
+  {
+    "item": "垃圾袋等",
+    "category": "home",
+    "amount": 400,
+    "date": "2019-2-25",
+    "merchant": "家樂福"
+  },
+  {
+    "item": "衛生紙等",
+    "category": "home",
+    "amount": 220,
+    "date": "2019-10-10",
+    "merchant": "家樂福"
+  }
+]
