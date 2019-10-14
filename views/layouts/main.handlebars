@@ -16,8 +16,15 @@
 
 <body class="bg-light">
   <header>
-    <nav>
-
+    <nav class="navbar navbar-dark bg-dark">
+      <a href="/" class="navbar-brand">
+        <span>{{user.name}}</span>的記帳本
+      </a>
+      {{#if isAuthenticated}}
+      <a href="/users/logout" class="btn btn-outline-light">Logout</a>
+      {{else}}
+      <a href="/users/login" class="btn btn-outline-light">Login</a>
+      {{/if}}
     </nav>
   </header>
 
