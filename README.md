@@ -7,7 +7,7 @@
 
 ## Preview Pages
 <img src="./public/1.jpg" width="300px" target="_blank">
-<img src="./public/2.jpg" width="300px" target="_blank">
+<img src="./public/2.jpg" width="300px" target="_blank" style="display: inline-block;">
 
 ## Environment and package used
 * [Node.js](https://nodejs.org/en/) v10.15.0
@@ -21,6 +21,7 @@
 **複製專案**
 ```git
 git clone https://github.com/HuangMinShi/URL_shorter.git
+```
 
 **切換專案**
 ```git
@@ -50,4 +51,4 @@ http://localhost:3000
 ```
 
 **部署**
-同步部署於 [Heroku](https://fathomless-badlands-88408.herokuapp.com)
+* 同步部署於 [Heroku](https://fathomless-badlands-88408.herokuapp.com)
