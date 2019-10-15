@@ -26,6 +26,7 @@
 * [Font Awesome](https://fontawesome.com/) v5.8.1
 * [Bootstrap](https://getbootstrap.com/) v4.3.1
 * [method-override](https://www.npmjs.com/package/method-override) v3.0.0
+* [body-parser](https://www.npmjs.com/package/body-parser) v1.19.0
 * [express-session](https://www.npmjs.com/package/express-session) v8.1.0
 * [passport](https://www.npmjs.com/package/passport) v0.4.0
 * [passport-local](https://www.npmjs.com/package/passport-local) v1.0.0
@@ -108,3 +109,7 @@ npm run dev
 ```
 http://localhost:3000
 ```
+
+**測試帳號**
+* user1@example.com, password:123
+* user2@example.com, password:123
