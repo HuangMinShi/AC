@@ -5,7 +5,7 @@
 1. 開發者可以查看收到 request 請求的時間
 
 ## Preview pages
-<img src="./public/1.jpg" width="847px" target="_blank">
+<img src="./public/1.jpg" width="347px" target="_blank">
 
 ## Environment and package used
 
