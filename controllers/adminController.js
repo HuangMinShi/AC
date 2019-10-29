@@ -16,10 +16,27 @@ const adminController = {
   },
 
   createRestaurant: (req, res) => {
-    return res.render('/admin/create')
+    return res.render('admin/create')
   },
 
+  postRestaurant: (req, res) => {
+    if (!req.body.name) {
+      req.flash('error_msg', '名字不存在')
+      return res.redirect('back')
+    }
 
+    return Restaurant.create({
+      name: req.body.name,
+      tel: req.body.tel,
+      address: req.body.address,
+      opening_hours: req.body.opening_hours,
+      description: req.body.description
+    })
+      .then(restaurant => {
+        req.flash('success_msg', '成功建立餐廳')
+        res.redirect('/admin/restaurants')
+      })
+  }
 
 }
 
