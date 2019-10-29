@@ -21,8 +21,6 @@ const adminController = {
 
   postRestaurant: (req, res) => {
     if (!req.body.name) {
-      console.log('不存在');
-
       req.flash('error_msg', '名字不存在')
       return res.redirect('back')
     }
@@ -53,6 +51,29 @@ const adminController = {
       .findByPk(req.params.id)
       .then(restaurant => {
         return res.render('admin/create', { restaurant })
+      })
+  },
+
+  putRestaurant: (req, res) => {
+    if (!req.body.name) {
+      req.flash('error_msg', '名字不存在')
+      return res.redirect('back')
+    }
+
+    return Restaurant
+      .findByPk(req.params.id)
+      .then(restaurant => {
+        restaurant.update({
+          name: req.body.name,
+          tel: req.body.tel,
+          address: req.body.address,
+          opening_hours: req.body.opening_hours,
+          description: req.body.description
+        })
+          .then(restaurant => {
+            req.flash('success_msg', '成功更新餐廳')
+            return res.redirect('/admin/restaurants')
+          })
       })
   }
 }
