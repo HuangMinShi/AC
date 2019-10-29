@@ -21,6 +21,8 @@ const adminController = {
 
   postRestaurant: (req, res) => {
     if (!req.body.name) {
+      console.log('不存在');
+
       req.flash('error_msg', '名字不存在')
       return res.redirect('back')
     }
@@ -36,8 +38,15 @@ const adminController = {
         req.flash('success_msg', '成功建立餐廳')
         res.redirect('/admin/restaurants')
       })
-  }
+  },
 
+  getRestaurant: (req, res) => {
+    return Restaurant
+      .findByPk(req.params.id)
+      .then(restaurant => {
+        return res.render('admin/restaurant', { restaurant })
+      })
+  }
 }
 
 module.exports = adminController
