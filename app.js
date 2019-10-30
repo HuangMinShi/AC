@@ -1,12 +1,13 @@
 const express = require('express')
 
-const db = require('./models')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const flash = require('connect-flash')
-const passport = require('./config/passport')
 const methodOverride = require('method-override')
+
+const passport = require('./config/passport')
+const db = require('./models')
 
 const port = process.env.PORT || 3000
 const app = express()
@@ -26,7 +27,6 @@ app.use((req, res, next) => {
   res.locals.user = req.user
   next()
 })
-
 
 app.listen(port, () => {
   db.sequelize.sync()
