@@ -5,6 +5,7 @@ const IMGUR_CLIENT_ID = '8c995c2bae122f6'
 
 const db = require('../models')
 const Restaurant = db.Restaurant
+const User = db.User
 
 const adminController = {
   getRestaurants: (req, res) => {
@@ -133,6 +134,33 @@ const adminController = {
         restaurant.destroy()
           .then(restaurant => {
             return res.redirect('/admin/restaurants')
+          })
+      })
+  },
+
+  editUsers: (req, res) => {
+    return User
+      .findAll()
+      .then(users => {
+        return res.render('admin/users',
+          {
+            users,
+            user: req.user
+          }
+        )
+      })
+  },
+
+  putUsers: (req, res) => {
+    return User
+      .findByPk(req.params.id)
+      .then(user => {
+        user
+          .update({ isAdmin: !user.isAdmin })
+          .then(user => {
+            req.flash('user_id_updated', `${req.params.id}`)
+            req.flash('success_msg', 'was successfully to update')
+            return res.redirect('/admin/users')
           })
       })
   }

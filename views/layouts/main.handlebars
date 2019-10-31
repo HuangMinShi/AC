@@ -27,15 +27,23 @@
           <a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">Logout</button></a>
         {{/if}}
       </div>
-
-  <main role="main">
-    <div class="album py-5 bg-light">
-      <div class="container">
-        {{#if success_msg}}
+    </div>
+  </nav>
+</header>
+<br>
+<main role="main">
+  <div class="album py-5 bg-light">
+    <div class="container">
+      {{#if success_msg}}
         <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
+
+          {{#if user_id_updated}}
+            user <span style="color: tomato;"><strong>{{user_id_updated}}</strong></span>
+          {{/if}}
+
           {{success_msg}}
         </div>
-        {{/if}}
+      {{/if}}
 
       {{#if error_msg}}
         <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
