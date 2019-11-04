@@ -4,6 +4,7 @@ const upload = multer({ dest: 'temp/' })
 const restController = require('../controllers/restController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
+const categoryController = require('../controllers/categoryController')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -40,6 +41,8 @@ module.exports = (app, passport) => {
   app.get('/admin/users', adminController.editUsers)
   app.put('/admin/users/:id', adminController.putUsers)
 
+  // categories
+  app.get('/admin/categories', categoryController.getCatrgories)
   // login, register and logout
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
