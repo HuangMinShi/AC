@@ -42,10 +42,11 @@ module.exports = (app, passport) => {
   app.put('/admin/users/:id', adminController.putUsers)
 
   // categories
-  app.get('/admin/categories', categoryController.getCatrgories)
-  app.post('/admin/categories', categoryController.postCatrgories)
-  app.get('/admin/categories/:id', categoryController.getCatrgory)
-  app.put('/admin/categories/:id', categoryController.putCatrgory)
+  app.get('/admin/categories', categoryController.getCategories)
+  app.post('/admin/categories', categoryController.postCategories)
+  app.get('/admin/categories/:id', categoryController.getCategory)
+  app.put('/admin/categories/:id', categoryController.putCategory)
+  app.delete('/admin/categories/:id', categoryController.deleteCategory)
 
   // login, register and logout
   app.get('/signup', userController.signUpPage)
