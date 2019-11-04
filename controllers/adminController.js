@@ -44,6 +44,7 @@ const adminController = {
           address: req.body.address,
           opening_hours: req.body.opening_hours,
           description: req.body.description,
+          CategoryId: req.body.categoryId,
           image: file ? img.data.link : null
         })
           .then(restaurant => {
@@ -58,6 +59,7 @@ const adminController = {
         address: req.body.address,
         opening_hours: req.body.opening_hours,
         description: req.body.description,
+        CategoryId: req.body.categoryId,
         image: null
       })
         .then(restaurant => {
@@ -106,6 +108,7 @@ const adminController = {
               address: req.body.address,
               opening_hours: req.body.opening_hours,
               description: req.body.description,
+              CategoryId: req.body.categoryId,
               image: file ? img.data.lonk : restaurant.image
             })
               .then(restaurant => {
@@ -124,6 +127,7 @@ const adminController = {
             address: req.body.address,
             opening_hours: req.body.opening_hours,
             description: req.body.description,
+            CategoryId: req.body.categoryId,
             image: restaurant.image
           })
             .then(restaurant => {
