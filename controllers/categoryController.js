@@ -2,12 +2,24 @@ const db = require('../models')
 const { Category } = db
 
 module.exports = {
-  // 瀏覽所有分類
+  // 瀏覽所有分類 & 取得編輯分類的頁面
   getCategories: (req, res) => {
     Category
       .findAll()
       .then(categories => {
-        return res.render('admin/categories', { categories })
+
+        if (req.params.id) {
+          Category
+            .findByPk(req.params.id)
+            .then(category => {
+              return res.render('admin/categories', { categories, category })
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        } else {
+          return res.render('admin/categories', { categories })
+        }
       })
       .catch(err => {
         console.log(err)
@@ -25,24 +37,6 @@ module.exports = {
       .then(category => {
         req.flash('success_msg', '成功新增類別')
         return res.redirect('/admin/categories')
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  },
-  // 取得編輯分類的頁面
-  getCategory: (req, res) => {
-    Category
-      .findAll()
-      .then(categories => {
-        Category
-          .findByPk(req.params.id)
-          .then(category => {
-            res.render('admin/categories', { categories, category })
-          })
-          .catch(err => {
-            console.log(err)
-          })
       })
       .catch(err => {
         console.log(err)
