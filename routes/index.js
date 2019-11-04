@@ -45,7 +45,7 @@ module.exports = (app, passport) => {
   app.get('/admin/categories', categoryController.getCatrgories)
   app.post('/admin/categories', categoryController.postCatrgories)
   app.get('/admin/categories/:id', categoryController.getCatrgory)
-
+  app.put('/admin/categories/:id', categoryController.putCatrgory)
 
   // login, register and logout
   app.get('/signup', userController.signUpPage)

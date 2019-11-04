@@ -15,7 +15,6 @@ module.exports = {
   },
   // 新增一筆分類
   postCatrgories: (req, res) => {
-
     if (!req.body.category) {
       req.flash('error_msg', '請輸入類別')
       return res.redirect('/admin/categories')
@@ -48,10 +47,33 @@ module.exports = {
       .catch(err => {
         console.log(err)
       })
-  }
-
+  },
   // 更新一筆分類
+  putCatrgory: (req, res) => {
+    if (!req.body.category) {
+      req.flash('error_msg', '欲修改類別不得為空')
+      return res.redirect('back')
+    }
 
+    Category
+      .findByPk(req.params.id)
+      .then(category => {
+        category
+          .update({
+            name: req.body.category
+          })
+          .then(category => {
+            req.flash('success_msg', '成功更新類別')
+            res.redirect('/admin/categories')
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
   // 刪除一筆分類
 
 }
