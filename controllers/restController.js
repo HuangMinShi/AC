@@ -1,10 +1,17 @@
 const db = require('../models')
 const { Restaurant, Category } = db
 
+const pageLimit = 10
+
 const restController = {
   getRestaurants: (req, res) => {
     const whereQuery = {}
     let categoryId = ''
+    let offset = 0
+
+    if (req.query.page) {
+      offset = (req.query.page - 1) * pageLimit
+    }
 
     if (req.query.categoryId) {
       categoryId = Number(req.query.categoryId)
@@ -12,9 +19,18 @@ const restController = {
     }
 
     return Restaurant
-      .findAll({ include: Category, where: whereQuery })
-      .then(restaurants => {
-        const data = restaurants.map(restaurant => ({
+      .findAndCountAll({
+        include: Category, where: whereQuery, offset, limit: pageLimit, raw: false
+      })
+      .then(results => {
+        // pagination
+        const page = Number(req.query.page) || 1
+        const pages = Math.ceil(results.count / pageLimit)
+        const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
+        const prev = page - 1 < 1 ? 1 : page - 1
+        const next = page + 1 > pages ? pages : page + 1
+
+        const data = results.rows.map(restaurant => ({
           ...restaurant.dataValues,
           description: restaurant.dataValues.description.substring(0, 50)
         }))
@@ -22,12 +38,15 @@ const restController = {
         Category
           .findAll()
           .then(categories => {
-            console.log(categoryId);
-
             return res.render('restaurants', {
               restaurants: data,
               categories,
-              categoryId
+              categoryId,
+              page,
+              pages,
+              totalPage,
+              prev,
+              next
             })
           })
       })
