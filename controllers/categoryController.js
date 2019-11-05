@@ -1,10 +1,10 @@
 const db = require('../models')
 const { Category } = db
 
-module.exports = {
+const categoryController = {
   // 瀏覽所有分類 & 取得編輯分類的頁面
   getCategories: (req, res) => {
-    Category
+    return Category
       .findAll()
       .then(categories => {
 
@@ -29,7 +29,7 @@ module.exports = {
   postCategories: (req, res) => {
     if (!req.body.category) {
       req.flash('error_msg', '請輸入類別')
-      return res.redirect('/admin/categories')
+      return res.redirect('back')
     }
 
     Category
@@ -88,3 +88,5 @@ module.exports = {
       })
   }
 }
+
+module.exports = categoryController
