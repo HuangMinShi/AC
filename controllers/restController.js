@@ -1,12 +1,9 @@
-
-
-
 const db = require('../models')
 const { Restaurant, Category } = db
 
 const restController = {
   getRestaurants: (req, res) => {
-    Restaurant
+    return Restaurant
       .findAll({ include: Category })
       .then(restaurants => {
 
@@ -16,6 +13,16 @@ const restController = {
         }))
 
         return res.render('restaurants', { restaurants: data })
+      })
+  },
+
+  getRestaurant: (req, res) => {
+    return Restaurant
+      .findByPk(req.params.id, { include: [Category] })
+      .then(restaurant => {
+        console.log(restaurant);
+
+        return res.render('restaurant', { restaurant })
       })
   }
 }
