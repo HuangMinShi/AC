@@ -5,6 +5,7 @@ const restController = require('../controllers/restController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const categoryController = require('../controllers/categoryController')
+const commentController = require('../controllers/commentController')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -28,6 +29,11 @@ module.exports = (app, passport) => {
   app.get('/', (req, res) => res.redirect('/restaurants'))
   app.get('/restaurants', restController.getRestaurants)
   app.get('/restaurants/:id', restController.getRestaurant)
+
+  // comment 
+  app.post('/comments', commentController.postComment)
+
+
 
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/restaurants'))
