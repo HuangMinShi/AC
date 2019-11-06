@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 })
 
 app.listen(port, () => {
-  db.sequelize.sync()
+  db.sequelize.sync({ force: false })
   console.log(`App is running on localhost:${port}`)
 })
 
