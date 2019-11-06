@@ -162,7 +162,7 @@ const adminController = {
       })
   },
 
-  putUsers: (req, res) => {
+  putUser: (req, res) => {
     return User
       .findByPk(req.params.id)
       .then(user => {
