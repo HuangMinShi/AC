@@ -32,7 +32,7 @@ const categoryController = {
       return res.redirect('back')
     }
 
-    Category
+    return Category
       .create({ name: req.body.category })
       .then(category => {
         req.flash('success_msg', '成功新增類別')
@@ -49,7 +49,7 @@ const categoryController = {
       return res.redirect('back')
     }
 
-    Category
+    return Category
       .findByPk(req.params.id)
       .then(category => {
         category
@@ -70,7 +70,7 @@ const categoryController = {
   },
   // 刪除一筆分類
   deleteCategory: (req, res) => {
-    Category
+    return Category
       .findByPk(req.params.id)
       .then(category => {
         category

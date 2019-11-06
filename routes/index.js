@@ -32,8 +32,7 @@ module.exports = (app, passport) => {
 
   // comment 
   app.post('/comments', commentController.postComment)
-
-
+  app.delete('/comments/:id', commentController.deleteComment)
 
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/restaurants'))
