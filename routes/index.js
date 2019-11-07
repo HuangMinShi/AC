@@ -26,33 +26,33 @@ module.exports = (app, passport) => {
   }
 
   // restaurants
-  app.get('/', (req, res) => res.redirect('/restaurants'))
-  app.get('/restaurants', restController.getRestaurants)
-  app.get('/restaurants/:id', restController.getRestaurant)
+  app.get('/', authenticated, (req, res) => res.redirect('/restaurants'))
+  app.get('/restaurants', authenticated, restController.getRestaurants)
+  app.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
   // comments 
-  app.post('/comments', commentController.postComment)
-  app.delete('/comments/:id', commentController.deleteComment)
+  app.post('/comments', authenticated, commentController.postComment)
+  app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 
   // admin
-  app.get('/admin', (req, res) => res.redirect('/admin/restaurants'))
-  app.get('/admin/restaurants', adminController.getRestaurants)
-  app.get('/admin/restaurants/create', adminController.createRestaurant)
-  app.post('/admin/restaurants', upload.single('image'), adminController.postRestaurant)
-  app.get('/admin/restaurants/:id', adminController.getRestaurant)
-  app.get('/admin/restaurants/:id/edit', adminController.editRestaurant)
-  app.put('/admin/restaurants/:id', upload.single('image'), adminController.putRestaurant)
-  app.delete('/admin/resturants/:id', adminController.deleteRestaurant)
+  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
+  app.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants)
+  app.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
+  app.post('/admin/restaurants', authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
+  app.get('/admin/restaurants/:id', authenticatedAdmin, adminController.getRestaurant)
+  app.get('/admin/restaurants/:id/edit', authenticatedAdmin, adminController.editRestaurant)
+  app.put('/admin/restaurants/:id', authenticatedAdmin, upload.single('image'), adminController.putRestaurant)
+  app.delete('/admin/resturants/:id', authenticatedAdmin, adminController.deleteRestaurant)
 
-  app.get('/admin/users', adminController.editUsers)
-  app.put('/admin/users/:id', adminController.putUser)
+  app.get('/admin/users', authenticatedAdmin, adminController.editUsers)
+  app.put('/admin/users/:id', authenticatedAdmin, adminController.putUser)
 
   // categories
-  app.get('/admin/categories', categoryController.getCategories)
-  app.post('/admin/categories', categoryController.postCategories)
-  app.get('/admin/categories/:id', categoryController.getCategories)
-  app.put('/admin/categories/:id', categoryController.putCategory)
-  app.delete('/admin/categories/:id', categoryController.deleteCategory)
+  app.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
+  app.post('/admin/categories', authenticatedAdmin, categoryController.postCategories)
+  app.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)
+  app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
+  app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 
   // login, register and logout
   app.get('/signup', userController.signUpPage)
