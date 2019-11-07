@@ -64,9 +64,4 @@ module.exports = (app, passport) => {
       failureFlash: true
     }), userController.signIn)
   app.get('/logout', userController.logout)
-
-  // users
-  app.get('/users/:id', userController.getUser)
-  app.get('/users/:id/edit', userController.editUser)
-  app.put('/users/:id', upload.single('image'), userController.putUser)
 }
