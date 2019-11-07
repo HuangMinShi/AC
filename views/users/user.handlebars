@@ -1,0 +1,15 @@
+<div class="d-flex" id="user-info">
+  <div class="user_img">
+    <img src="{{userQueried.image}}" alt="avatar" width="300px">
+  </div>
+
+  <div class="user_content ml-3">
+    <h5>{{userQueried.name}}</h5>
+    <p>{{userQueried.email}}</p>
+    {{#ifCond userQueried.id user.id}}
+      <a href="/users/{{../user.id}}/edit">
+        <button type="button" class="btn btn-primary">Edit</button>
+      </a>
+    {{/ifCond}}
+  </div>
+</div>

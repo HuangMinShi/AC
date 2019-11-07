@@ -1,6 +1,9 @@
 const bcrypt = require('bcryptjs')
+const imgur = require('imgur-node-api')
+
 const db = require('../models')
-const User = db.User
+
+const { User } = db
 
 const userController = {
   signUpPage: (req, res) => {
@@ -52,6 +55,99 @@ const userController = {
     req.flash('success_msg', '成功登出')
     req.logout()
     res.redirect('/signin')
+  },
+  // 瀏覽 profile
+  getUser: (req, res) => {
+    const userId = Number(req.params.id)
+
+    return User
+      .findByPk(userId)
+      .then(userQueried => {
+        return res.render('users/user', { userQueried })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+  },
+  // 修改 profile頁面
+  editUser: (req, res) => {
+    const userId = Number(req.params.id)
+
+    if (userId !== req.user.id) {
+      req.flash('error_msg', '不要輕舉妄動!')
+      return res.redirect(`/users/${req.user.id}`)
+    }
+
+    return User
+      .findByPk(userId)
+      .then(userQueried => {
+        return res.render('users/edit')
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+  // 修改 profile
+  putUser: (req, res) => {
+    const userId = Number(req.params.id)
+
+    if (userId !== req.user.id) {
+      req.flash('error_msg', '不要輕舉妄動!')
+      return res.redirect(`/users/${req.user.id}`)
+    }
+
+    if (!req.body.name) {
+      req.flash('error_msg', '請輸入姓名')
+      return res.redirect('back')
+    }
+
+    const { file } = req
+    if (file) {
+      imgur.setClientID(process.env.IMGUR_CLIENT_ID)
+      imgur
+        .upload(file.path, (err, img) => {
+          return User
+            .findByPk(userId)
+            .then(userQueried => {
+              return userQueried
+                .update({
+                  name: req.body.name,
+                  image: file ? img.data.link : userQueried.image
+                })
+                .then(userQueried => {
+                  req.flash('success_msg', '成功更新個人頁面')
+                  res.redirect(`/users/${userId}`)
+                })
+                .catch(err => {
+                  console.log(err)
+                })
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        })
+    } else {
+      return User
+        .findByPk(userId)
+        .then(userQueried => {
+          return userQueried
+            .update({
+              name: req.body.name,
+              image: userQueried.image
+            })
+            .then(userQueried => {
+              req.flash('success_msg', '成功更新個人頁面')
+              res.redirect(`/users/${userId}`)
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   }
 }
 
