@@ -3,7 +3,7 @@ const imgur = require('imgur-node-api')
 
 const db = require('../models')
 
-const { User } = db
+const { User, Comment, Restaurant } = db
 
 const userController = {
   signUpPage: (req, res) => {
@@ -60,15 +60,33 @@ const userController = {
   getUser: (req, res) => {
     const userId = Number(req.params.id)
 
-    return User
-      .findByPk(userId)
-      .then(userQueried => {
-        return res.render('users/user', { userQueried })
+    User
+      .findByPk(userId, {
+        include: [
+          { model: Comment, include: [Restaurant] }
+        ]
+      })
+      .then(results => {
+        const userQueried = results.dataValues
+        const resId = [], comments = []
+
+        // 對 user 評論過的餐廳s 檢查重複
+        userQueried.Comments.forEach(comment => {
+          if (!resId.includes(comment.RestaurantId)) {
+            resId.push(comment.RestaurantId)
+            comments.push(comment)
+          }
+        })
+
+        const count = comments.length
+        // 取代 user 的 Comments 
+        userQueried.Comments = comments
+        return res.render('users/user', { userQueried, count })
       })
       .catch(err => {
+        res.status(422).json(err)
         console.log(err)
       })
-
   },
   // 修改 profile頁面
   editUser: (req, res) => {

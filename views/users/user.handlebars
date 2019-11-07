@@ -1,15 +1,34 @@
 <div class="d-flex" id="user-info">
   <div class="user_img">
-    <img src="{{userQueried.image}}" alt="avatar" width="300px">
+    <img src="{{userQueried.image}}" alt="avatar" width="150px">
   </div>
 
   <div class="user_content ml-3">
     <h5>{{userQueried.name}}</h5>
     <p>{{userQueried.email}}</p>
+    <div class="my-3"><span class="mr-1">{{count}}</span>已評論餐廳</div>
     {{#ifCond userQueried.id user.id}}
       <a href="/users/{{../user.id}}/edit">
         <button type="button" class="btn btn-primary">Edit</button>
       </a>
     {{/ifCond}}
+  </div>
+</div>
+
+<br>
+
+<div class="card">
+  <div class="card-header">
+    <div><span class="mr-1">{{count}}</span>已評論餐廳</div>
+  </div>
+  <div class="card-body">
+    {{#each userQueried.Comments}}
+      <div class="mr-2 card-restaurant-img" style="display: inline-block;">
+        <a href="/restaurants/{{this.Restaurant.id}}">
+          <img src="{{this.Restaurant.image}}" alt="image" width="100px">
+        </a>
+      </div>
+
+    {{/each}}
   </div>
 </div>
