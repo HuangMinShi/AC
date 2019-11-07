@@ -25,12 +25,12 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
-  // restaurants
+  // user
   app.get('/', (req, res) => res.redirect('/restaurants'))
   app.get('/restaurants', restController.getRestaurants)
   app.get('/restaurants/:id', restController.getRestaurant)
 
-  // comments 
+  // comment 
   app.post('/comments', commentController.postComment)
   app.delete('/comments/:id', commentController.deleteComment)
 

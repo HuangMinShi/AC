@@ -1,8 +1,9 @@
 const fs = require('fs')
 const imgur = require('imgur-node-api')
 
-const db = require('../models')
+const IMGUR_CLIENT_ID = '8c995c2bae122f6'
 
+const db = require('../models')
 const { Restaurant, User, Category } = db
 
 const adminController = {
@@ -28,7 +29,6 @@ const adminController = {
   },
 
   postRestaurant: (req, res) => {
-
     if (!req.body.name) {
       req.flash('error_msg', '名字不存在')
       return res.redirect('back')
@@ -36,7 +36,7 @@ const adminController = {
 
     const { file } = req
     if (file) {
-      imgur.setClientID(process.env.IMGUR_CLIENT_ID)
+      imgur.setClientID(IMGUR_CLIENT_ID)
       imgur.upload(file.path, (err, img) => {
         return Restaurant.create({
           name: req.body.name,
@@ -97,7 +97,7 @@ const adminController = {
 
     const { file } = req
     if (file) {
-      imgur.setClientID(process.env.IMGUR_CLIENT_ID)
+      imgur.setClientID(IMGUR_CLIENT_ID)
       imgur.upload(file.path, (err, img) => {
         return Restaurant
           .findByPk(req.params.id)
@@ -109,7 +109,7 @@ const adminController = {
               opening_hours: req.body.opening_hours,
               description: req.body.description,
               CategoryId: req.body.categoryId,
-              image: file ? img.data.link : restaurant.image
+              image: file ? img.data.lonk : restaurant.image
             })
               .then(restaurant => {
                 req.flash('success_msg', '成功更新餐廳')
