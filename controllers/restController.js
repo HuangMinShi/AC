@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Restaurant, Category, User, Comment } = db
+const { Restaurant, Category, User, Comment, sequelize } = db
 
 const pageLimit = 10
 
@@ -85,6 +85,22 @@ const restController = {
           .catch(err => {
             console.log(err)
           })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+
+  getDashboard: (req, res) => {
+    return Restaurant
+      .findByPk(req.params.id, {
+        // Add attribute, first [] to rename, second [] to include 
+        attributes: { include: [[sequelize.fn('COUNT', sequelize.col('Comments.id')), 'commentCounts']] },
+        // do LEFT OUTER JOIN
+        include: [Category, Comment]
+      })
+      .then(restaurant => {
+        return res.render('dashboard', { restaurant })
       })
       .catch(err => {
         console.log(err)
