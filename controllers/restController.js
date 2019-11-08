@@ -100,6 +100,7 @@ const restController = {
         include: [Category, Comment]
       })
       .then(restaurant => {
+        restaurant.increment('viewCounts', { by: 1 })
         return res.render('dashboard', { restaurant })
       })
       .catch(err => {
