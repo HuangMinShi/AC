@@ -28,6 +28,7 @@ module.exports = (app, passport) => {
   // restaurants
   app.get('/', (req, res) => res.redirect('/restaurants'))
   app.get('/restaurants', restController.getRestaurants)
+  app.get('/restaurants/feeds', restController.getFeeds)
   app.get('/restaurants/:id', restController.getRestaurant)
 
   // comments 
