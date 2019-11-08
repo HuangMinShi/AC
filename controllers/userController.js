@@ -4,7 +4,7 @@ const imgur = require('imgur-node-api')
 
 const db = require('../models')
 
-const { User, Comment, Restaurant } = db
+const { User, Comment, Restaurant, Favorite } = db
 
 const userController = {
   signUpPage: (req, res) => {
@@ -186,7 +186,37 @@ const userController = {
           console.log(err)
         })
     }
-  }
+  },
+
+  addFavorite: (req, res) => {
+    return Favorite
+      .create({
+        UserId: req.user.id,
+        RestaurantId: req.params.restaurantId
+      })
+      .then(favorite => {
+        req.flash('success_msg', '成功加入收藏')
+        res.redirect('back')
+      })
+  },
+
+  removeFavorite: (req, res) => {
+    return Favorite
+      .findOne({
+        where: {
+          UserId: req.user.id,
+          RestaurantId: req.params.restaurantId
+        }
+      })
+      .then(favorite => {
+        favorite
+          .destroy()
+          .then(favorite => {
+            req.flash('success_msg', '成功移除收藏')
+            res.redirect('back')
+          })
+      })
+  },
 }
 
 module.exports = userController
