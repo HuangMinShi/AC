@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs')
+const passport = require('passport')
 const imgur = require('imgur-node-api')
 
 const db = require('../models')
@@ -47,8 +48,27 @@ const userController = {
   },
 
   signIn: (req, res) => {
-    req.flash('success_msg', '成功登入')
-    return res.redirect('/restaurants')
+    passport.authenticate('local', (err, user, info) => {
+      if (err) return console.log(err)
+
+      if (!user) {
+        const email = req.body.email
+        const password = req.body.password
+        let error_msg = req.flash('error_msg')
+
+        if (!email || !password) error_msg = '請輸入 email 及 password'
+
+        return res.render('signin', { email, error_msg })
+      }
+
+      req.login(user, err => {
+        if (err) return console.log(err)
+
+        req.flash('success_msg', '成功登入')
+        res.redirect('/restaurants')
+      })
+
+    })(req, res)
   },
 
   logout: (req, res) => {
