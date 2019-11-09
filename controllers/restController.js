@@ -51,6 +51,9 @@ const restController = {
             })
           })
       })
+      .catch(err => {
+        console.log(err)
+      })
   },
 
   getRestaurant: (req, res) => {
@@ -58,11 +61,16 @@ const restController = {
       .findByPk(req.params.id, {
         include: [
           Category,
-          { model: Comment, include: [User] }
+          { model: Comment, include: [User] },
+          { model: User, as: 'FavoritedUsers' }
         ]
       })
       .then(restaurant => {
-        return res.render('restaurant', { restaurant })
+        const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
+        return res.render('restaurant', { restaurant, isFavorited })
+      })
+      .catch(err => {
+        console.log(err)
       })
   },
 
