@@ -4,7 +4,7 @@ const imgur = require('imgur-node-api')
 
 const db = require('../models')
 
-const { User, Comment, Restaurant, Favorite, Like } = db
+const { User, Comment, Restaurant, Favorite, Like, Followship } = db
 
 const userController = {
   signUpPage: (req, res) => {
@@ -274,6 +274,43 @@ const userController = {
         users = users.sort((a, b) => { b.FollowerCount - a.FollowerCount })
 
         return res.render('topUser', { users })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+
+  addFollowing: (req, res) => {
+    return Followship
+      .create({
+        followerId: req.user.id,
+        followingId: req.params.userId
+      })
+      .then(() => {
+        res.redirect('back')
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+
+  removeFollowing: (req, res) => {
+    return Followship
+      .findOne({
+        where: {
+          followerId: req.user.id,
+          followingId: req.params.userId
+        }
+      })
+      .then(followship => {
+        followship
+          .destroy()
+          .then(() => {
+            res.redirect('back')
+          })
+          .catch(err => {
+            console.log(err)
+          })
       })
       .catch(err => {
         console.log(err)
