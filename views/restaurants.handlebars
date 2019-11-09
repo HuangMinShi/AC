@@ -37,13 +37,26 @@
 
           <!-- 收藏 -->
           {{#if isFavorited}}
-            <form action="/favorite/{{this.id}}?_method=DELETE" method="POST">
+            <form action="/favorite/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
               <button type="submit" class="btn btn-danger">移除最愛
               </button>
             </form>
           {{else}}
-            <form action="/favorite/{{this.id}}" method="POST">
+            <form action="/favorite/{{this.id}}" method="POST" style="display: contents;">
               <button type="submit" class="btn btn-primary">加到最愛
+              </button>
+            </form>
+          {{/if}}
+
+          <!-- 喜歡 -->
+          {{#if isLiked}}
+            <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <button type="submit" class="btn btn-unlike"><i class="fas fa-heart"></i>
+              </button>
+            </form>
+          {{else}}
+            <form action="/like/{{this.id}}" method="POST" style="display: contents;">
+              <button type="submit" class="btn btn-like"><i class="far fa-heart"></i>
               </button>
             </form>
           {{/if}}

@@ -36,6 +36,10 @@ module.exports = (app, passport) => {
   app.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
   app.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
 
+  // likes
+  app.post('/like/:restaurantId', authenticated, userController.like)
+  app.delete('/like/:restaurantId', authenticated, userController.unlike)
+
   // comments 
   app.post('/comments', authenticated, commentController.postComment)
   app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)

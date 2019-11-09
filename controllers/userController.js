@@ -4,7 +4,7 @@ const imgur = require('imgur-node-api')
 
 const db = require('../models')
 
-const { User, Comment, Restaurant, Favorite } = db
+const { User, Comment, Restaurant, Favorite, Like } = db
 
 const userController = {
   signUpPage: (req, res) => {
@@ -217,6 +217,44 @@ const userController = {
           })
       })
   },
+
+  like: (req, res) => {
+    return Like
+      .create({
+        UserId: req.user.id,
+        RestaurantId: req.params.restaurantId
+      })
+      .then(() => {
+        res.redirect('back')
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+
+  unlike: (req, res) => {
+    return Like
+      .findOne({
+        where: {
+          UserId: req.user.id,
+          RestaurantId: req.params.restaurantId
+        }
+      })
+      .then(liked => {
+        liked
+          .destroy()
+          .then(() => {
+            res.redirect('back')
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+  }
 }
 
 module.exports = userController

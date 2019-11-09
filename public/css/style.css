@@ -8,8 +8,28 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+/* restaurants */
 .restaurants_action {
   margin-bottom: 1rem;
+}
+
+/* restaurants like switch might a little bit slow... */
+.btn.btn-like:focus,
+.btn.btn-unlike:focus {
+  box-shadow: none;
+}
+
+.btn-unlike,.btn-like {
+  background: transparent;
+  font-size: 30px;
+  border: none;
+  padding: 0;
+  color: #dc3545;
+  margin-left: .5rem;
+}
+
+.btn-like {
+  color: black;
 }
 
 /* user */
