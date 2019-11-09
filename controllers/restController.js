@@ -32,7 +32,8 @@ const restController = {
 
         const data = results.rows.map(restaurant => ({
           ...restaurant.dataValues,
-          description: restaurant.dataValues.description.substring(0, 50)
+          description: restaurant.dataValues.description.substring(0, 50),
+          isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(restaurant.id)
         }))
 
         Category
