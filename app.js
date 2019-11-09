@@ -39,7 +39,8 @@ app.use((req, res, next) => {
 })
 
 app.listen(port, () => {
-  db.sequelize.sync({ force: false })
+  // suggest using migrations to control db
+  // db.sequelize.sync({ force: false })
   console.log(`App is running on localhost:${port}`)
 })
 
