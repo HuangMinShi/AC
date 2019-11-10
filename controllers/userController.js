@@ -76,39 +76,52 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  // 瀏覽 profile
+
   getUser: (req, res) => {
     const userId = Number(req.params.id)
 
     User
       .findByPk(userId, {
         include: [
-          { model: Comment, include: [Restaurant] }
+          { model: Comment, include: [Restaurant] },
+          { model: Restaurant, as: 'FavoritedRestaurants' },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
         ]
       })
       .then(results => {
-        const userQueried = results.dataValues
-        const resId = [], comments = []
+        // 找出評論中不重複的餐廳 id
+        const noRepeatCommentsResId = results.Comments.reduce((prev, curr) => {
+          prev[curr.RestaurantId] = 0
+          return prev
+        }, {})
 
-        // 對 user 評論過的餐廳s 檢查重複
-        userQueried.Comments.forEach(comment => {
-          if (!resId.includes(comment.RestaurantId)) {
-            resId.push(comment.RestaurantId)
-            comments.push(comment)
-          }
+        // 藉由不重複的餐廳 id 取出餐廳
+        const noRepeatCommentsRes = Object.keys(noRepeatCommentsResId).map(id => {
+          return results.Comments.find(item => {
+            return item.RestaurantId === Number(id)
+          })
         })
 
-        const count = comments.length
-        // 取代 user 的 Comments 
-        userQueried.Comments = comments
-        return res.render('users/user', { userQueried, count })
+        // 整理送往前端資料
+        const userQueried = {
+          ...results.dataValues,
+          Comments: noRepeatCommentsRes,
+          CommentsCount: noRepeatCommentsRes.length,
+          FavoritedRestaurantsCount: results.FavoritedRestaurants.length,
+          FollowerCount: results.Followers.length,
+          FollowingsCount: results.Followings.length,
+          isFollowed: results.Followers.map(user => user.id).includes(req.user.id)
+        }
+
+        return res.render('users/user', { userQueried })
       })
       .catch(err => {
         res.status(422).json(err)
         console.log(err)
       })
   },
-  // 修改 profile頁面
+
   editUser: (req, res) => {
     const userId = Number(req.params.id)
 
@@ -126,7 +139,7 @@ const userController = {
         console.log(err)
       })
   },
-  // 修改 profile
+
   putUser: (req, res) => {
     const userId = Number(req.params.id)
 
