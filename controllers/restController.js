@@ -109,7 +109,8 @@ const restController = {
         // Add attribute, first [] to rename, second [] to include 
         attributes: { include: [[sequelize.fn('COUNT', sequelize.col('Comments.id')), 'commentCounts']] },
         // do LEFT OUTER JOIN
-        include: [Category, Comment]
+        include: [Category, Comment],
+        group: ['Restaurant.id']
       })
       .then(restaurant => {
         restaurant.increment('viewCounts', { by: 1 })
