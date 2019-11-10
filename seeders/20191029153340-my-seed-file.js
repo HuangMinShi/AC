@@ -20,7 +20,7 @@ module.exports = {
     queryInterface.bulkInsert('Users', [
       {
         email: 'root@example.com',
-        password: bcrypt.hashSync('1', bcrypt.genSaltSync(10), null),
+        password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
         isAdmin: true,
         name: 'root',
         createdAt: new Date(),
@@ -28,7 +28,7 @@ module.exports = {
       },
       {
         email: 'user1@example.com',
-        password: bcrypt.hashSync('1', bcrypt.genSaltSync(10), null),
+        password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
         isAdmin: false,
         name: 'user1',
         createdAt: new Date(),
@@ -38,7 +38,7 @@ module.exports = {
     //  restaurant seed data
     return queryInterface.bulkInsert('Restaurants',
       Array
-        .from({ length: 5 })
+        .from({ length: 50 })
         .map(d =>
           ({
             name: faker.name.findName(),
@@ -48,6 +48,7 @@ module.exports = {
             image: faker.image.imageUrl(),
             description: faker.lorem.text(),
             CategoryId: Math.floor(Math.random() * 5 + 1),
+            viewCounts: Math.floor(Math.random() * 100),
             createdAt: new Date(),
             updatedAt: new Date()
           })
