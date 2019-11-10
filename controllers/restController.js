@@ -106,9 +106,6 @@ const restController = {
   getDashboard: (req, res) => {
     return Restaurant
       .findByPk(req.params.id, {
-        // Add attribute, first [] to rename, second [] to include 
-        attributes: { include: [[sequelize.fn('COUNT', sequelize.col('Comments.id')), 'commentCounts']] },
-        // do LEFT OUTER JOIN
         include: [Category, Comment]
       })
       .then(restaurant => {
