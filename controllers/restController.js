@@ -106,25 +106,10 @@ const restController = {
   getDashboard: (req, res) => {
     return Restaurant
       .findByPk(req.params.id, {
-
-        attributes: [
-          'id',
-          'name',
-          'viewCounts',
-          [sequelize.fn('COUNT', sequelize.col('Comments.id')), 'commentCounts']
-        ],
-        include: [
-          Category,
-          // exclude Comment primary key 
-          { model: Comment, attributes: [] }
-        ],
-        group: ['Restaurant.id']
-
+        include: [Category, Comment]
       })
-      .then(r => {
-        r.increment('viewCounts', { by: 1 })
-        // 展開成 plain js object
-        const restaurant = { ...r.dataValues }
+      .then(restaurant => {
+        restaurant.increment('viewCounts', { by: 1 })
         return res.render('dashboard', { restaurant })
       })
       .catch(err => {
