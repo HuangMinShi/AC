@@ -1,9 +1,8 @@
 const bcrypt = require('bcryptjs')
-const passport = require('passport')
+const passport = require('../config/passport')
 const imgur = require('imgur-node-api')
 
 const db = require('../models')
-
 const { User, Comment, Restaurant, Favorite, Like, Followship } = db
 
 const userController = {
