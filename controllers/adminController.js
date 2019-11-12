@@ -2,9 +2,9 @@ const fs = require('fs')
 const imgur = require('imgur-node-api')
 
 const db = require('../models')
-const adminService = require('../services/adminService')
-
 const { Restaurant, User, Category } = db
+
+const adminService = require('../services/adminService')
 
 const adminController = {
   getRestaurants: (req, res) => {
@@ -64,11 +64,9 @@ const adminController = {
   },
 
   getRestaurant: (req, res) => {
-    return Restaurant
-      .findByPk(req.params.id, { include: [Category] })
-      .then(restaurant => {
-        return res.render('admin/restaurant', { restaurant })
-      })
+    return adminService.getRestaurant(req, res, (data) => {
+      return res.render('admin/restaurant', data)
+    })
   },
 
   editRestaurant: (req, res) => {

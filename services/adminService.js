@@ -9,7 +9,26 @@ const adminService = {
         const options = { restaurants }
         return callback(options)
       })
+      .catch(err => {
+        console.log(err)
+      })
   },
+
+  getRestaurant: (req, res, cb) => {
+    return Restaurant
+      .findByPk(req.params.id,
+        {
+          include: [Category]
+        }
+      )
+      .then(restaurant => {
+        const options = { restaurant }
+        return cb(options)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 }
 
 module.exports = adminService
