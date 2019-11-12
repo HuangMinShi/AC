@@ -43,7 +43,10 @@ const userController = {
   },
 
   signInPage: (req, res) => {
-    return res.render('signin')
+    const email = 'z7707092004@gmail.com'
+    const password = '1'
+
+    return res.render('signin', { email, password })
   },
 
   signIn: (req, res) => {
@@ -271,19 +274,25 @@ const userController = {
   getTopUser: (req, res) => {
     return User
       .findAll({
-        include: [
-          { model: User, as: 'Followers' }
-        ]
+        include:
+          [
+            { model: User, as: 'Followers' }
+          ],
       })
       .then(users => {
-        users = users.map(user => ({
-          ...user.dataValues,
-          FollowerCount: user.Followers.length,
-          isFollowed: req.user.Followings.map(u => u.id).includes(user.id)
-        }))
 
-        // DESC by FollowCount
-        users = users.sort((a, b) => { b.FollowerCount - a.FollowerCount })
+        users = users
+          .map(user => {
+            // 若為 req.user 自己則新增 isUserSelf 送至 views 判斷
+            if (user.id === req.user.id) user.dataValues.isUserSelf = true
+
+            return ({
+              ...user.dataValues,
+              FollowerCount: user.Followers.length,
+              isFollowed: req.user.Followings.some(followingUser => followingUser.id === user.id)
+            })
+          })
+          .sort((a, b) => { b.FollowerCount - a.FollowerCount })
 
         return res.render('topUser', { users })
       })
@@ -296,10 +305,10 @@ const userController = {
     return Followship
       .create({
         followerId: req.user.id,
-        followingId: req.params.userId
+        followingId: Number(req.params.userId)
       })
       .then(() => {
-        res.redirect('back')
+        return res.redirect('back')
       })
       .catch(err => {
         console.log(err)
@@ -309,20 +318,17 @@ const userController = {
   removeFollowing: (req, res) => {
     return Followship
       .findOne({
-        where: {
+        where:
+        {
           followerId: req.user.id,
-          followingId: req.params.userId
+          followingId: Number(req.params.userId)
         }
       })
       .then(followship => {
-        followship
-          .destroy()
-          .then(() => {
-            res.redirect('back')
-          })
-          .catch(err => {
-            console.log(err)
-          })
+        return followship.destroy()
+      })
+      .then(() => {
+        return res.redirect('back')
       })
       .catch(err => {
         console.log(err)
