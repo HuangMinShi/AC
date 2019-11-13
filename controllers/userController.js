@@ -43,8 +43,8 @@ const userController = {
   },
 
   signInPage: (req, res) => {
-    const email = 'z7707092004@gmail.com'
-    const password = '1'
+    // const email = 'z7707092004@gmail.com'
+    // const password = '1'
 
     return res.render('signin', { email, password })
   },
