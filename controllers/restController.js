@@ -41,7 +41,7 @@ const restController = {
         const data = restaurants.map(restaurant => {
 
           if (restaurant.description > 50) {
-            restaurant.description = restaurant.description.slice(0, 50)
+            restaurant.description = restaurant.description.substring(0, 50)
           }
 
           return ({
