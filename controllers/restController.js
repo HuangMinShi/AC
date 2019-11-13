@@ -18,39 +18,51 @@ const restController = {
       whereQuery['categoryId'] = categoryId
     }
 
-    return Restaurant
-      .findAndCountAll({
-        include: Category, where: whereQuery, offset, limit: pageLimit, raw: false
-      })
+    const findQuery = {
+      include: Category,
+      where: whereQuery,
+      offset,
+      limit: pageLimit,
+    }
+    const promises = [Restaurant.findAndCountAll(findQuery), Category.findAll()]
+
+    return Promise
+      .all(promises)
       .then(results => {
+        const [{ count, rows: restaurants }, categories] = results
+
         // pagination
         const page = Number(req.query.page) || 1
-        const pages = Math.ceil(results.count / pageLimit)
+        const pages = Math.ceil(count / pageLimit)
         const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
         const prev = page - 1 < 1 ? 1 : page - 1
         const next = page + 1 > pages ? pages : page + 1
 
-        const data = results.rows.map(restaurant => ({
-          ...restaurant.dataValues,
-          description: restaurant.dataValues.description.substring(0, 50),
-          isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(restaurant.id),
-          isLiked: req.user.LikedRestaurants.map(d => d.id).includes(restaurant.id)
-        }))
+        const data = restaurants.map(restaurant => {
 
-        Category
-          .findAll()
-          .then(categories => {
-            return res.render('restaurants', {
-              restaurants: data,
-              categories,
-              categoryId,
-              page,
-              pages,
-              totalPage,
-              prev,
-              next
-            })
+          if (restaurant.description > 50) {
+            restaurant.description = restaurant.description.slice(0, 50)
+          }
+
+          return ({
+            ...restaurant.dataValues,
+            isFavorited: req.user.FavoritedRestaurants.some(favoritedRest => favoritedRest.id === restaurant.id),
+            isLiked: req.user.LikedRestaurants.some(likedRest => likedRest.id === restaurant.id)
           })
+        })
+
+        const options = {
+          restaurants: data,
+          categories,
+          categoryId,
+          page,
+          pages,
+          totalPage,
+          prev,
+          next
+        }
+
+        return res.render('restaurants', options)
       })
       .catch(err => {
         console.log(err)
@@ -68,8 +80,8 @@ const restController = {
         ]
       })
       .then(restaurant => {
-        const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
-        const isLiked = restaurant.LikedUsers.map(u => u.id).includes(req.user.id)
+        const isFavorited = restaurant.FavoritedUsers.some(favoriteduser => favoriteduser.id === req.user.id)
+        const isLiked = restaurant.LikedUsers.some(likedUser => likedUser.id === req.user.id)
         return res.render('restaurant', { restaurant, isFavorited, isLiked })
       })
       .catch(err => {
@@ -78,25 +90,24 @@ const restController = {
   },
 
   getFeeds: (req, res) => {
-    return Restaurant
-      .findAll({
+    const promises = [
+      Restaurant.findAll({
         limit: 10,
         order: [['createdAt', 'DESC'], ['id', 'ASC']],
         include: [Category]
+      }),
+      Comment.findAll({
+        limit: 10,
+        order: [['createdAt', 'DESC'], ['id', 'ASC']],
+        include: [User, Restaurant]
       })
-      .then(restaurants => {
-        return Comment
-          .findAll({
-            limit: 10,
-            order: [['createdAt', 'DESC'], ['id', 'ASC']],
-            include: [User, Restaurant]
-          })
-          .then(comments => {
-            return res.render('feeds', { restaurants, comments })
-          })
-          .catch(err => {
-            console.log(err)
-          })
+    ]
+
+    return Promise
+      .all(promises)
+      .then(results => {
+        const [restaurants, comments] = results
+        return res.render('feeds', { restaurants, comments })
       })
       .catch(err => {
         console.log(err)
@@ -125,7 +136,7 @@ const restController = {
       .then(r => {
         r.increment('viewCounts', { by: 1 })
 
-        // 展開成 plain js object
+        // 展開成 plain js object, 不然 categoryName 抓不到
         const restaurant = { ...r.dataValues }
 
         return res.render('dashboard', { restaurant })
@@ -143,15 +154,21 @@ const restController = {
         ]
       })
       .then(restaurants => {
-        restaurants = restaurants.map(restaurant => ({
-          ...restaurant.dataValues,
-          description: restaurant.dataValues.description.slice(0, 50),
-          FavoritedUsersCount: restaurant.FavoritedUsers.length,
-          isFavorited: req.user.FavoritedRestaurants.map(r => r.id).includes(restaurant.id)
-        }))
+        restaurants = restaurants
+          .map(restaurant => {
 
-        restaurants = restaurants.sort((a, b) => { return b.FavoritedUsersCount - a.FavoritedUsersCount })
-        restaurants = restaurants.slice(0, 10)
+            if (restaurant.description > 50) {
+              restaurant.description = restaurant.description.slice(0, 50)
+            }
+
+            return ({
+              ...restaurant.dataValues,
+              FavoritedUsersCount: restaurant.FavoritedUsers.length,
+              isFavorited: req.user.FavoritedRestaurants.some(favoritedRest => favoritedRest.id === restaurant.id)
+            })
+          })
+          .sort((a, b) => b.FavoritedUsersCount - a.FavoritedUsersCount)
+          .slice(0, 10)
 
         return res.render('topRestaurants', { restaurants })
       })

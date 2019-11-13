@@ -11,7 +11,7 @@
 
 <div class="form-group">
   <label for="categoryId">Category</label>
-  <select name="categoryId" id="categoryId" class="form-control">
+  <select name="CategoryId" id="categoryId" class="form-control">
     {{#each categories}}
       <option value="{{this.id}}" {{#ifCond this.id ../restaurant.CategoryId}} selected {{/ifCond}}>
         {{this.name}}
