@@ -6,15 +6,15 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const methodOverride = require('method-override')
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const passport = require('./config/passport')
 const db = require('./models')
 
 const port = process.env.PORT || 3000
 const app = express()
-
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
 
 app.engine('handlebars', exphbs({
   defaultLayout: 'main',
