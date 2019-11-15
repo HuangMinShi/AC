@@ -45,6 +45,35 @@ const categoryService = {
         console.log(err)
       })
   },
+
+  putCategory: (req, res, cb) => {
+    if (!req.body.category) {
+      const results = {
+        status: 'failure',
+        message: '請填入修改類別'
+      }
+
+      return cb(results)
+    }
+
+    return Category
+      .findByPk(req.params.id)
+      .then(category => {
+        return category.update({ name: req.body.category })
+      })
+      .then(() => {
+        const results = {
+          status: 'success',
+          message: '成功更新類別'
+        }
+
+        return cb(results)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+
 }
 
 module.exports = categoryService

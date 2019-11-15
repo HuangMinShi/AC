@@ -17,6 +17,11 @@ const categoryController = {
     })
   },
 
+  putCategory: (req, res) => {
+    return categoryService.putCategory(req, res, (data) => {
+      return res.json(data)
+    })
+  }
 
 
 
