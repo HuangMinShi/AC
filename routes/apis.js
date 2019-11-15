@@ -42,7 +42,7 @@ router.delete('/admin/categories/:id', categoryController.deleteCategory)
 
 // signin 
 router.post('/signin', userController.signIn)
-
+router.post('/signup', userController.signUp)
 
 
 module.exports = router

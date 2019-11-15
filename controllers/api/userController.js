@@ -58,7 +58,42 @@ const userController = {
       })
   },
 
+  signUp: (req, res) => {
+    let results = {
+      status: 'failure',
+      message: ''
+    }
 
+    if (req.body.passwordCheck !== req.body.password) {
+      results.message = '兩次密碼輸入不同'
+      return res.json(results)
+    }
+
+    return User
+      .findOne({ where: { email: req.body.email } })
+      .then(user => {
+
+        if (user) {
+          results.message = '信箱重複'
+          return res.json(results)
+        } else {
+          User
+            .create({
+              name: req.body.name,
+              email: req.body.email,
+              password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
+            })
+            .then(user => {
+              results = { status: 'success', message: '註冊成功' }
+              return res.json(results)
+            })
+        }
+
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
 
 }
 
