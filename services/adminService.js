@@ -73,6 +73,50 @@ const adminService = {
     }
   },
 
+  putRestaurant: (req, res, cb) => {
+    let results = {
+      status: 'success',
+      message: '成功修改餐廳'
+    }
+
+    if (!req.body.name) {
+      results = { status: 'failure', message: '名字不存在' }
+      return cb(results)
+    }
+
+    const { file } = req
+    if (file) {
+      imgur.setClientID(process.env.IMGUR_CLIENT_ID)
+      imgur.upload(file.path, (err, img) => {
+        return Restaurant
+          .findByPk(req.params.id)
+          .then(restaurant => {
+            req.body.image = file ? img.data.link : restaurant.image
+            return restaurant.update(req.body)
+          })
+          .then(() => {
+            return cb(results)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      })
+    } else {
+      return Restaurant
+        .findByPk(req.params.id)
+        .then(restaurant => {
+          return restaurant.update(req.body)
+        })
+        .then(() => {
+          return cb(results)
+        })
+        .catch(err => {
+          res.status(500).json(err.toString())
+          console.log(err)
+        })
+    }
+  },
+
   deleteRestaurant: (req, res, cb) => {
     return Restaurant
       .findByPk(req.params.id)
