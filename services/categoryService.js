@@ -74,6 +74,24 @@ const categoryService = {
       })
   },
 
+  deleteCategory: (req, res, cb) => {
+    return Category
+      .findByPk(req.params.id)
+      .then(category => {
+        return category.destroy()
+      })
+      .then(() => {
+        const results = {
+          status: 'success',
+          message: '成功刪除類別'
+        }
+
+        return cb(results)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 }
 
 module.exports = categoryService
