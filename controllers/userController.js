@@ -92,24 +92,17 @@ const userController = {
         ]
       })
       .then(results => {
-        // 找出評論中不重複的餐廳 id
-        const noRepeatCommentsResId = results.Comments.reduce((prev, curr) => {
-          prev[curr.RestaurantId] = 0
+        // 找出評論中不重複的餐廳s
+        const noRepeatCommentsRes = results.Comments.reduce((prev, curr) => {
+          prev[curr.RestaurantId] = curr
           return prev
         }, {})
-
-        // 藉由不重複的餐廳 id 取出餐廳
-        const noRepeatCommentsRes = Object.keys(noRepeatCommentsResId).map(id => {
-          return results.Comments.find(item => {
-            return item.RestaurantId === Number(id)
-          })
-        })
 
         // 整理送往前端資料
         const userQueried = {
           ...results.dataValues,
-          Comments: noRepeatCommentsRes,
-          CommentsCount: noRepeatCommentsRes.length,
+          Comments: Object.values(noRepeatCommentsRes),
+          CommentsCount: Object.keys(noRepeatCommentsRes).length,
           FavoritedRestaurantsCount: results.FavoritedRestaurants.length,
           FollowerCount: results.Followers.length,
           FollowingsCount: results.Followings.length,

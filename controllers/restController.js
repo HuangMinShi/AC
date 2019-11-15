@@ -80,6 +80,8 @@ const restController = {
         ]
       })
       .then(restaurant => {
+        restaurant.increment('viewCounts', { by: 1 })
+
         const isFavorited = restaurant.FavoritedUsers.some(favoriteduser => favoriteduser.id === req.user.id)
         const isLiked = restaurant.LikedUsers.some(likedUser => likedUser.id === req.user.id)
         return res.render('restaurant', { restaurant, isFavorited, isLiked })
@@ -134,8 +136,6 @@ const restController = {
 
       })
       .then(r => {
-        r.increment('viewCounts', { by: 1 })
-
         // 展開成 plain js object, 不然 categoryName 抓不到
         const restaurant = { ...r.dataValues }
 
