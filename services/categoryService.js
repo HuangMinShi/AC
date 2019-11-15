@@ -22,7 +22,29 @@ const categoryService = {
       })
   },
 
+  postCategories: (req, res, cb) => {
+    if (!req.body.category) {
+      const results = {
+        status: 'failure',
+        message: '請輸入類別'
+      }
+      return cb(results)
+    }
 
+    return Category
+      .create({ name: req.body.category })
+      .then(category => {
+        const results = {
+          status: 'success',
+          message: '成功新增類別'
+        }
+
+        return cb(results)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
 }
 
 module.exports = categoryService

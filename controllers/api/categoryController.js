@@ -11,6 +11,13 @@ const categoryController = {
     })
   },
 
+  postCategories: (req, res) => {
+    return categoryService.postCategories(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+
+
 
 
 }

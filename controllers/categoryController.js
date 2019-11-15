@@ -12,20 +12,15 @@ const categoryController = {
   },
 
   postCategories: (req, res) => {
-    if (!req.body.category) {
-      req.flash('error_msg', '請輸入類別')
-      return res.redirect('back')
-    }
+    return categoryService.postCategories(req, res, (data) => {
+      if (data.status === 'failure') {
+        req.flash('error_msg', data.message)
+        return res.redirect('back')
+      }
 
-    return Category
-      .create({ name: req.body.category })
-      .then(category => {
-        req.flash('success_msg', '成功新增類別')
-        return res.redirect('/admin/categories')
-      })
-      .catch(err => {
-        console.log(err)
-      })
+      req.flash('success_msg', data.message)
+      return res.redirect('/admin/categories')
+    })
   },
 
   putCategory: (req, res) => {
