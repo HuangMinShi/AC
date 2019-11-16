@@ -133,6 +133,38 @@ const restService = {
         return res.status(500).json(err.stack)
       })
   },
+
+  getTopRestaurants: (req, res, cb) => {
+    return Restaurant
+      .findAll({
+        include: [
+          { model: User, as: 'FavoritedUsers' }
+        ]
+      })
+      .then(restaurants => {
+        restaurants = restaurants
+          .map(restaurant => {
+
+            if (restaurant.description && restaurant.description.length > 50) {
+              restaurant.description = restaurant.description.substring(0, 50)
+            }
+
+            return ({
+              ...restaurant.dataValues,
+              FavoritedUsersCount: restaurant.FavoritedUsers.length,
+              isFavorited: req.user.FavoritedRestaurants.some(favoritedRest => favoritedRest.id === restaurant.id)
+            })
+          })
+          .sort((a, b) => b.FavoritedUsersCount - a.FavoritedUsersCount)
+          .slice(0, 1)
+
+        const results = { restaurants }
+        return cb(results)
+      })
+      .catch(err => {
+        return res.status(500).json(err.stack)
+      })
+  }
 }
 
 module.exports = restService

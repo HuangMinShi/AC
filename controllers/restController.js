@@ -29,34 +29,9 @@ const restController = {
   },
 
   getTopRestaurants: (req, res) => {
-    return Restaurant
-      .findAll({
-        include: [
-          { model: User, as: 'FavoritedUsers' }
-        ]
-      })
-      .then(restaurants => {
-        restaurants = restaurants
-          .map(restaurant => {
-
-            if (restaurant.description && restaurant.description.length > 50) {
-              restaurant.description = restaurant.description.substring(0, 50)
-            }
-
-            return ({
-              ...restaurant.dataValues,
-              FavoritedUsersCount: restaurant.FavoritedUsers.length,
-              isFavorited: req.user.FavoritedRestaurants.some(favoritedRest => favoritedRest.id === restaurant.id)
-            })
-          })
-          .sort((a, b) => b.FavoritedUsersCount - a.FavoritedUsersCount)
-          .slice(0, 10)
-
-        return res.render('topRestaurants', { restaurants })
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    return restService.getTopRestaurants(req, res, (data) => {
+      return res.render('topRestaurants', data)
+    })
   }
 }
 
