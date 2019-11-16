@@ -1,7 +1,7 @@
 const imgur = require('imgur-node-api')
 
 const db = require('../models')
-const { Restaurant, Category } = db
+const { Restaurant, Category, User } = db
 
 const adminService = {
   getRestaurants: (req, res, callback) => {
@@ -135,6 +135,27 @@ const adminService = {
         console.log(err)
       })
   },
+
+  putUser: (req, res, cb) => {
+    return User
+      .findByPk(req.params.id)
+      .then(user => {
+        return user.update({ isAdmin: !user.isAdmin })
+      })
+      .then(user => {
+        const results = {
+          status: 'success',
+          message: 'was successfully to update',
+          email: user.email
+        }
+
+        return cb(results)
+      })
+      .catch(err => {
+        // Internal Server Error ，伺服器遇到意外的情況，無法返回客戶端主機的請求
+        return res.status(500).json(err.stack)
+      })
+  }
 }
 
 module.exports = adminService

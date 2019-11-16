@@ -33,6 +33,13 @@ const adminController = {
       return res.json(data)
     })
   },
+
+  putUser: (req, res) => {
+    return adminService.putUser(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+
 }
 
 module.exports = adminController
