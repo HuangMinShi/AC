@@ -17,28 +17,9 @@ const restController = {
   },
 
   getFeeds: (req, res) => {
-    const promises = [
-      Restaurant.findAll({
-        limit: 10,
-        order: [['createdAt', 'DESC'], ['id', 'ASC']],
-        include: [Category]
-      }),
-      Comment.findAll({
-        limit: 10,
-        order: [['createdAt', 'DESC'], ['id', 'ASC']],
-        include: [User, Restaurant]
-      })
-    ]
-
-    return Promise
-      .all(promises)
-      .then(results => {
-        const [restaurants, comments] = results
-        return res.render('feeds', { restaurants, comments })
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    return restService.getFeeds(req, res, (data) => {
+      return res.render('feeds', data)
+    })
   },
 
   getDashboard: (req, res) => {

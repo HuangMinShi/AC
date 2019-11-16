@@ -28,8 +28,8 @@ const restService = {
 
     return Promise
       .all(promises)
-      .then(findResults => {
-        const [{ count, rows: restaurants }, categories] = findResults
+      .then(queryResults => {
+        const [{ count, rows: restaurants }, categories] = queryResults
 
         // pagination
         const page = Number(req.query.page) || 1
@@ -87,6 +87,32 @@ const restService = {
           isLiked: restaurant.LikedUsers.some(likedUser => likedUser.id === req.user.id)
         }
 
+        return cb(results)
+      })
+      .catch(err => {
+        return res.status(500).json(err.stack)
+      })
+  },
+
+  getFeeds: (req, res, cb) => {
+    const promises = [
+      Restaurant.findAll({
+        limit: 10,
+        order: [['createdAt', 'DESC'], ['id', 'ASC']],
+        include: [Category]
+      }),
+      Comment.findAll({
+        limit: 10,
+        order: [['createdAt', 'DESC'], ['id', 'ASC']],
+        include: [User, Restaurant]
+      })
+    ]
+
+    return Promise
+      .all(promises)
+      .then(queryResults => {
+        const [restaurants, comments] = queryResults
+        const results = { restaurants, comments }
         return cb(results)
       })
       .catch(err => {
