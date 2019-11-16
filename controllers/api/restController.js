@@ -19,6 +19,12 @@ const restController = {
     })
   },
 
+  getDashboard: (req, res) => {
+    return restService.getDashboard(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+
 }
 
 module.exports = restController

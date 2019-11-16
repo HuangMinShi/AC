@@ -23,33 +23,9 @@ const restController = {
   },
 
   getDashboard: (req, res) => {
-    return Restaurant
-      .findByPk(req.params.id, {
-
-        attributes: [
-          'id',
-          'name',
-          'viewCounts',
-          [sequelize.fn('COUNT', sequelize.col('Comments.id')), 'commentCounts'],
-          [sequelize.col('Category.name'), 'categoryName']
-        ],
-        include: [
-          // exclude Comment primary key 
-          { model: Category, attributes: [] },
-          { model: Comment, attributes: [] }
-        ],
-        group: ['Restaurant.id', 'Category.name']
-
-      })
-      .then(r => {
-        // 展開成 plain js object, 不然 categoryName 抓不到
-        const restaurant = { ...r.dataValues }
-
-        return res.render('dashboard', { restaurant })
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    return restService.getDashboard(req, res, (data) => {
+      return res.render('dashboard', data)
+    })
   },
 
   getTopRestaurants: (req, res) => {

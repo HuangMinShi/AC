@@ -119,6 +119,20 @@ const restService = {
         return res.status(500).json(err.stack)
       })
   },
+
+  getDashboard: (req, res, cb) => {
+    return Restaurant
+      .findByPk(req.params.id, {
+        include: [Category, Comment]
+      })
+      .then(restaurant => {
+        const results = { restaurant }
+        return cb(results)
+      })
+      .catch(err => {
+        return res.status(500).json(err.stack)
+      })
+  },
 }
 
 module.exports = restService
