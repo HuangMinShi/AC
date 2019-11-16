@@ -7,6 +7,12 @@ const restController = {
     })
   },
 
+  getRestaurant: (req, res) => {
+    return restService.getRestaurant(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+
 }
 
 module.exports = restController

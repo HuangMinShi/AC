@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Restaurant, Category } = db
+const { Restaurant, Category, Comment, User } = db
 
 const pageLimit = 10
 
@@ -61,6 +61,32 @@ const restService = {
           prev,
           next
         }
+        return cb(results)
+      })
+      .catch(err => {
+        return res.status(500).json(err.stack)
+      })
+  },
+
+  getRestaurant: (req, res, cb) => {
+    return Restaurant
+      .findByPk(req.params.id, {
+        include: [
+          Category,
+          { model: Comment, include: [User] },
+          { model: User, as: 'FavoritedUsers' },
+          { model: User, as: 'LikedUsers' }
+        ]
+      })
+      .then(restaurant => {
+        restaurant.increment('viewCounts', { by: 1 })
+
+        const results = {
+          restaurant,
+          isFavorited: restaurant.FavoritedUsers.some(favoriteduser => favoriteduser.id === req.user.id),
+          isLiked: restaurant.LikedUsers.some(likedUser => likedUser.id === req.user.id)
+        }
+
         return cb(results)
       })
       .catch(err => {
