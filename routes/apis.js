@@ -8,6 +8,7 @@ const passport = require('../config/passport')
 const adminController = require('../controllers/api/adminController')
 const categoryController = require('../controllers/api/categoryController')
 const userController = require('../controllers/api/userController')
+const restController = require('../controllers/api/restController')
 
 // middleware
 const authenticated = passport.authenticate('jwt', { session: false })
@@ -27,7 +28,6 @@ const authenticatedAdmin = (req, res, next) => {
 
 
 // admin/restaurants
-
 router.get('/admin', (req, res) => res.redirect('/admin/restaurants'))
 router.get('/admin/restaurants', adminController.getRestaurants)
 router.get('/admin/restaurants/:id', adminController.getRestaurant)
@@ -48,6 +48,18 @@ router.delete('/admin/categories/:id', categoryController.deleteCategory)
 // signin 
 router.post('/signin', userController.signIn)
 router.post('/signup', userController.signUp)
+
+// restaurants
+router.get('/restaurants', authenticated, restController.getRestaurants)
+
+
+
+
+
+
+
+
+
 
 
 module.exports = router

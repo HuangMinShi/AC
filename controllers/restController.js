@@ -1,72 +1,13 @@
 const db = require('../models')
 const { Restaurant, Category, User, Comment, sequelize } = db
 
-const pageLimit = 10
+const restService = require('../services/restService')
 
 const restController = {
   getRestaurants: (req, res) => {
-    const whereQuery = {}
-    let categoryId = ''
-    let offset = 0
-
-    if (req.query.page) {
-      offset = (req.query.page - 1) * pageLimit
-    }
-
-    if (req.query.categoryId) {
-      categoryId = Number(req.query.categoryId)
-      whereQuery['CategoryId'] = categoryId
-    }
-
-    const findQuery = {
-      include: Category,
-      where: whereQuery,
-      offset,
-      limit: pageLimit,
-    }
-    const promises = [Restaurant.findAndCountAll(findQuery), Category.findAll()]
-
-    return Promise
-      .all(promises)
-      .then(results => {
-        const [{ count, rows: restaurants }, categories] = results
-
-        // pagination
-        const page = Number(req.query.page) || 1
-        const pages = Math.ceil(count / pageLimit)
-        const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
-        const prev = page - 1 < 1 ? 1 : page - 1
-        const next = page + 1 > pages ? pages : page + 1
-
-        const data = restaurants.map(restaurant => {
-
-          if (restaurant.description && restaurant.description.length > 50) {
-            restaurant.description = restaurant.description.substring(0, 50)
-          }
-
-          return ({
-            ...restaurant.dataValues,
-            isFavorited: req.user.FavoritedRestaurants.some(favoritedRest => favoritedRest.id === restaurant.id),
-            isLiked: req.user.LikedRestaurants.some(likedRest => likedRest.id === restaurant.id)
-          })
-        })
-
-        const options = {
-          restaurants: data,
-          categories,
-          categoryId,
-          page,
-          pages,
-          totalPage,
-          prev,
-          next
-        }
-
-        return res.render('restaurants', options)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    return restService.getRestaurants(req, res, (data) => {
+      return res.render('restaurants', data)
+    })
   },
 
   getRestaurant: (req, res) => {
