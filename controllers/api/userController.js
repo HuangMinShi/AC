@@ -119,6 +119,12 @@ const userController = {
       return res.json(data)
     })
   },
+
+  removeFavorite: (req, res) => {
+    return userService.removeFavorite(req, res, (data) => {
+      return res.json(data)
+    })
+  },
 }
 
 module.exports = userController

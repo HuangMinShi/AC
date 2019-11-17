@@ -118,27 +118,16 @@ const userController = {
 
   addFavorite: (req, res) => {
     return userService.addFavorite(req, res, (data) => {
-      req.flash('success_msg', '成功加入收藏')
+      req.flash('success_msg', data.message)
       return res.redirect('back')
     })
   },
 
   removeFavorite: (req, res) => {
-    return Favorite
-      .findOne({
-        where: {
-          UserId: req.user.id,
-          RestaurantId: req.params.restaurantId
-        }
-      })
-      .then(favorite => {
-        favorite
-          .destroy()
-          .then(favorite => {
-            req.flash('success_msg', '成功移除收藏')
-            res.redirect('back')
-          })
-      })
+    return userService.removeFavorite(req, res, (data) => {
+      req.flash('success_msg', data.message)
+      return res.redirect('back')
+    })
   },
 
   like: (req, res) => {

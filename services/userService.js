@@ -152,6 +152,30 @@ const userService = {
         return res.status(500).json(err.stack)
       })
   },
+
+  removeFavorite: (req, res, cb) => {
+    return Favorite
+      .findOne({
+        where: {
+          UserId: req.user.id,
+          RestaurantId: req.params.restaurantId
+        }
+      })
+      .then(favorite => {
+        return favorite.destroy()
+      })
+      .then(() => {
+        const results = {
+          status: 'success',
+          message: '成功移除收藏'
+        }
+
+        return cb(results)
+      })
+      .catch(err => {
+        return res.status(500).json(err.stack)
+      })
+  },
 }
 
 module.exports = userService
