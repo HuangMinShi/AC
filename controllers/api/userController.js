@@ -125,6 +125,12 @@ const userController = {
       return res.json(data)
     })
   },
+
+  like: (req, res) => {
+    return userService.like(req, res, (data) => {
+      return res.json(data)
+    })
+  },
 }
 
 module.exports = userController

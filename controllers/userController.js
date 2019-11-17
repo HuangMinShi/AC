@@ -131,17 +131,9 @@ const userController = {
   },
 
   like: (req, res) => {
-    return Like
-      .create({
-        UserId: req.user.id,
-        RestaurantId: req.params.restaurantId
-      })
-      .then(() => {
-        res.redirect('back')
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    return userService.like(req, res, (data) => {
+      return res.redirect('back')
+    })
   },
 
   unlike: (req, res) => {

@@ -176,6 +176,24 @@ const userService = {
         return res.status(500).json(err.stack)
       })
   },
+
+  like: (req, res, cb) => {
+    return Like
+      .create({
+        UserId: req.user.id,
+        RestaurantId: req.params.restaurantId
+      })
+      .then(() => {
+        const results = {
+          status: 'success'
+        }
+
+        return cb(results)
+      })
+      .catch(err => {
+        return res.status(500).json(err.stack)
+      })
+  },
 }
 
 module.exports = userService
