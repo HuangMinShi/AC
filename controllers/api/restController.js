@@ -25,6 +25,12 @@ const restController = {
     })
   },
 
+  getTopRestaurants: (req, res) => {
+    return restService.getTopRestaurants(req, res, (data) => {
+      return res.json(data)
+    })
+  }
+
 }
 
 module.exports = restController
