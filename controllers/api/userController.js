@@ -137,6 +137,12 @@ const userController = {
       return res.json(data)
     })
   },
+
+  addFollowing: (req, res) => {
+    return userService.addFollowing(req, res, (data) => {
+      return res.json(data)
+    })
+  },
 }
 
 module.exports = userController

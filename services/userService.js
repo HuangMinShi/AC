@@ -218,6 +218,24 @@ const userService = {
       })
 
   },
+
+  addFollowing: (req, res, cb) => {
+    return Followship
+      .create({
+        followerId: req.user.id,
+        followingId: Number(req.params.userId)
+      })
+      .then(() => {
+        const results = {
+          status: 'success'
+        }
+
+        return cb(results)
+      })
+      .catch(err => {
+        return res.status(500).json(err.stack)
+      })
+  },
 }
 
 module.exports = userService

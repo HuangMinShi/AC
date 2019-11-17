@@ -149,17 +149,9 @@ const userController = {
   },
 
   addFollowing: (req, res) => {
-    return Followship
-      .create({
-        followerId: req.user.id,
-        followingId: Number(req.params.userId)
-      })
-      .then(() => {
-        return res.redirect('back')
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    return userService.addFollowing(req, res, (data) => {
+      return res.redirect('back')
+    })
   },
 
   removeFollowing: (req, res) => {
