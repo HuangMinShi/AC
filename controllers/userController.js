@@ -117,15 +117,10 @@ const userController = {
   },
 
   addFavorite: (req, res) => {
-    return Favorite
-      .create({
-        UserId: req.user.id,
-        RestaurantId: req.params.restaurantId
-      })
-      .then(favorite => {
-        req.flash('success_msg', '成功加入收藏')
-        res.redirect('back')
-      })
+    return userService.addFavorite(req, res, (data) => {
+      req.flash('success_msg', '成功加入收藏')
+      return res.redirect('back')
+    })
   },
 
   removeFavorite: (req, res) => {

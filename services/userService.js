@@ -1,5 +1,5 @@
 const db = require('../models')
-const { User, Comment, Restaurant } = db
+const { User, Comment, Restaurant, Favorite } = db
 
 const userService = {
   getUser: (req, res, cb) => {
@@ -134,6 +134,24 @@ const userService = {
       })
   },
 
+  addFavorite: (req, res, cb) => {
+    return Favorite
+      .create({
+        UserId: req.user.id,
+        RestaurantId: req.params.restaurantId
+      })
+      .then(() => {
+        const results = {
+          status: 'success',
+          message: '成功加入收藏'
+        }
+
+        return cb(results)
+      })
+      .catch(err => {
+        return res.status(500).json(err.stack)
+      })
+  },
 }
 
 module.exports = userService
