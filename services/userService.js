@@ -1,5 +1,5 @@
 const db = require('../models')
-const { User, Comment, Restaurant, Favorite, Like } = db
+const { User, Comment, Restaurant, Favorite, Like, Followship } = db
 
 const userService = {
   getUser: (req, res, cb) => {
@@ -236,6 +236,29 @@ const userService = {
         return res.status(500).json(err.stack)
       })
   },
+
+  removeFollowing: (req, res, cb) => {
+    return Followship
+      .findOne({
+        where: {
+          followerId: req.user.id,
+          followingId: Number(req.params.userId)
+        }
+      })
+      .then(followship => {
+        return followship.destroy()
+      })
+      .then(() => {
+        const results = {
+          status: 'success'
+        }
+
+        return cb(results)
+      })
+      .catch(err => {
+        return res.status(500).json(err.stack)
+      })
+  }
 }
 
 module.exports = userService

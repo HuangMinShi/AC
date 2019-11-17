@@ -143,6 +143,12 @@ const userController = {
       return res.json(data)
     })
   },
+
+  removeFollowing: (req, res) => {
+    return userService.removeFollowing(req, res, (data) => {
+      return res.json(data)
+    })
+  }
 }
 
 module.exports = userController
