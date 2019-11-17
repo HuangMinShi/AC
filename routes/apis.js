@@ -60,7 +60,7 @@ router.get('/restaurants/:id/dashboard', authenticated, restController.getDashbo
 
 // comments
 router.post('/comments', authenticated, commentController.postComment)
-
+router.delete('/comments/:id', authenticated, commentController.deleteComment)
 
 
 
