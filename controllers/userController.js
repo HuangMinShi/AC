@@ -185,33 +185,9 @@ const userController = {
   },
 
   getTopUser: (req, res) => {
-    return User
-      .findAll({
-        include:
-          [
-            { model: User, as: 'Followers' }
-          ],
-      })
-      .then(users => {
-
-        users = users
-          .map(user => {
-            // 若為 req.user 自己則新增 isUserSelf 送至 views 判斷
-            if (user.id === req.user.id) user.dataValues.isUserSelf = true
-
-            return ({
-              ...user.dataValues,
-              FollowerCount: user.Followers.length,
-              isFollowed: req.user.Followings.some(followingUser => followingUser.id === user.id)
-            })
-          })
-          .sort((a, b) => { b.FollowerCount - a.FollowerCount })
-
-        return res.render('topUser', { users })
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    return userService.getTopUser(req, res, (data) => {
+      return res.render('topUser', data)
+    })
   },
 
   addFollowing: (req, res) => {

@@ -103,7 +103,36 @@ const userService = {
     }
   },
 
+  getTopUser: (req, res, cb) => {
+    return User
+      .findAll({
+        include:
+          [
+            { model: User, as: 'Followers' }
+          ]
+      })
+      .then(users => {
 
+        users = users
+          .map(user => {
+            // 若為 req.user 自己則新增 isUserSelf 送至 views 判斷
+            if (user.id === req.user.id) user.dataValues.isUserSelf = true
+
+            return ({
+              ...user.dataValues,
+              FollowerCount: user.Followers.length,
+              isFollowed: req.user.Followings.some(followingUser => followingUser.id === user.id)
+            })
+          })
+          .sort((a, b) => { b.FollowerCount - a.FollowerCount })
+
+        const results = { users }
+        return cb(results)
+      })
+      .catch(err => {
+        return res.status(500).json(err.stack)
+      })
+  },
 
 }
 
