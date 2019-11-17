@@ -1,5 +1,5 @@
 const db = require('../models')
-const { User, Comment, Restaurant, Favorite } = db
+const { User, Comment, Restaurant, Favorite, Like } = db
 
 const userService = {
   getUser: (req, res, cb) => {
@@ -193,6 +193,30 @@ const userService = {
       .catch(err => {
         return res.status(500).json(err.stack)
       })
+  },
+
+  unlike: (req, res, cb) => {
+    return Like
+      .findOne({
+        where: {
+          UserId: req.user.id,
+          RestaurantId: req.params.restaurantId
+        }
+      })
+      .then(liked => {
+        return liked.destroy()
+      })
+      .then(() => {
+        const results = {
+          status: 'success'
+        }
+
+        return cb(results)
+      })
+      .catch(err => {
+        return res.status(500).json(err.stack)
+      })
+
   },
 }
 

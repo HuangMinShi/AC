@@ -131,6 +131,12 @@ const userController = {
       return res.json(data)
     })
   },
+
+  unlike: (req, res) => {
+    return userService.unlike(req, res, (data) => {
+      return res.json(data)
+    })
+  },
 }
 
 module.exports = userController

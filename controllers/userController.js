@@ -137,27 +137,9 @@ const userController = {
   },
 
   unlike: (req, res) => {
-    return Like
-      .findOne({
-        where: {
-          UserId: req.user.id,
-          RestaurantId: req.params.restaurantId
-        }
-      })
-      .then(liked => {
-        liked
-          .destroy()
-          .then(() => {
-            res.redirect('back')
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-
+    return userService.unlike(req, res, (data) => {
+      return res.redirect('back')
+    })
   },
 
   getTopUser: (req, res) => {

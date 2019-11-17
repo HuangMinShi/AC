@@ -73,4 +73,6 @@ router.delete('/favorite/:restaurantId', authenticated, userController.removeFav
 
 // likes
 router.post('/like/:restaurantId', authenticated, userController.like)
+router.delete('/like/:restaurantId', authenticated, userController.unlike)
+
 module.exports = router
