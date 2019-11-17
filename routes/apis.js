@@ -62,8 +62,8 @@ router.get('/restaurants/:id/dashboard', authenticated, restController.getDashbo
 router.post('/comments', authenticated, commentController.postComment)
 router.delete('/comments/:id', authenticated, commentController.deleteComment)
 
-
-
+// users
+router.get('/users/:id', authenticated, userController.getUser)
 
 
 

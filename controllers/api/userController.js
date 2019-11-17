@@ -1,3 +1,4 @@
+const userService = require('../../services/userService')
 const db = require('../../models')
 const { User } = db
 
@@ -94,6 +95,14 @@ const userController = {
         console.log(err)
       })
   },
+
+  getUser: (req, res) => {
+    return userService.getUser(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+
+
 
 }
 

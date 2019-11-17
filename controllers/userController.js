@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 const passport = require('../config/passport')
 const imgur = require('imgur-node-api')
 
+const userService = require('../services/userService')
 const db = require('../models')
 const { User, Comment, Restaurant, Favorite, Like, Followship } = db
 
@@ -80,41 +81,9 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    const userId = Number(req.params.id)
-
-    User
-      .findByPk(userId, {
-        include: [
-          { model: Comment, include: [Restaurant] },
-          { model: Restaurant, as: 'FavoritedRestaurants' },
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
-        ]
-      })
-      .then(results => {
-        // 找出評論中不重複的餐廳s
-        const noRepeatCommentsRes = results.Comments.reduce((prev, curr) => {
-          prev[curr.RestaurantId] = curr
-          return prev
-        }, {})
-
-        // 整理送往前端資料
-        const userQueried = {
-          ...results.dataValues,
-          Comments: Object.values(noRepeatCommentsRes),
-          CommentsCount: Object.keys(noRepeatCommentsRes).length,
-          FavoritedRestaurantsCount: results.FavoritedRestaurants.length,
-          FollowerCount: results.Followers.length,
-          FollowingsCount: results.Followings.length,
-          isFollowed: results.Followers.map(user => user.id).includes(req.user.id)
-        }
-
-        return res.render('users/user', { userQueried })
-      })
-      .catch(err => {
-        res.status(422).json(err)
-        console.log(err)
-      })
+    return userService.getUser(req, res, (data) => {
+      return res.render('users/user', data)
+    })
   },
 
   editUser: (req, res) => {
