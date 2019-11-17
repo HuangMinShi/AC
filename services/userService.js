@@ -40,7 +40,68 @@ const userService = {
       })
   },
 
+  putUser: (req, res, cb) => {
+    const userId = Number(req.params.id)
+    const results = {
+      status: 'failure',
+      message: null
+    }
 
+    if (userId !== req.user.id) {
+      results.message = '不要輕舉妄動'
+      return cb(results)
+    }
+
+    if (!req.body.name) {
+      results.message = '請輸入姓名'
+      return cb(results)
+    }
+
+    const { file } = req
+    if (file) {
+      imgur.setClientID(process.env.IMGUR_CLIENT_ID)
+      imgur.upload(file.path, (err, img) => {
+
+        return User
+          .findByPk(userId)
+          .then(userQueried => {
+            return userQueried.update({
+              name: req.body.name,
+              image: file ? img.data.link : userQueried.image
+            })
+          })
+          .then(() => {
+            results.status = 'success'
+            results.message = '成功更新個人頁面'
+            results.userId = userId
+
+            return cb(results)
+          })
+          .catch(err => {
+            return res.status(500).json(err.stack)
+          })
+      })
+    } else {
+      return User
+        .findByPk(userId)
+        .then(userQueried => {
+          return userQueried.update({
+            name: req.body.name,
+            image: userQueried.image
+          })
+        })
+        .then(() => {
+          results.status = 'success'
+          results.message = '成功更新個人頁面'
+          results.userId = userId
+
+          return cb(results)
+        })
+        .catch(err => {
+          return res.status(500).json(err.stack)
+        })
+    }
+  },
 
 
 

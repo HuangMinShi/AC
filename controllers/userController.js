@@ -105,64 +105,15 @@ const userController = {
   },
 
   putUser: (req, res) => {
-    const userId = Number(req.params.id)
+    return userService.putUser(req, res, (data) => {
+      if (data.status === 'failure') {
+        req.flash('error_msg', data.message)
+        return res.redirect('back')
+      }
 
-    if (userId !== req.user.id) {
-      req.flash('error_msg', '不要輕舉妄動!')
-      return res.redirect(`/users/${req.user.id}`)
-    }
-
-    if (!req.body.name) {
-      req.flash('error_msg', '請輸入姓名')
-      return res.redirect('back')
-    }
-
-    const { file } = req
-    if (file) {
-      imgur.setClientID(process.env.IMGUR_CLIENT_ID)
-      imgur
-        .upload(file.path, (err, img) => {
-          return User
-            .findByPk(userId)
-            .then(userQueried => {
-              return userQueried
-                .update({
-                  name: req.body.name,
-                  image: file ? img.data.link : userQueried.image
-                })
-                .then(userQueried => {
-                  req.flash('success_msg', '成功更新個人頁面')
-                  res.redirect(`/users/${userId}`)
-                })
-                .catch(err => {
-                  console.log(err)
-                })
-            })
-            .catch(err => {
-              console.log(err)
-            })
-        })
-    } else {
-      return User
-        .findByPk(userId)
-        .then(userQueried => {
-          return userQueried
-            .update({
-              name: req.body.name,
-              image: userQueried.image
-            })
-            .then(userQueried => {
-              req.flash('success_msg', '成功更新個人頁面')
-              res.redirect(`/users/${userId}`)
-            })
-            .catch(err => {
-              console.log(err)
-            })
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
+      req.flash('success_msg', data.message)
+      return res.redirect(`/users/${data.userId}`)
+    })
   },
 
   addFavorite: (req, res) => {

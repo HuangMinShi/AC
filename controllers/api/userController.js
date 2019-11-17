@@ -102,7 +102,11 @@ const userController = {
     })
   },
 
-
+  putUser: (req, res) => {
+    return userService.putUser(req, res, (data) => {
+      return res.json(data)
+    })
+  },
 
 }
 
