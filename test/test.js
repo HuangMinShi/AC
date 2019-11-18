@@ -1,6 +1,9 @@
 const assert = require('assert')
-const helper = require('../helper')
 const axios = require('axios')
+
+const helper = require('../helper')
+const request = require('supertest')
+const app = require('../app')
 
 /**
 function sum(a, b) {
@@ -20,7 +23,6 @@ describe('#2 測試檔案外函式', function () {
     assert.equal(helper.sum(1, 2), 3)
   })
 })
-*/
 
 // #3 測試路由 - axios(開啟伺服器)
 describe('#3 測試路由 - axios', () => {
@@ -36,6 +38,21 @@ describe('#3 測試路由 - axios', () => {
       })
       .catch(err => {
         console.log(err)
+      })
+  })
+})
+*/
+
+// #4 測試路由 - supertest
+describe('#4 測試路由 - supertest', () => {
+  it('sum(1,2) === 3 ?', (done) => {
+    request(app)
+      .get('/add?a=1&b=2')
+      .end((err, res) => {
+        if (err) return done(err)
+
+        assert.equal(res.text, 3)
+        return done()
       })
   })
 })

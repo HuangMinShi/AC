@@ -6,11 +6,10 @@
   "dependencies": {
     "axios": "^0.19.0",
     "express": "^4.17.1",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "supertest": "^4.0.2"
   },
-  "devDependencies": {
-    "mocha": "^6.2.2"
-  },
+  "devDependencies": {},
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js",
