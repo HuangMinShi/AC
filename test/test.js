@@ -1,5 +1,8 @@
 const assert = require('assert')
+const helper = require('../helper')
+const axios = require('axios')
 
+/**
 function sum(a, b) {
   return a + b
 }
@@ -18,3 +21,21 @@ describe('#2 測試檔案外函式', function () {
   })
 })
 */
+
+// #3 測試路由 - axios(開啟伺服器)
+describe('#3 測試路由 - axios', () => {
+  it('sum(1,2) === 3 ?', (done) => {
+    axios
+      .get('http://localhost:3000/add?a=1&b=2')
+      .then(res => {
+        return res.data
+      })
+      .then(data => {
+        assert.equal(data, 3)
+        return done()
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  })
+})
