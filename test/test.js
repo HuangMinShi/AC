@@ -2,7 +2,7 @@ const assert = require('assert')
 const axios = require('axios')
 const sinon = require('sinon')
 
-const helper = require('../helper')
+const helpers = require('../helpers')
 const request = require('supertest')
 const app = require('../app')
 
@@ -57,14 +57,13 @@ describe('#4 測試路由 - supertest', () => {
       })
   })
 })
-*/
 
 // #5 模擬登入 - stub
 describe('#5 模擬登入 - stub', () => {
 
   before(() => {
-    this.logined = sinon
-      .stub(helper, 'logined')
+    sinon
+      .stub(helpers, 'logined')
       .returns(true)
   })
 
@@ -80,6 +79,34 @@ describe('#5 模擬登入 - stub', () => {
   })
 
   after(() => {
-    this.logined.restore()
+    helpers.logined.restore()
+  })
+})
+*/
+
+// #6 模擬登入 - mock
+describe('#6 模擬登入 - mock', () => {
+
+  before(() => {
+    sinon
+      .mock(helpers)
+      .expects('logined')
+      .once()
+      .returns(true)
+  })
+
+  it('sum(1,2) === 3 ?', (done) => {
+    request(app)
+      .get('/add?a=1&b=2')
+      .end((err, res) => {
+        if (err) return done(err)
+
+        assert.equal(res.text, 3)
+        return done()
+      })
+  })
+
+  after(() => {
+    helpers.logined.restore()
   })
 })

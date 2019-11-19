@@ -1,6 +1,6 @@
 const express = require('express')
 
-const helper = require('./helper')
+const helpers = require('./helpers')
 
 const app = express()
 const port = 3000
@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 
 app.get('/add', (req, res) => {
 
-  if (!helper.logined() && !logined) {
+  if (!helpers.logined() && !logined) {
     return res.send('')
   }
 
