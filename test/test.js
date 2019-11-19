@@ -1,5 +1,6 @@
 const assert = require('assert')
 const axios = require('axios')
+const sinon = require('sinon')
 
 const helper = require('../helper')
 const request = require('supertest')
@@ -41,7 +42,7 @@ describe('#3 測試路由 - axios', () => {
       })
   })
 })
-*/
+
 
 // #4 測試路由 - supertest
 describe('#4 測試路由 - supertest', () => {
@@ -54,5 +55,31 @@ describe('#4 測試路由 - supertest', () => {
         assert.equal(res.text, 3)
         return done()
       })
+  })
+})
+*/
+
+// #5 模擬登入 - stub
+describe('#5 模擬登入 - stub', () => {
+
+  before(() => {
+    this.logined = sinon
+      .stub(helper, 'logined')
+      .returns(true)
+  })
+
+  it('sum(1,2) === 3 ?', (done) => {
+    request(app)
+      .get('/add?a=1&b=2')
+      .end((err, res) => {
+        if (err) return done(err)
+
+        assert.equal(res.text, 3)
+        return done()
+      })
+  })
+
+  after(() => {
+    this.logined.restore()
   })
 })
