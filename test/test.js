@@ -82,7 +82,6 @@ describe('#5 模擬登入 - stub', () => {
     helpers.logined.restore()
   })
 })
-*/
 
 // #6 模擬登入 - mock
 describe('#6 模擬登入 - mock', () => {
@@ -109,4 +108,25 @@ describe('#6 模擬登入 - mock', () => {
   after(() => {
     helpers.logined.restore()
   })
+})
+*/
+
+// #7 手動登入  
+describe('#7 模擬登入 - 手動', () => {
+
+  it('sum(1,2) === 3 ?', (done) => {
+    request(app)
+      .get('/login')
+      .end((err, res) => {
+        request(app)
+          .get('/add?a=1&b=2')
+          .end((err, res) => {
+            if (err) return done(err)
+
+            assert.equal(res.text, 3)
+            return done()
+          })
+      })
+  })
+
 })
