@@ -14,6 +14,7 @@ const passport = require('./config/passport')
 const db = require('./models')
 
 const port = process.env.PORT || 3000
+const env = process.env.NODE_ENV || 'development'
 const app = express()
 
 app.engine('handlebars', exphbs({
@@ -38,10 +39,13 @@ app.use((req, res, next) => {
   next()
 })
 
-app.listen(port, () => {
-  // suggest using migrations to control db
-  // db.sequelize.sync({ force: false })
-  console.log(`App is running on localhost:${port}`)
-})
+if (env !== 'test') {
+  app.listen(port, () => {
+    // suggest using migrations to control db
+    // db.sequelize.sync({ force: false })
+    console.log(`App is running on localhost:${port}, env:${env}`)
+  })
+}
 
 require('./routes')(app)
+module.exports = app
