@@ -4,7 +4,7 @@ const { User } = db
 const chai = require('chai')
 const should = chai.should()
 
-describe('#1 User Model', () => {
+describe('# User Model', () => {
   describe('CRUD', () => {
 
     let data = null
