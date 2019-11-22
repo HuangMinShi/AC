@@ -4,28 +4,12 @@ const multer = require('multer')
 const router = express.Router()
 const upload = multer({ dest: 'temp/' })
 
-const passport = require('../config/passport')
+const { authenticated, authenticatedAdmin } = require('../middlewares/api/auth')
 const adminController = require('../controllers/api/adminController')
 const categoryController = require('../controllers/api/categoryController')
 const userController = require('../controllers/api/userController')
 const restController = require('../controllers/api/restController')
 const commentController = require('../controllers/api/commentController')
-
-// middleware
-const authenticated = passport.authenticate('jwt', { session: false })
-const authenticatedAdmin = (req, res, next) => {
-  const results = {
-    status: 'failure',
-    message: 'permission denied'
-  }
-
-  if (req.user) {
-    if (req.user.isAdmin) return next()
-    return res.json(results)
-  }
-  return res.json(results)
-}
-
 
 
 // admin/restaurants

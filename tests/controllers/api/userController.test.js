@@ -174,4 +174,34 @@ describe('# User controller api', () => {
         })
     })
   })
+
+  describe('GET /api/users/top - 登入', () => {
+    before(async () => {
+      await User.destroy({ where: {}, truncate: true })
+      const root = await User.create({ name: 'root' })
+      await User.create({ name: 'user1' })
+
+      this.authenticate = sinon
+        .stub(passport, 'authenticate')
+        .callsFake((strategy, options, callback) => {
+          callback(null, { ...root }, null)
+          return (req, res, next) => { }
+        })
+    })
+
+    after(async () => {
+      await User.destroy({ where: {}, truncate: true })
+      this.authenticate.restore()
+    })
+
+    it('[O] 登入狀態，取得 Top Users', (done) => {
+      request(app)
+        .get('/api/users/top')
+        .expect(200)
+        .end((err, res) => {
+          res.body.users.length.should.be.equal(2)
+          err ? done(err) : done()
+        })
+    })
+  })
 })
