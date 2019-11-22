@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js",
-    "test": "set NODE_ENV=test&& mocha tests --exit --recursive --timeout 5000"
+    "test": "set NODE_ENV=test& mocha tests --exit --recursive --timeout 5000"
   },
   "keywords": [],
   "author": "",
