@@ -19,6 +19,7 @@ const adminController = {
       .then(categories => {
         return res.render('admin/create', { categories })
       })
+      .catch(err => res.status(500).json(err.stack))
   },
 
   postRestaurant: (req, res) => {

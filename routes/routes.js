@@ -9,23 +9,7 @@ const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const categoryController = require('../controllers/categoryController')
 const commentController = require('../controllers/commentController')
-
-const authenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next()
-  }
-  res.redirect('/signin')
-}
-
-const authenticatedAdmin = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    if (req.user.isAdmin) {
-      return next()
-    }
-    return res.redirect('/')
-  }
-  res.redirect('/signin')
-}
+const { authenticated, authenticatedAdmin } = require('../config/auth')
 
 // restaurants
 router.get('/', authenticated, (req, res) => res.redirect('/restaurants'))
