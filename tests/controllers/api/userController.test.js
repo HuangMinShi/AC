@@ -155,4 +155,23 @@ describe('# User controller api', () => {
         })
     })
   })
+
+  describe('GET /api/users/top - 未登入', () => {
+    before(async () => {
+      await User.destroy({ where: {}, truncate: true })
+    })
+
+    after(async () => await User.destroy({ where: {}, truncate: true }))
+
+    it('[X] 未登入，無法取得 Top Users', (done) => {
+      request(app)
+        .get('/api/users/top')
+        .expect(401)
+        .end((err, res) => {
+          res.body.status.should.be.equal('failure')
+          res.body.message.should.be.equal('沒有auth token')
+          err ? done(err) : done()
+        })
+    })
+  })
 })
