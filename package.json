@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js",
-    "test": "set NODE_ENV=test& mocha tests --exit --recursive --timeout 5000"
+    "test": "set NODE_ENV=test& mocha tests --exit --recursive --timeout 5000",
+    "cover": "set NODE_ENV=test& npx nyc mocha tests/controllers --exit --recursive --timeout 5000"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +37,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.2.2",
+    "nyc": "^14.1.1",
     "sinon": "^7.5.0",
     "supertest": "^4.0.2"
   }
