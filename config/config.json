@@ -8,6 +8,7 @@
     "logging": false
   },
   "test": {
+    "username": "travis",
     "database": "forum_test",
     "host": "127.0.0.1",
     "dialect": "mysql",
