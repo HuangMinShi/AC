@@ -44,6 +44,7 @@ module.exports = passport => {
       .then(user => {
         if (!user) {
           // Email不存在=>產生隨機密碼=>加鹽=>存進資料庫
+          // mongodb 可以當引數丟進去，因為_id !== id
           const newUser = new User(profile._json)
 
           const randomPassword = Math.random().toString(36).slice(-8)
@@ -56,6 +57,8 @@ module.exports = passport => {
               newUser
                 .save()
                 .then(user => {
+                  console.log(user);
+
                   return done(null, user)
                 })
                 .catch(err => {
