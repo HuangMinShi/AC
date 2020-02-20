@@ -1,0 +1,199 @@
+/* ============ basic settings ============ */
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background-color: #FFFAF0;
+}
+
+header, footer {
+  overflow: hidden;
+}
+
+
+/* ============ header ============ */
+.navbar .navbar-brand {
+  color: #4592af;
+}
+
+.navbar .navbar-brand:hover {
+  color: #226089;
+}
+
+.banner {
+  position: relative;
+  z-index: -1;
+  margin: -5px;
+  height: 360px;
+  background: #dddddd center center url('https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/5720/restaurants-list-cover.jpg');
+  background-size: cover;
+  filter: blur(3px);
+}
+
+
+/* ============ search-bar ============ */
+.search-bar span {
+  font-size: 30px;
+  font-weight: 900;
+  padding-bottom: 6px;
+}
+
+.search-bar div.form-group {
+  display: flex;
+  flex-flow: row nowrap;
+  margin-top: 16px; 
+  position: relative;
+}
+
+.btn-search {
+  position: absolute;
+  right: 1px;
+  border: 0;
+}
+
+.btn-search::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f002";
+}
+
+.btn-create{
+  padding-left: 15px;
+  padding-top: 15px
+}
+
+
+
+/* ============ sort-drop-down-menu ============ */
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+ul.sort-drop-down-menu {
+  max-width: 25%;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  margin: 15px;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+ul.sort-drop-down-menu a {
+  display: block;
+  color: #495057;
+  font-size: 17px;
+  padding: 5px;
+}
+
+ul.sort-drop-down-menu li:hover > a {
+  background: #007bff;
+  color: #fff;
+  text-decoration: none;
+}
+
+ul.sort-drop-down-menu ul {
+  display: none;
+  background-color: #fff;
+  position: absolute;
+  z-index: 1;
+}
+
+ul.sort-drop-down-menu li:hover > ul {
+  display: block;
+  width: 100%;
+}
+
+
+
+/* ============ main ============ */
+.col-restaurant {
+  top: 0;
+  left: 0;
+}
+
+.col-restaurant:hover {
+  top: -10px;
+  -webkit-transition: .2s linear;
+  -moz-transition: .2s linear;
+  -ms-transition: .2s linear;
+  -o-transition: .2s linear;
+  transition: .2s linear;
+}
+
+
+/* ============ show-restaurant ============ */
+.restaurant-show p{
+font-size: 1.3rem;
+}
+
+#restaurant-show-image img{
+  width: 100%;
+  cursor: pointer;
+}
+
+#restaurant-show-title {
+  position: relative;
+  top: -100px;
+  color: white;
+  text-align: center;
+  font-size: 3rem;
+  text-shadow: 0 0 10px rgba(0, 0, 0, .8);
+}
+
+.modal-body {
+  padding: 0;
+}
+
+.modal-body img {
+  width: 100%;
+}
+
+.modal-body button.close {
+  position: absolute;
+  right: 6px;
+}
+
+.modal-body button span {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 1)
+}
+
+
+/* ============ new/edit ============ */
+.required-icon {
+  color: red;
+  font-size: 5px;
+}
+
+.not-required-icon {
+  color: rgba(0, 0, 0, 0);
+  font-size: 5px;
+}
+
+
+/* ============ footer ============ */
+footer {
+  background-color: #343a40;
+  color: white;
+}
+
+
+/* ============ RWD ============ */
+@media screen and (min-width: 768px) {
+  .card img{
+    height: 160px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .card img{
+    height: 150px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .card img{
+    height: 180px;
+  }
+}

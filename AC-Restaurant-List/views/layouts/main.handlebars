@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Restaurant List</title>
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+  <link rel="stylesheet" href="/fontawesome-free-5.10.2-web/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+
+  <header>
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
+            width="30" height="30" alt="Restaurant List">
+          Restaurant List
+        </a>
+
+
+        {{#if isAuthenticated}}
+        <a href="/users/logout" class="btn btn-outline-primary">Logout</a>
+        {{else}}
+        <a href="/users/login" class="btn btn-outline-primary">Login</a>
+        {{/if}}
+      </div>
+    </nav>
+
+    <div class="banner"></div>
+  </header>
+
+  <main>
+    {{{body}}}
+  </main>
+
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-content text-center p-1">
+        <p class="my-3">
+          Restaurant list built by
+          <a href="https://github.com/HuangMinShi" target="_blank" class="ml-1">
+            Ethan
+            <i class="fab fa-github mx-1 text-white"></i>
+          </a>
+        </p>
+        <p>
+          <a href="#">back to top</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/javascripts/jquery-3.3.1.js"></script>
+  <script src="/javascripts/popper.min.js"></script>
+  <script src="/javascripts/bootstrap.js"></script>
+</body>
+
+</html>
