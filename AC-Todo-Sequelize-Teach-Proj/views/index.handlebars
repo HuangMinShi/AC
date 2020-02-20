@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="wrapper col-md-10 col-lg-8 mx-auto">
+
+    <a href="/todos/new" class="btn btn-primary mb-3">新增待辦</a>
+    <hr>
+
+    <ul class="list-group">
+      {{#each todos}}
+      <div class="row">
+        <div class="col-2 text-center" style="line-height: 62px">{{this.category}}</div>
+        <div class="todo-content col-5 col-lg-6">
+          <li class="list-group-item d-flex align-items-center">
+            <input style="vertical-align: middle;width: 20px;height:20px;" type="checkbox" name="done"
+              {{#if this.done}}checked{{/if}} class="mr-2" disabled />
+
+            <div class="todo-content-info">
+              <span style="font-size: 28px">{{this.name}}</span>
+            </div>
+            <span class="ml-auto" style="line-height: 32px">
+              {{#if this.delay}}
+              <strong class="text-danger">已逾期</strong>
+              {{else}}
+              {{#if this.done}}
+              <strong class="text-primary">期限內完成</strong>
+              {{else}}
+              還有 <strong class="text-info" style="font-size: 20px">
+                {{this.dateDiffToday}}</strong>天
+              {{/if}}
+              {{/if}}
+            </span>
+          </li>
+        </div>
+
+        <div class="todo-action col-5 col-lg-4 d-flex align-items-center">
+          <a href="/todos/{{this.id}}" class="btn btn-secondary">內容</a>
+          <a href="/todos/{{this.id}}/edit" class="btn btn-primary mx-2">修改</a>
+
+          <button type="submit" class="btn btn btn-outline-danger" data-toggle="modal"
+            data-target="#todo-delete-modal">刪除</button>
+        </div>
+      </div>
+
+      <!-- ============ *delete-modal ============ -->
+      <div class="modal fade" id="todo-delete-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-body d-flex align-items-center">
+              <h4 class="mr-auto text-danger"><strong>確定要刪除?</strong></h4>
+              <div class="action p-1">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">返回</button>
+                <form action="/todos/{{this.id}}/delete?_method=DELETE" method="POST" class="d-inline">
+                  <button type=" submit" class="btn btn btn-outline-danger">確定</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </ul>
+    <hr>
+
+  </div>
+</div>
