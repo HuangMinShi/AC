@@ -1,0 +1,54 @@
+<div class="row">
+  <div class=" col-md-10 col-lg-8 mx-auto">
+    <div class="card card-body p-5">
+
+      <div class="card-title">
+        <h1 class="text-center">URL Shorter</h1>
+        <div class="text-center my-4">
+          <img src="https://icon-library.net//images/chain-link-icon-png/chain-link-icon-png-9.jpg" width="150" />
+        </div>
+      </div>
+
+      {{#if key}}
+      <div class="url-display">
+        <h2>Link shortening successful! Visit your website at
+          <a href="/{{key}}">
+            <strong>{{shortenUrl}}</strong>
+          </a>
+        </h2>
+
+        <a href="/" class="btn btn-outline-primary w-50 mt-3 ">Shorten another one</a>
+      </div>
+
+      {{else}}
+      {{#if keyError}}
+
+      <div class="url-display">
+        <h2>Sorry, we can't find the server IP address of
+          <strong style="color: blue;">{{shortenUrl}}</strong>.
+        </h2>
+
+        <div class="text-left mt-3">
+          <ul style="padding-left: 16px;">
+            <li class="mb-1">Check the url you typed.</li>
+            <li><a href="/" class="">Go to Shorter page!</a> </li>
+          </ul>
+        </div>
+      </div>
+
+      {{else}}
+
+      {{> messages}}
+      <div class="url-input text-center">
+        <form action="/" method="POST" class="form-group">
+          <input type="url" name="url" class="form-control" placeholder="https://www.google.com/" value="{{url}}"
+            required>
+          <button type="submit" class="btn btn-outline-primary w-50 mt-3">Shorten!</button>
+        </form>
+      </div>
+
+      {{/if}}
+      {{/if}}
+    </div>
+  </div>
+</div>
