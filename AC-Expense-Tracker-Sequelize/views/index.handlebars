@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="wrapper col-md-10 col-lg-8 mx-auto">
+
+    <!-- ============ filter ============ -->
+    <div class="row my-3">
+      <div class="expense-filter-dropdown col-2">
+        <div class="dropdown">
+          <button class="btn w-100 text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{#if year}}{{year}}{{else}}2019{{/if}}
+          </button>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {{#each years}}
+            <a class="dropdown-item" href="/records/filter?year={{this}}">{{this}}</a>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+
+      <div class="expense-filter-dropdown col-3">
+        <div class="dropdown">
+          <button class="btn w-100 text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{#if month}}{{month}}月{{else}}不分月份{{/if}}
+          </button>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {{#if month}}
+            <a class="dropdown-item" href="/records/filter?resetMonth=true">不分月份</a>
+            {{/if}}
+
+            {{#each months}}
+            <a class="dropdown-item" href="/records/filter?month={{@key}}" {{#is this '0月'}} style="display: none;"
+              {{/is}}>{{this}}</a>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+
+      <div class="expense-filter-dropdown col-3">
+        <div class="dropdown">
+          <button class="btn w-100 text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{#if category2Cn}}{{category2Cn}}{{else}}不分類別{{/if}}
+          </button>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {{#if category2Cn}}
+            <a class=" dropdown-item" href="/records/filter?resetCategory=true">不分類別</a>
+            {{/if}}
+
+            {{#each categoryList}}
+            <a class="dropdown-item" href="/records/filter?category={{@key}}">{{this}}</a>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="total-amount" class="row">
+      <div class="col-7 col-md-8 d-flex justify-content-between">
+        <h5>總金額:</h5>
+        <p>{{totalAmount}}</p>
+      </div>
+    </div>
+    <hr>
+
+    <!-- ============ data-panel ============ -->
+    <ul class="list-group">
+      {{#if default}}
+      <img src={{default}}>
+      {{/if}}
+
+      {{#each records}}
+      <div class="row mt-1">
+        <div class="expense-content col-7 col-md-8">
+          <li class="list-group-item d-flex align-items-center">
+            <i class="expense-content-icon fas fa-{{this.category}} mr-2 text-info"></i>
+
+            <div class="expense-content-info">
+              <h5>{{this.item}}
+                <small class="ml-2 text-info" style="font-size: 10px;">
+                  {{#if this.merchant}} @{{this.merchant}} {{/if}}
+                </small>
+              </h5>
+              <p>{{this.date}}</p>
+            </div>
+
+            <p class="expense-content-amount ml-auto">{{this.amount}}</p>
+          </li>
+        </div>
+
+        <div class="expense-action col-5 col-md-4 d-flex align-items-center">
+          <a href="/records/{{this.id}}/edit?_method=PUT" class="mr-2 btn btn-primary">修改</a>
+
+          <button type="submit" class="btn btn-danger" data-toggle="modal"
+            data-target="#record-delete-modal">刪除</button>
+        </div>
+      </div>
+
+      <!-- ============ delete-modal ============ -->
+      <div class="modal fade" id="record-delete-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content bg-light">
+            <div class="modal-body d-flex align-items-center">
+              <h4 class="mr-auto text-danger"><strong>刪除確認?</strong></h4>
+              <div class="action p-1">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">返回</button>
+                <form action="/records/{{this.id}}/delete?_method=DELETE" method="POST" class="d-inline">
+                  <button type=" submit" class="btn btn btn-outline-danger">確定</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </ul>
+    <hr>
+
+    <div class="row my-4">
+      <div class="col-7 col-md-8 text-center">
+        <a href="/records/new" class="btn btn-primary w-50">新增支出</a>
+      </div>
+    </div>
+  </div>
+</div>

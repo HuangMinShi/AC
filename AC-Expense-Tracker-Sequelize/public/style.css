@@ -1,0 +1,115 @@
+/* ============= basic ============= */
+* {
+  font-family: 'Noto Sans TC', sans-serif, 'Nunito Sans';
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+#wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
+hr {
+  border-top: 1px solid rgba(0,0,0,.5)
+}
+
+/* ============= header ============= */
+header {
+  position: fixed;
+  top: 0;
+  z-index: 1001;
+  width: 100%;
+}
+
+header nav {
+  min-height: 65px;
+}
+
+/* ============= main ============= */
+main {
+  padding: 80px 0;
+  min-height: 720px;
+}
+
+/** ============= expense ============= **/
+#total-amount p {
+  font-size: 5rem;
+  color: orangered
+}
+
+.expense-content-icon {
+  font-size: 2.2rem;
+  width: 45px;
+  height: 40px;
+}
+
+.expense-content-info p {
+  font-size: .5rem;
+}
+
+.expense-content li {
+  border-bottom: 1px solid rgba(199, 204, 203, .6);
+}
+
+.expense-content-amount {
+  font-size: 1.3rem;
+}
+
+.expense-action {
+  vertical-align: middle;
+}
+
+/** ============= dropdown menu ============= **/
+.dropdown button {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, .3);
+}
+
+.dropdown button:focus {
+  box-shadow: none;
+}
+
+.dropdown-menu {
+  width: 94%;
+}
+
+.dropdown-item {
+  padding-right: 12px;
+  padding-left: 12px;
+}
+
+/** ============= list-group ============= **/
+.list-group-item {
+  border: none;
+}
+
+.list-group-item:first-child,.list-group-item:last-child {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.list-group-item:hover {
+  background-color:rgba(18, 19, 19, 0.849);
+  color: #fff;
+}
+
+.list-group-item-dark {
+  background-color:rgba(199, 204, 203, .3);
+}
+
+.wrapper {
+  border: 2px solid rgba(18, 19, 19, 0.849);
+  border-radius: 5px;
+}
