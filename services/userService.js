@@ -122,7 +122,7 @@ const userService = {
               ...user.dataValues,
               FollowerCount: user.Followers.length,
               // isFollowed: req.user.Followings.some(followingUser => followingUser.id === user.id)
-              isFollowed: req.user.Followings ? req.user.Followings.some(follwingUser => followingUser.id === user.id) : false
+              isFollowed: req.user.Followings ? req.user.Followings.some(followingUser => followingUser.id === user.id) : false
             })
           })
           .sort((a, b) => { b.FollowerCount - a.FollowerCount })

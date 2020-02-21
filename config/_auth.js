@@ -3,7 +3,7 @@ const isAuthenticated = (req) => {
 }
 
 const isUserAdmin = (req) => {
-  return req.user.idAdmin
+  return req.user.isAdmin
 }
 
 module.exports = {
